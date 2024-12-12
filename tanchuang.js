@@ -1,6 +1,6 @@
 
 // 弹窗内容
-var popupNotice = "⭐2024年10月22日⭐";
+var popupNotice = "⭐2024年12月13日⭐";
 var popupMainContent = "本APP的UI体验效果欠佳，现已发布新版1.2版，可以选择更新使体验，已更新可取消，一星期后不再弹窗！";
 var popupJoinLink = "xzy.html";
 
