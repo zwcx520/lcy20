@@ -1,4 +1,4 @@
-  const text = "你好！岁月！";
+  const text = "优雅！实在太优雅了！！";
     const typingEffect = document.getElementById('typingEffect');
     let index = 0;
 
