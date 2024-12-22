@@ -1,2 +1,2 @@
 var outputDiv = document.getElementById('output');
-    outputDiv.innerHTML = '    背景音乐 : 周深 - 触不可及';
+    outputDiv.innerHTML = '    背景音乐 : 邵帅-人造流星';
