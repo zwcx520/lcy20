@@ -1,0 +1,12 @@
+  .image {
+    position: fixed;
+    bottom: 80px;
+    right: 10px;
+    width: 100px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.image:hover {
+    transform: scale(1.1);
+}
