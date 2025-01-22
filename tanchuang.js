@@ -1,8 +1,8 @@
 
 // 弹窗内容
 var popupNotice = "⭐归档公告⭐";
-var popupMainContent = "本APP和电脑版的UI体验效果欠佳，\n下载页重新布局设计，现已发布新版1.3版，电脑版还未优化，可以选择更新使体验，已更新可取消，一星期后不再弹窗！";
-var popupJoinLink = "xzy.html";
+var popupMainContent = "本APP和电脑版的UI体验效果欠佳，\n下载页重新布局设计，现已发布新版1.3版，电脑版还未优化，可以点击查看更多公告选择新版本体验！";
+var popupJoinLink = "gonggao.html";
 
 // 是否弹出弹窗的变量
 var shouldPopup = 1;
