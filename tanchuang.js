@@ -31,7 +31,7 @@ popupCloseButton.textContent = "取消";
 
 var popupJoinButton = document.createElement("a");
 popupJoinButton.className = "popup-btn-join";
-popupJoinButton.textContent = "更新";
+popupJoinButton.textContent = "公告";
 popupJoinButton.href = popupJoinLink;
 
 popupButtons.appendChild(popupCloseButton);
