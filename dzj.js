@@ -1,4 +1,4 @@
-  const text = "没有光的话，就做自己的光！";
+  const text = "人生漫长，前行总有曙光！";
     const typingEffect = document.getElementById('typingEffect');
     let index = 0;
 
