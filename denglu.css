@@ -87,7 +87,7 @@ hr{
 	width: 50%;
 }
 .dengluwaikuang{
- border-radius: 20px;
+ border-radius: 0px 20px 20px 20px;
   border: 2px solid #ffff00;
   width: 88%;
 margin:5% auto ;
