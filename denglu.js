@@ -1,7 +1,7 @@
 $('#login-button').click(function (event) {
     let userName = document.getElementById("userName").value;
     let pwd = document.getElementById("pwd").value;
-    if (userName == "lcy" && pwd == "lcy") {
+    if (userName == "zwcx" && pwd == "lcy") {
         
         event.preventDefault();
         $('form').fadeOut(2500);
