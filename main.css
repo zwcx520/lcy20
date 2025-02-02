@@ -1,0 +1,175 @@
+@charset "utf-8";
+/*common*/
+* {
+    padding: 0;
+    margin: 0;
+    letter-spacing: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+img {
+    border-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.hide {
+    display: none !important;
+}
+
+#md-app {
+    display: none;
+}
+
+.bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.bg img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.logo {
+    position: fixed;
+    left: 20vh;
+    top: 5.74vh;
+    width: auto;
+    height: 5vh;
+    z-index: 99;
+}
+
+.main {
+    position: absolute;
+    top: 6vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 99;
+}
+
+.main .title {
+    display: block;
+    width: auto;
+    height: 13vh;
+}
+
+.main .slogan {
+    width: auto;
+    font-size: 3.59vh;
+    color: #ffaa7f;
+}
+
+.main .btn {
+    margin-top: 5.278vh;
+    padding-bottom: 10vh;
+}
+
+.main .btn img {
+    width: 25vh;
+    height: auto;
+    margin: 0 1.2vh;
+    cursor: pointer;
+}
+
+/* H5 */
+@media screen and (max-width: 750px) {
+    #app {
+        display: none;
+    }
+
+    #md-app {
+        display: block;
+    }
+
+    #md-app .swiper-slide-bg {
+        width: 100%;
+        height: 100%;
+    }
+
+    #md-app .swiper-slide-slog {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        height: 24%;
+    }
+
+    #md-app .swiper-slide-mask {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        height: 24%;
+    }
+
+    #md-app .logo {
+        position: absolute;
+        top: 5vh;
+        left: 5vw;
+        z-index: 1;
+        width: auto;
+        height: 48px;
+    }
+
+        #md-app .logo2 {
+            position: absolute;
+            bottom: 0.01vh;
+            z-index: 1;
+            width: 100%;
+            height: 50px;
+			font-size:1.2rem;
+			color:#ffffff;
+			width:80%;
+			left:10%;
+        }
+
+    #md-app .btn {
+        position: absolute;
+        bottom: 8%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        z-index: 1;
+    }
+
+    #md-app .btn img {
+        width: auto;
+        height: 48px;
+    }
+
+    #md-app .btn a {
+        margin-top: 25px;
+        display: block;
+    }
+
+    .footer_ym {
+        font-size: 12px !important;
+    }
+}
+
+.footer_ym {
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+    z-index: 1;
+}
