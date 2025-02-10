@@ -112,8 +112,8 @@ var _wpmejsSettings = {"pluginPath":"\/wp-includes\/js\/mediaelement\/","classPr
 
 <meta name="msapplication-TileImage" content="wp-content/uploads/2022/02/cropped-213412312-270x270.jpg" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="fonts/iconfont.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="css/player.css"
+		<link rel="stylesheet" href="../fonts/iconfont.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="../css/player.css"
 		/>
 		<style>
 		    body {
@@ -295,6 +295,7 @@ width: 100% ; " class="title"><img style="vertical-align: middle; border-radius:
 		</li>
 </ul>
 
+
 </main>
 
 <footer style="position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );">
@@ -312,14 +313,15 @@ width: 100% ; " class="title"><img style="vertical-align: middle; border-radius:
 (function($){"use strict";var mobx_options = {"mediaSelector":".mobx, .mobx-gallery figure > a, a > img[class*=\"wp-image-\"], .gallery-icon > a","spacing":"0.10","loop":0,"rightToLeft":0,"smartResize":1,"overflow":0,"threshold":5,"preload":5,"timeToIdle":0,"history":0,"mouseWheel":1,"contextMenu":1,"scrollBar":0,"loadError":"Sorry, an error occured while loading the content...","noContent":"Sorry, no content was found!","pinchToClose":0,"tapToClose":1,"dragToClose":1,"doubleTapToZoom":0,"pinchToZoom":0,"prevNextKey":1,"escapeToClose":1,"scrollSensitivity":15,"scrollToNav":1,"scrollToZoom":0,"scrollToClose":0,"controls":["play","close"],"prevNext":1,"prevNextTouch":0,"caption":1,"autoCaption":0,"captionSmallDevice":0,"thumbnails":1,"thumbnailsNav":"basic","thumbnailSizes":{"1920":{"width":110,"height":80,"gutter":10},"1280":{"width":90,"height":65,"gutter":10},"680":{"width":70,"height":50,"gutter":8},"480":{"width":60,"height":44,"gutter":5}},"shareButtons":[],"shareText":"Share on","sharedUrl":"deeplink","slideShowInterval":4000,"slideShowAutoPlay":0,"slideShowAutoStop":0,"countTimer":1,"countTimerBg":"rgba(10,10,10,0)","countTimerColor":"#c5bfb2","counterMessage":"[index] \/ [total]","zoomTo":"auto","minZoom":"1.20","maxZoom":"4.00","videoRatio":2.3333333333333335,"videoMaxWidth":1180,"videoAutoPlay":1,"videoThumbnail":0,"mediaelement":1,"attraction":{"slider":1,"slide":0,"thumbs":0},"friction":{"slider":1,"slide":0,"thumbs":0}};var mobx_accessibility = {"closeLabel":"Close lightbox","downloadLabel":"Download media","fullScreenLabel":"Toggle fullscreen mode","nextLabel":"Go to next slide","prevLabel":"Go to previous slide","shareLabel":"Share this media","playLabel":"Toggle slideshow mode","zoomLabel":"Toggle zoom","title":0};var mobx_svg_icons = 'wp-content/plugins/modulobox/public/assets/icons/modulobox.svg';var mobx_google_fonts = '';document.addEventListener('DOMContentLoaded',function(){var mobx = new ModuloBox(mobx_options);if("undefined"!==typeof mobx_svg_icons&&mobx_svg_icons){var ajax=new XMLHttpRequest;ajax.open("GET",mobx_svg_icons,!0);ajax.send();ajax.onload=function(){var a=document.createElement("DIV");a.style.display="none";a.innerHTML=ajax.responseText;document.body.insertBefore(a,document.body.childNodes[0])}}mobx.on("beforeAppendDOM.modulobox",function(a){for(var b in this.buttons)if(this.buttons.hasOwnProperty(b)){"undefined"!==typeof mobx_accessibility&&mobx_accessibility[b+"Label"]&&(this.buttons[b].setAttribute("aria-label",mobx_accessibility[b+"Label"]),mobx_accessibility.title&&this.buttons[b].setAttribute("title",mobx_accessibility[b+"Label"]));a=document.createElementNS("http://www.w3.org/2000/svg","svg");var d=document.createElementNS("http://www.w3.org/2000/svg","use");a.setAttribute("class","mobx-svg");d.setAttribute("class","mobx-use");a.appendChild(d).setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#mobx-svg-"+b.toLowerCase());this.buttons[b].appendChild(a);if(-1<["fullScreen","play","zoom"].indexOf(b)){var c;switch(b){case "fullScreen":c="unfullscreen";break;case "play":c="pause";break;case "zoom":c="zoom-out"}a=a.cloneNode(!0);a.firstElementChild.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href","#mobx-svg-"+c);this.buttons[b].appendChild(a)}}});var mobx_wp_images=function(){for(var d=document.querySelectorAll('a > img[class*="wp-image-"]'),c=0,g=d.length;c<g;c++){var a=d[c],e=a.parentElement,f=(a.title||a.alt)&&mobx_options.autoCaption,b=e.nextElementSibling,b=b&&-1<b.className.indexOf("wp-caption-text")?b.innerHTML:"";a.setAttribute("data-src",e.href);mobx.addAttr(a,{title:f?a.title||a.alt:b||"",desc:f?b:""})}};jQuery(document).ready(function(){jQuery(".single-image-gallery").removeData("carousel-extra");mobx_wp_images()});var mobx_wp_gallery=function(){for(var d=document.querySelectorAll('.gallery[id*="gallery-"]'),b=0,k=d.length;b<k;b++){d[b].removeAttribute("data-carousel-extra");for(var g=d[b].querySelectorAll(".gallery-icon > a"),e=0,l=g.length;e<l;e++){var f=g[e],c=f.firstElementChild,h=(c.title||c.alt)&&mobx_options.autoCaption,a=f.parentElement.nextElementSibling,a=a&&-1<a.className.indexOf("wp-caption-text")?a.innerHTML:"";mobx.addAttr(f,{rel:"wp-gallery-"+(b+1),title:h?c.title||c.alt:a||"",desc:h?a:"",thumb:c.src})}}};mobx_wp_gallery();mobx.init();});})(jQuery)
 </script>
 <script type='text/javascript' src="wp-includes/js/mediaelement/wp-mediaelement.min.js-ver=4.9.26" tppabs="wp-includes/js/mediaelement/wp-mediaelement.min.js?ver=4.9.26"></script>
-<script src="js/utill.js">
+<script src="../js/utill.js">
 		</script>
 		<script src="../js/jquery.min.js">
 		</script>
-		<script src="../js/player.js">
+		<script src="../js/player1.js">
 		</script>
 		<script src="tanchuang.js">
 		</script>
 	
 </body>
 </html>
+
