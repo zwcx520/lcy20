@@ -1,4 +1,4 @@
-  const text = "人生漫长，前行总有曙光！";
+  const text = "那一年，月下飞花已满天！";
     const typingEffect = document.getElementById('typingEffect');
     let index = 0;
 
