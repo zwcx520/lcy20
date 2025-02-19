@@ -1,2 +1,2 @@
 var outputDiv = document.getElementById('output');
-    outputDiv.innerHTML = '    背景音乐 : 和田薫 - 时代を越える想い~Piano Concerto~ (Moscow Recording Ver.)';
+    outputDiv.innerHTML = '    背景音乐 : MOTO GP - 重低音经典旋律';
