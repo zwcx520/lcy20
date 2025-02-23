@@ -1,2 +1,2 @@
 var outputDiv = document.getElementById('output');
-    outputDiv.innerHTML = '    背景音乐 : MOTO GP - 重低音经典旋律';
+    outputDiv.innerHTML = '    背景音乐 : 王靖雯 - 谦让';
