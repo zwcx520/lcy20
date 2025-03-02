@@ -1,2 +1,2 @@
 var outputDiv = document.getElementById('output');
-    outputDiv.innerHTML = '    背景音乐 : 王靖雯 - 谦让';
+    outputDiv.innerHTML = '    背景音乐 : 福禄寿FloruitShow - 多一个世界';
