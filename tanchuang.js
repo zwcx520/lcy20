@@ -1,7 +1,7 @@
 
 // 弹窗内容
 var popupNotice = "⭐归档公告⭐";
-var popupMainContent = "本APP和电脑版的UI已重新规划设计，APK与EXE安装包UI已同步更新，暂时无ios版本\n下载页重新布局设计，现已发布新版1.3版，电脑版同步优化，可以点击查看更多公告选择新版本体验！";
+var popupMainContent = "本APP和电脑版的UI已着重重新规划设计，APK与EXE安装包UI已同步更新，暂时无ios版本\n下载页重新布局设计，现已发布新版1.3版，电脑版同步优化，可以点击查看更多公告选择新版本体验！";
 var popupJoinLink = "gonggao.html";
 
 // 是否弹出弹窗的变量
