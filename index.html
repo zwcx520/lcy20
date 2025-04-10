@@ -19,7 +19,7 @@
        <big><big><big><big><i> 归档-时光卷轴
 	</i>	</big></big></big></big>
        	<div style="background-image: url(1.gi);  background-size: 100% 100%; background-repeat: no-repeat;" class="dengluwaikuang " >
-       			<div style="font-size: 90%; display: flex;align-items: center; justify-content: center; height: 100px; background-color: rgba(255, 240, 245, 1.0);height: 50px;color: #000;border-radius: 0px 15px 20px 15px;"><marquee><div id="typingEffect" ></div></marquee></div>
+       			<div style="font-size: 90%; display: flex;align-items: center; justify-content: center; height: 100px; background-color: rgba(255, 240, 245, 1.0);height: 50px;color: #000;border-radius: 0px 15px 20px 15px;"><!-- <marquee><div id="typingEffect" ></div></marquee>  --><span id="runtime_span"></span></div>
        			<form style="color: #000;" class="form">
        		————————用户名———————— <input id="userName" name="userName" type="text" placeholder="输入用户名:">
        			  ————————密码———————— <input id="pwd" name="pwd" type="password" placeholder="输入密码:">
@@ -58,6 +58,16 @@
 <script src="https://lcy20.netlify.app/yssm.js"></script>
 <script src="https://lcy20.netlify.app/jquery-3.6.0.min.js"></script>
 <script src="https://lcy20.netlify.app/denglu.js"></script>
+<script> function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("2024/06/25 00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "归档运行: " + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();
+function generateQuotes() { const apiUrl = 'https://v1.hitokoto.cn/';
+return fetch(apiUrl) .then(response => response.json()) .then(data => { const quote = data.hitokoto; return quote; }) }
+async function createCard() { const cardContainer = document.getElementById('cardContainer'); cardContainer.innerHTML = '';
+for (let i = 0; i < 1; i++) { const quote = await generateQuotes(); const card = document.createElement('div'); card.classList.add('card'); card.textContent = quote;
+const copyButton = document.createElement('button'); copyButton.classList.add('copy-button')
+copyButton.addEventListener('click', () => { copyToClipboard(quote, card); });
 
+cardContainer.appendChild(card); } }
+function restart() { createCard(); } createCard();
+function toggleSidebar() { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const overlay = document.getElementById('overlay'); overlay.classList.toggle('show'); } </script>
 <audio autoplay="true"  loop="loop" src="https://lcy20.netlify.app/yy.mp3"></audio>m</body>
 </html>
