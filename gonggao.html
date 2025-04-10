@@ -98,6 +98,10 @@
 										<div data-v-15bb1dcc="" style="text-indent: 2em; font-size: 16px; color: rgb(255, 170, 127);">
 [2024·9] ©  ICP 未备案 
 
+										</div>						
+										<div data-v-15bb1dcc="" style="text-indent: 2em; font-size: 16px; color: rgb(255, 170, 127);">
+<span id="runtime_span"></span>
+
 										</div>
 									</div>
 								</div>
@@ -126,5 +130,16 @@
 		
 
 	</body>
+<script> function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("2024/06/25 00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "本站勉强运行: " + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();
+function generateQuotes() { const apiUrl = 'https://v1.hitokoto.cn/';
+return fetch(apiUrl) .then(response => response.json()) .then(data => { const quote = data.hitokoto; return quote; }) }
+async function createCard() { const cardContainer = document.getElementById('cardContainer'); cardContainer.innerHTML = '';
+for (let i = 0; i < 1; i++) { const quote = await generateQuotes(); const card = document.createElement('div'); card.classList.add('card'); card.textContent = quote;
+const copyButton = document.createElement('button'); copyButton.classList.add('copy-button')
+copyButton.addEventListener('click', () => { copyToClipboard(quote, card); });
 
+cardContainer.appendChild(card); } }
+function restart() { createCard(); } createCard();
+function toggleSidebar() { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const overlay = document.getElementById('overlay'); overlay.classList.toggle('show'); } 
+</script>
 </html>
