@@ -178,4 +178,22 @@
 		
 	</body>
 
+  <script>
+    // 页面加载时先检查网络状态
+    if (navigator.onLine === false) {
+      alert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+    }
+
+    // 监听网络断开事件
+    window.addEventListener('offline', function () {
+      alert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+    });
+
+    // 监听网络连接事件，这里不需要弹窗，仅作监测
+    window.addEventListener('online', function () {
+      // 这里可以添加当网络连接时执行的其他代码逻辑，目前仅监听，无弹窗操作
+    });
+  </script>
+
+	
 </html>
