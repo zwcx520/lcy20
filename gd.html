@@ -7,6 +7,21 @@
 		<title>
 			归档-时光卷轴
 		</title>
+		  <style>
+    /*网络监测弹窗 自定义弹窗样式 */
+   .custom-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: yellow;
+      color:red;
+      padding: 20px;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      border-radius: 5%;
+    }
+		  </style>
 		<meta name="keywords" content="">
 		<meta name="description" content="">
 		<link rel="stylesheet" href="csss/base_2.0.css">
@@ -553,24 +568,35 @@
 		</script>
 
 
-    <script>
+      <script>
+    function showCustomAlert(message) {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'custom-alert';
+      alertDiv.textContent = message;
+      document.body.appendChild(alertDiv);
+      setTimeout(() => {
+        document.body.removeChild(alertDiv);
+      }, 3000); // 3秒后自动关闭弹窗
+    }
+
     // 页面加载时先检查网络状态
     if (navigator.onLine === false) {
-      alert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+      showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
     }
 
     // 监听网络断开事件
     window.addEventListener('offline', function () {
-      alert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+      showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
     });
 
     // 监听网络连接事件
     window.addEventListener('online', function () {
-      alert('网络已连接成功！'); 
-      // 网络连接成功后刷新页面
-      location.reload();
+      showCustomAlert('网络已连接成功！');
+      location.reload(); // 添加这行代码，在网络连接成功时刷新页面
     });
-    </script>
+  </script>
+  
+  
 		
 		<div id="tcaptcha_transform_dy" style="opacity: 0; position: absolute; transition: opacity 0.3s linear; top: -1e+06px;">
 			<iframe name="t.captcha.qq.com" id="tcaptcha_iframe_dy" frameborder="0"
