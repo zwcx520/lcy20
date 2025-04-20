@@ -7,6 +7,7 @@
     <title>归档-时光卷轴</title>  
      <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
    <link rel="stylesheet" href="denglu.css">
+   <link rel="stylesheet" href="https://lcy20.netlify.app/tanchuang.css">
     <style>
         /*网络监测弹窗 自定义弹窗样式 */
        .custom-alert {
@@ -28,7 +29,7 @@
 
 <body>
     <div class="form-container" id="loginForm">
-        <h2>归档-登录<hr/><div><span id="runtime_span"></span></div></h2>
+        <h2>归档-登录<hr/><div style="font-size:10px;"><span id="runtime_span"></span></div></h2>
         <label for="loginUsername">账号:</label>
         <input type="text" id="loginUsername" placeholder="请输入用户名" />
         <label for="loginPassword">密码:</label>
@@ -63,6 +64,7 @@
 
 <script src="https://lcy20.netlify.app/denglu.js"></script>
 <script src="https://lcy20.netlify.app/yyts.js"></script>
+<script src="https://lcy20.netlify.app/tanchuang.js"></script>
 
 <script> 
 function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("2024/06/25 00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "归档运行: " + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();
