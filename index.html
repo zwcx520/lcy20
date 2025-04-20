@@ -1,79 +1,71 @@
-<!doctype html>
-<html lang="zh">
-<head>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>归档-登陆</title>
-    <link rel="stylesheet" href="denglu.css">
-        <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
-	
-		<link rel="shortcut icon" href="zwcx/4.ico" type="image/x-icon">
+    <title>归档-时光卷轴</title>  
+     <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
+   <link rel="stylesheet" href="denglu.css">
     <style>
-    /*网络监测弹窗 自定义弹窗样式 */
-   .custom-alert {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: yellow;
-      color:red;
-      padding: 20px;
-      border: 1px solid #ccc;
-      z-index: 1000;
-      border-radius: 5%;
-    }
+        /*网络监测弹窗 自定义弹窗样式 */
+       .custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: yellow;
+            color: red;
+            padding: 20px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            border-radius: 5%;
+        }
+
+        
     </style>
 </head>
 
 <body>
-<div class="htmleaf-container">
-    <div class="wrapper">
-        <div class="container">
-       
-       <big><big><big><big><i> 归档-时光卷轴
-	</i>	</big></big></big></big>
-       	<div style="background-image: url(1.gi);  background-size: 100% 100%; background-repeat: no-repeat;" class="dengluwaikuang " >
-       			<div style="font-size: 90%; display: flex;align-items: center; justify-content: center; height: 100px; background-color: rgba(255, 240, 245, 1.0);height: 50px;color: #000;border-radius: 0px 15px 20px 15px;"><!-- <marquee><div id="typingEffect" ></div></marquee>  --><span id="runtime_span"></span></div>
-       			<form style="color: #000;" class="form">
-       		————————用户名———————— <input id="userName" name="userName" type="text" placeholder="输入用户名:">
-       			  ————————密码———————— <input id="pwd" name="pwd" type="password" placeholder="输入密码:">
-       			 <button type="submit" id="login-button">登陆</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       
-          	 <button onclick="yssm()" id="login-button"><a style=" text-decoration:none"  >隐私声明</a></button>
-       	
-         	</form>
-       	  
-       		</div>
-   <br>
-			<div id="output" style="font-size: 10%;border-radius: 0px 50px 50px 0px;color:#ffffff;background-color: lightpink;width: 70%;"></div>
+    <div class="form-container" id="loginForm">
+        <h2>归档-登录<hr/><div><span id="runtime_span"></span></div></h2>
+        <label for="loginUsername">账号:</label>
+        <input type="text" id="loginUsername" placeholder="请输入用户名" />
+        <label for="loginPassword">密码:</label>
+        <input type="password" id="loginPassword" placeholder="请输入密码" />
+        <button onclick="login()">登录</button>
+        <p class="error" id="loginError"></p>
+        <p>还没有账号？<a href="#" onclick="showRegisterForm()">注册</a></p>
+    </div>
+
+    <div class="form-container" id="registerForm" style="display: none;">
+        <h2>账号注册</h2>
+        <label for="registerUsername">账号:</label>
+        <input type="text" id="registerUsername" placeholder="请输入用户名" />
+        <label for="registerPassword">密码:</label>
+        <input type="password" id="registerPassword" placeholder="请输入密码" />
+        <button onclick="register()">注册</button>
+        <p class="error" id="registerError"></p>
+        <p>已有账号？<a href="#" onclick="showLoginForm()">登录</a></p>
+    </div>  
+    
+    
+    <br>
+			<div id="output" style="font-size: 10%;border-radius: 0px 50px 50px 0px;color:#ffffff;background-color: lightpink;width: 70%;text-align: center;"></div>
    
-    <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );"><a href="https://lcy20.netlify.app/gonggao.html">APP版本1.4及公告</a>&nbsp;&nbsp; <a href="gdq/index.html">游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
+    <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href="https://lcy20.netlify.app/gonggao.html">APP版本1.5及公告</a>&nbsp;&nbsp; <a href="gdq/index.html">游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
        </div>
  <a href="https://lcy20.netlify.app/lianxierweima.jpg"> <img class="image" alt="联系二维码" src="https://lcy20.netlify.app/lianxierweima.jpg"/>
-      </a>  <ul class="bg-bubbles">
-      
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </div>
-    
-</div>
+      </a>  
+      <audio autoplay="true"  loop="loop" src="https://lcy20.netlify.app/yy.mp3"></audio>
+  
+</body>
 
-<script src="https://lcy20.netlify.app/dzj.js"></script>
-<script src="https://lcy20.netlify.app/yyts.js"></script>
-<script src="https://lcy20.netlify.app/yssm.js"></script>
-<script src="https://lcy20.netlify.app/jquery-3.6.0.min.js"></script>
 <script src="https://lcy20.netlify.app/denglu.js"></script>
-<script> function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("2024/06/25 00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "归档运行: " + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();
+<script src="https://lcy20.netlify.app/yyts.js"></script>
+
+<script> 
+function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("2024/06/25 00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "归档运行: " + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();
 function generateQuotes() { const apiUrl = 'https://v1.hitokoto.cn/';
 return fetch(apiUrl) .then(response => response.json()) .then(data => { const quote = data.hitokoto; return quote; }) }
 async function createCard() { const cardContainer = document.getElementById('cardContainer'); cardContainer.innerHTML = '';
@@ -83,39 +75,39 @@ copyButton.addEventListener('click', () => { copyToClipboard(quote, card); });
 
 cardContainer.appendChild(card); } }
 function restart() { createCard(); } createCard();
-function toggleSidebar() { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const overlay = document.getElementById('overlay'); overlay.classList.toggle('show'); } </script>
-<audio autoplay="true"  loop="loop" src="https://lcy20.netlify.app/yy.mp3"></audio>
-  
-  
-  
-  <script>
+function toggleSidebar() { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const overlay = document.getElementById('overlay'); overlay.classList.toggle('show'); } 
+  </script>
+
+
+
+
+<script>
     function showCustomAlert(message) {
-      const alertDiv = document.createElement('div');
-      alertDiv.className = 'custom-alert';
-      alertDiv.textContent = message;
-      document.body.appendChild(alertDiv);
-      setTimeout(() => {
-        document.body.removeChild(alertDiv);
-      }, 3000); // 3秒后自动关闭弹窗
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'custom-alert';
+        alertDiv.textContent = message;
+        document.body.appendChild(alertDiv);
+        setTimeout(() => {
+            document.body.removeChild(alertDiv);
+        }, 3000); // 3秒后自动关闭弹窗
     }
 
     // 页面加载时先检查网络状态
     if (navigator.onLine === false) {
-      showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+        showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
     }
 
     // 监听网络断开事件
     window.addEventListener('offline', function () {
-      showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+        showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
     });
 
     // 监听网络连接事件
     window.addEventListener('online', function () {
-      showCustomAlert('网络已连接成功！');
-      location.reload(); // 添加这行代码，在网络连接成功时刷新页面
+        showCustomAlert('网络已连接成功！');
+        location.reload(); // 添加这行代码，在网络连接成功时刷新页面
     });
-  </script>
-  
-  
-</body>
+</script>
+
+
 </html>
