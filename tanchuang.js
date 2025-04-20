@@ -2,7 +2,7 @@
 // 弹窗内容
 var popupNotice = "⭐归档提示⭐";
 var popupMainContent = "本APP已更新至1.5版，UI已着重重新规划设计，EXE安装包UI暂为同步更新，暂时无ios版本\n下载页重新布局设计，现已发布新版1.5版，历史版本将停用，可以点击查看更多公告选择新版本体验！";
-var popupJoinLink = "gonggao.html";
+var popupJoinLink = "https://lcy20.netlify.app/gonggao.html";
 
 // 是否弹出弹窗的变量
 var shouldPopup = 1;
