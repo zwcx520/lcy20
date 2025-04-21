@@ -1,6 +1,6 @@
 let users = [
         { username: 'lcy', password: 'lcy' },
-        { username: '1234', password: '1111' }
+        { username: 'zwcx', password: 'zwcx' }
     ];
 
     function login() {
