@@ -1,10 +1,10 @@
 // 初始用户名和密码
   const initialUser1 = {
-    username: "lcy",
+    username: "廖聪颖",
     password: "lcy"
   };
   const initialUser2 = {
-    username: "zwcx",
+    username: "追吻辰星",
     password: "zwcx"
   };
  
