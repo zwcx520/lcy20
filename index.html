@@ -28,7 +28,7 @@
 
 <body>
   <div class="container" id="loginContainer">
-    <h2>归档-时光卷轴</h2>
+    <h2>归档-时光卷轴<hr/><div style="text-align:center;font-size:15px;"><span id="runtime_span"></span></div></h2>
     <!-- 新增提示信息元素 -->
     <div id="loginMessage" class="message"></div>
     <form id="loginForm">
@@ -157,14 +157,4 @@
   // 监听网络连接事件
   window.addEventListener('online', function () {
     showCustomAlert('网络已连接成功！');
-    location.reload(); // 添加这行代码，在网络连接成功时刷新页面
-  });
-</script>
-
-<script>
-  
-</script>
-
-</body>
-
-</html>
+    location.reload(); // 添加这行代码，在�
