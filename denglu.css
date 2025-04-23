@@ -1,61 +1,75 @@
+
 body {
-            background-image: url(https://lcy20.netlify.app/bj.gif);
-            background-size: cover; /* 修改为cover，使图片铺满满屏 */
-            background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
-            margin: 0; /* 去除默认边距 */
-            padding: 0; /* 去除默认内边距 */
-        }
+      background-image: url(https://lcy20.netlify.app/bj.gif);
+      background-size: cover; /* 修改为cover，使图片铺满满屏 */
+      background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
+      margin: 0; /* 去除默认边距 */
+      padding: 0; /* 去除默认内边距 */
+    }
 
-       .form-container {
-            width: 300px;
-            margin: 100px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background-color: transparent;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow-y: hidden;
+      overflow-x: hidden;
+    }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: white;
-        }
+   .container {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      margin-top: -180px;
+      color: white; /* 添加这一行，设置文字颜色为白色 */
+    }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            padding-left: 10px; /* 添加内边距，使文字往右移动 */
-        }
+    h2 {
+      text-align: center;
+    }
 
-        input {
-            width: 90%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            margin: 0 auto 15px;
-            background-color: white;
-        }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
+    label {
+      margin-top: 10px;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
+    input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
 
-       .error {
-            color: red;
-            font-size: 14px;
-        }
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    p {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* 新增的提示信息样式 */
+   .message {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+    }

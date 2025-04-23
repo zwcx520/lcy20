@@ -2,59 +2,64 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>归档-时光卷轴</title>  
-     <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
-   <link rel="stylesheet" href="denglu.css">
-   <link rel="stylesheet" href="https://lcy20.netlify.app/tanchuang.css">
-    <style>
-        /*网络监测弹窗 自定义弹窗样式 */
-       .custom-alert {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: yellow;
-            color: red;
-            padding: 20px;
-            border: 1px solid #ccc;
-            z-index: 1000;
-            border-radius: 5%;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>归档登录</title>
+  <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
+  <link rel="stylesheet" href="denglu.css">
+  <style>
+    /*网络监测弹窗 自定义弹窗样式 */
+   .custom-alert {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: yellow;
+      color: red;
+      padding: 20px;
+      border: 1px solid #ccc;
+      z-index: 1000;
+      border-radius: 5%;
+    }
 
-        
-    </style>
+    
+  </style>
 </head>
 
 <body>
-    <div class="form-container" id="loginForm">
-        <h2>归档-登录<hr/><div style="font-size:10px;"><span id="runtime_span"></span></div></h2>
-        <label for="loginUsername">账号:</label>
-        <input type="text" id="loginUsername" placeholder="请输入用户名" />
-        <label for="loginPassword">密码:</label>
-        <input type="password" id="loginPassword" placeholder="请输入密码" />
-        <button onclick="login()">登录</button>
-        <p class="error" id="loginError"></p>
-        <p>还没有账号？<a href="#" onclick="showRegisterForm()">账号注册</a></p>
-    </div>
+  <div class="container" id="loginContainer">
+    <h2>归档-时光卷轴</h2>
+    <!-- 新增提示信息元素 -->
+    <div id="loginMessage" class="message"></div>
+    <form id="loginForm">
+      <label for="loginUsername">用户名:</label>
+      <input type="text" id="loginUsername" required placeholder="请输入用户名">
+      <label for="loginPassword">密码:</label>
+      <input type="password" id="loginPassword" required placeholder="请输入密码">
+      <button type="button" onclick="login()">登录</button>
+    </form>
+    <p>没有账号? <a href="#" onclick="showRegister()">注册</a></p>
+  </div>
 
-    <div class="form-container" id="registerForm" style="display: none;">
-        <h2>账号注册</h2>
-        <label for="registerUsername">账号:</label>
-        <input type="text" id="registerUsername" placeholder="请输入用户名" />
-        <label for="registerPassword">密码:</label>
-        <input type="password" id="registerPassword" placeholder="请输入密码" />
-        <button onclick="register()">注册</button>
-        <p class="error" id="registerError"></p>
-        <p>已有账号？<a href="#" onclick="showLoginForm()">登录</a></p>
-    </div>  
-    
-    
-    <br>
-			<div id="output" style="font-size: 10%;border-radius: 0px 50px 50px 0px;color:#ffffff;background-color: lightpink;width: 70%;text-align: center;"></div>
+  <div class="container" id="registerContainer" style="display: none;">
+    <h2>注册</h2>
+    <!-- 新增提示信息元素 -->
+    <div id="registerMessage" class="message"></div>
+    <form id="registerForm">
+      <label for="registerUsername">用户名:</label>
+      <input type="text" id="registerUsername" required placeholder="请输入用户名">
+      <label for="registerPassword">密码:</label>
+      <input type="password" id="registerPassword" required placeholder="请输入密码">
+      <label for="confirmPassword">确认密码:</label>
+      <input type="password" id="confirmPassword" required placeholder="请再次输入密码">
+      <button type="button" onclick="register()">注册</button>
+    </form>
+    <p>已有账号? <a href="#" onclick="showLogin()">登录</a></p>
+  </div>
+
+  	
    
-    <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href="https://lcy20.netlify.app/gonggao.html">APP版本1.5及公告</a>&nbsp;&nbsp; <a href="gdq/index.html">游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
+    <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href='https://lcy20.netlify.app/gonggao'>APP版本1.5及公告</a>&nbsp;&nbsp; <a href='/gdq/'>游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
        </div>
  <a href="https://lcy20.netlify.app/lianxierweima.jpg"> <img class="image" alt="联系二维码" src="https://lcy20.netlify.app/lianxierweima.jpg"/>
       </a>  
@@ -62,54 +67,104 @@
   
 </body>
 
-<script src="https://lcy20.netlify.app/denglubkzc.js"></script>
-<script src="https://lcy20.netlify.app/yyts.js"></script>
-<script src="https://lcy20.netlify.app/tanchuang.js"></script>
-
-<script> 
-function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("2024/06/25 00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "归档运行: " + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();
-function generateQuotes() { const apiUrl = 'https://v1.hitokoto.cn/';
-return fetch(apiUrl) .then(response => response.json()) .then(data => { const quote = data.hitokoto; return quote; }) }
-async function createCard() { const cardContainer = document.getElementById('cardContainer'); cardContainer.innerHTML = '';
-for (let i = 0; i < 1; i++) { const quote = await generateQuotes(); const card = document.createElement('div'); card.classList.add('card'); card.textContent = quote;
-const copyButton = document.createElement('button'); copyButton.classList.add('copy-button')
-copyButton.addEventListener('click', () => { copyToClipboard(quote, card); });
-
-cardContainer.appendChild(card); } }
-function restart() { createCard(); } createCard();
-function toggleSidebar() { const sidebar = document.getElementById('sidebar'); sidebar.classList.toggle('open'); const overlay = document.getElementById('overlay'); overlay.classList.toggle('show'); } 
-  </script>
-
-
+<script src="https://lcy20.netlify.app/user.js"></script>
+<script src="denglu.js"></script>
 
 
 <script>
-    function showCustomAlert(message) {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'custom-alert';
-        alertDiv.textContent = message;
-        document.body.appendChild(alertDiv);
-        setTimeout(() => {
-            document.body.removeChild(alertDiv);
-        }, 3000); // 3秒后自动关闭弹窗
+  function show_runtime() {
+    window.setTimeout("show_runtime()", 1000);
+    X = new Date("2024/06/25 00:00");
+    Y = new Date();
+    T = (Y.getTime() - X.getTime());
+    M = 24 * 60 * 60 * 1000;
+    a = T / M;
+    A = Math.floor(a);
+    b = (a - A) * 24;
+    B = Math.floor(b);
+    c = (b - B) * 60;
+    C = Math.floor((b - B) * 60);
+    D = Math.floor((c - C) * 60);
+    runtime_span.innerHTML = "归档运行: " + A + "天" + B + "小时" + C + "分" + D + "秒"
+  }
+  show_runtime();
+
+  function generateQuotes() {
+    const apiUrl = '';
+    return fetch(apiUrl)
+     .then(response => response.json())
+     .then(data => {
+        const quote = data.hitokoto;
+        return quote;
+      })
+  }
+
+  async function createCard() {
+    const cardContainer = document.getElementById('cardContainer');
+    cardContainer.innerHTML = '';
+
+    for (let i = 0; i < 1; i++) {
+      const quote = await generateQuotes();
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.textContent = quote;
+
+      const copyButton = document.createElement('button');
+      copyButton.classList.add('copy-button')
+
+      copyButton.addEventListener('click', () => {
+        copyToClipboard(quote, card);
+      });
+
+      cardContainer.appendChild(card);
     }
+  }
 
-    // 页面加载时先检查网络状态
-    if (navigator.onLine === false) {
-        showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
-    }
+  function restart() {
+    createCard();
+  }
+  createCard();
 
-    // 监听网络断开事件
-    window.addEventListener('offline', function () {
-        showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
-    });
-
-    // 监听网络连接事件
-    window.addEventListener('online', function () {
-        showCustomAlert('网络已连接成功！');
-        location.reload(); // 添加这行代码，在网络连接成功时刷新页面
-    });
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open');
+    const overlay = document.getElementById('overlay');
+    overlay.classList.toggle('show');
+  }
 </script>
 
+<script>
+  function showCustomAlert(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'custom-alert';
+    alertDiv.textContent = message;
+    document.body.appendChild(alertDiv);
+    setTimeout(() => {
+      document.body.removeChild(alertDiv);
+    }, 3000); // 3秒后自动关闭弹窗
+  }
+
+  // 页面加载时先检查网络状态
+  if (navigator.onLine === false) {
+    showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+  }
+
+  // 监听网络断开事件
+  window.addEventListener('offline', function () {
+    showCustomAlert('网络已断开，请检查您的网络连接（可能没有 Wi-Fi 或移动数据等网络连接）');
+  });
+
+  // 监听网络连接事件
+  window.addEventListener('online', function () {
+    showCustomAlert('网络已连接成功！');
+    location.reload(); // 添加这行代码，在网络连接成功时刷新页面
+  });
+</script>
+
+<script>
+  
+</script>
+
+</body>
 
 </html>
