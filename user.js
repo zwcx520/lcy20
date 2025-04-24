@@ -5,7 +5,7 @@
                 password: "lcy"
             },
             {
-                username: "zwcx",
+                username: "追吻辰星",
                 password: "zwcx"
             }
         ];
@@ -46,7 +46,7 @@
             const messageElement = document.getElementById('loginMessage');
             if (user) {
                 messageElement.className = "message success";
-                messageElement.innerHTML = "登录成功，正在跳转...";
+                messageElement.innerHTML = "登录成功，正在加载...";
                 setTimeout(() => {
                     window.location.href = "https://lcy20.netlify.app/gd.html";
                 }, 1500);
