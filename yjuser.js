@@ -22,7 +22,7 @@
                 loginMessage.className = 'message success';
                 loginMessage.innerText = "登录成功！";
                 // 登录成功后跳转到百度页面
-                window.location.href = "yj.html";
+                window.location.href = "yj/yj.html";
             } else {
                 loginMessage.className = 'message error';
                 loginMessage.innerText = "用户名或邮箱或密码错误！";
