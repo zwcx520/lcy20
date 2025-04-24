@@ -2,13 +2,12 @@
 <html lang="zh-CN">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>归档登录</title>
-  <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://lcy20.netlify.app/lianxierweima.css">
   <link rel="stylesheet" href="denglu.css">
- <link rel="shortcut icon" href="app.jpg" type="image/x-icon"> 
-  <style>
+    <title>归档-时光卷轴</title>  
+    <style>
     /*网络监测弹窗 自定义弹窗样式 */
    .custom-alert {
       position: fixed;
@@ -22,57 +21,75 @@
       z-index: 1000;
       border-radius: 5%;
     }
-
-    
+  body{
+background-image: url(https://lcy20.netlify.app/bj.gif);
+      background-size: cover; /* 修改为cover，使图片铺满满屏 */
+      background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
+      margin: 0; /* 去除默认边距 */
+      padding: 0; /* 去除默认内边距 */
+    }
   </style>
+    
 </head>
 
-<body>
-  <div class="container" id="loginContainer">
-    <h2>归档-时光卷轴<hr/><div style="text-align:center;font-size:15px;"><span id="runtime_span"></span></div></h2>
-    <!-- 新增提示信息元素 -->
-    <div id="loginMessage" class="message"></div>
-    <form id="loginForm">
-      <label for="loginUsername">用户名:</label>
-      <input type="text" id="loginUsername" required placeholder="请输入用户名">
-      <label for="loginPassword">密码:</label>
-      <input type="password" id="loginPassword" required placeholder="请输入密码">
-      <button type="button" onclick="login()">登录</button>
-    </form>
-    <p>没有账号? <a href="#" onclick="showRegister()">注册</a></p>
-  </div>
+<body >
+    <div class="container"> 
+     <div style="text-align:center;font-size:20px;color:#fff"><span id="runtime_span"></span></div>
+         
+        <div class="tabs">
+        <div class="tab active" onclick="switchForm('login')">登录</div>
+            <div class="tab" onclick="switchForm('register')">注册</div>
+        </div>
 
-  <div class="container" id="registerContainer" style="display: none;">
-    <h2>注册</h2>
-    <!-- 新增提示信息元素 -->
-    <div id="registerMessage" class="message"></div>
-    <form id="registerForm">
-      <label for="registerUsername">用户名:</label>
-      <input type="text" id="registerUsername" required placeholder="请输入用户名">
-      <label for="registerPassword">密码:</label>
-      <input type="password" id="registerPassword" required placeholder="请输入密码">
-      <label for="confirmPassword">确认密码:</label>
-      <input type="password" id="confirmPassword" required placeholder="请再次输入密码">
-      <button type="button" onclick="register()">注册</button>
-    </form>
-    <p>已有账号? <a href="#" onclick="showLogin()">登录</a></p>
-  </div>
+        <div class="form-container">
+            <!-- 登录表单 -->
+            <form id="loginForm" class="form active" onsubmit="return handleLogin(event)">
+                <div id="loginMessage" class="message"></div>
+                <div class="input-group">
+                    <label>用户名</label>
+                    <input type="text" id="loginAccount" required placeholder="请输入用户名">
+                </div>
+                <div class="input-group">
+                    <label>密码</label>
+                    <input type="password" id="loginPassword" required placeholder="请输入密码">
+                </div>
+                <button type="submit">立即登录</button>
+            </form>
 
-  	
-   
-    <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href='https://lcy20.netlify.app/gonggao'>APP版本1.5及公告</a>&nbsp;&nbsp; <a href='gdq/index.html'>游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
+            <!-- 注册表单 -->
+            <form id="registerForm" class="form" onsubmit="return handleRegister(event)">
+                <div id="registerMessage" class="message"></div>
+                <div class="input-group">
+                    <label>用户名</label>
+                    <input type="text" id="regUsername" required pattern="[A-Za-z0-9]{4,20}" placeholder="请输入4到20位用户名">
+                </div>
+                <div class="input-group">
+                    <label>密码</label>
+                    <input type="password" id="regPassword" required minlength="6" placeholder="请输入至少6位的密码">
+                </div>
+                <div class="input-group">
+                    <label>确认密码</label>
+                    <input type="password" id="regConfirmPassword" required placeholder="请再次输入密码">
+                </div>
+                <button type="submit">立即注册</button>
+            </form>
+        </div>
+    </div>
+    
+  <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href='https://lcy20.netlify.app/gonggao'>APP版本1.5及公告</a>&nbsp;&nbsp; <a href='gdq/index.html'>游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
        </div>
  <a href="https://lcy20.netlify.app/lianxierweima.jpg"> <img class="image" alt="联系二维码" src="https://lcy20.netlify.app/lianxierweima.jpg"/>
       </a>  
       <audio autoplay="true"  loop="loop" src="https://lcy20.netlify.app/yy.mp3"></audio>
-  
-</body>
+  <script src="https://lcy20.netlify.app/user.js"></script>
 
-<script src="https://lcy20.netlify.app/user.js"></script>
-<script src="denglu.js"></script>
-
-
-<script>
+    <script>
+      
+    </script>
+    
+    
+    
+    <script>
   function show_runtime() {
     window.setTimeout("show_runtime()", 1000);
     X = new Date("2024/06/25 00:00");
@@ -161,11 +178,6 @@
     location.reload(); // 添加这行代码，在网络连接成功时刷新页面
   });
 </script>
-
-<script>
-  
-</script>
-
 </body>
 
 </html>

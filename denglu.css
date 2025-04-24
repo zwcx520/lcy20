@@ -1,75 +1,69 @@
 
-body {
-      background-image: url(https://lcy20.netlify.app/bj.gif);
-      background-size: cover; /* 修改为cover，使图片铺满满屏 */
-      background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
-      margin: 0; /* 去除默认边距 */
-      padding: 0; /* 去除默认内边距 */
-    }
 
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      overflow-y: hidden;
-      overflow-x: hidden;
-    }
+  /* 添加禁止滚动样式*/
+        html,
+        body {
+            overflow: hidden;
+            height: 100%;
+        
+        }
 
-   .container {
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      margin-top: -180px;
-      color: white; /* 添加这一行，设置文字颜色为白色 */
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    h2 {
-      text-align: center;
-    }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f2f5;
+        }
 
-    form {
-      display: flex;
-      flex-direction: column;
-    }
+       .container {
+            /* 修改背景色为带有透明度的白色 */
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            margin: 20px 0;
+            transform: translateY(-90px); /* 修改这里的值，增大向上移动的距离 */
+        }
 
-    label {
-      margin-top: 10px;
-    }
+       .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+        }
 
-    input {
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
+       .tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+        }
 
-    button {
-      background-color: #007BFF;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+       .tab.active {
+            border-color: #2196F3;
+            font-weight: bold;
+            color: #2196F3;
+        }
 
-    button:hover {
-      background-color: #0056b3;
-    }
+       .form-container {
+            position: relative;
+        }
 
-    p {
-      text-align: center;
-      margin-top: 10px;
-    }
+       .form {
+            display: none;
+            opacity: 0;
+            transition: 0.3s;
+        }
 
-    /* 新增的提示信息样式 */
-   .message {
-      color: red;
-      text-align: center;
-      margin-bottom: 10px;
-    }
+       .form.active {
+            display: block;
+      

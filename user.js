@@ -1,84 +1,107 @@
-// 初始用户名和密码
-  const initialUser1 = {
-    username: "廖聪颖",
-    password: "lcy"
-  };
-  const initialUser2 = {
-    username: "追吻辰星",
-    password: "zwcx"
-  };
- 
-  const users = [initialUser1, initialUser2];
+  // 初始用户数组
+        let users = [
+            {
+                username: "廖聪颖",
+                password: "lcy"
+            },
+            {
+                username: "zwcx",
+                password: "zwcx"
+            }
+        ];
 
-  function showLogin() {
-    document.getElementById('loginContainer').style.display = 'block';
-    document.getElementById('registerContainer').style.display = 'none';
-  }
+        // 从本地存储中读取用户数据，如果没有则初始化为空数组
+        const localUsers = JSON.parse(localStorage.getItem('users')) || [];
 
-  function showRegister() {
-    document.getElementById('loginContainer').style.display = 'none';
-    document.getElementById('registerContainer').style.display = 'block';
-  }
+        function switchForm(formType) {
+            // 切换选项卡样式
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.tab[onclick="switchForm('${formType}')"]`).classList.add('active');
 
-  function register() {
-    const username = document.getElementById('registerUsername').value;
-    const password = document.getElementById('registerPassword').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
+            // 切换表单显示
+            document.querySelectorAll('.form').forEach(form => {
+                form.classList.remove('active');
+            });
+            document.getElementById(`${formType}Form`).classList.add('active');
 
-    // 检查用户名是否为空
-    if (username === "") {
-      document.getElementById('registerMessage').textContent = "用户名不能为空";
-      return;
-    }
-    // 检查密码是否为空
-    if (password === "") {
-      document.getElementById('registerMessage').textContent = "密码不能为空";
-      return;
-    }
-    // 检查确认密码是否为空
-    if (confirmPassword === "") {
-      document.getElementById('registerMessage').textContent = "确认密码不能为空";
-      return;
-    }
+            // 隐藏提示信息
+            document.getElementById('loginMessage').innerHTML = "";
+            document.getElementById('registerMessage').innerHTML = "";
+        }
 
-    if (password!== confirmPassword) {
-      document.getElementById('registerMessage').textContent = '两次输入的密码不一致';
-      return;
-    }
+        function handleLogin(e) {
+            e.preventDefault();
+            const account = document.getElementById('loginAccount').value;
+            const password = document.getElementById('loginPassword').value;
 
-    // 检查用户名是否已存在
-    const existingUser = users.find(u => u.username === username);
-    if (existingUser) {
-      document.getElementById('registerMessage').textContent = '该用户名已被注册，请更换用户名';
-      return;
-    }
+            // 先检查初始用户数组
+            let user = users.find(u => u.username === account && u.password === password);
+            // 再检查本地存储中的用户数组
+            if (!user) {
+                user = localUsers.find(u => u.username === account && u.password === password);
+            }
 
-    const user = users.push({ username, password });
-    document.getElementById('registerMessage').textContent = '注册成功';
-    showLogin();
-  }
+            const messageElement = document.getElementById('loginMessage');
+            if (user) {
+                messageElement.className = "message success";
+                messageElement.innerHTML = "登录成功，正在跳转...";
+                setTimeout(() => {
+                    window.location.href = "https://lcy20.netlify.app/gd.html";
+                }, 1500);
+            } else {
+                messageElement.className = "message error";
+                messageElement.innerHTML = "用户名/密码错误！";
+            }
 
-  function login() {
-    const username = document.getElementById('loginUsername').value;
-    const password = document.getElementById('loginPassword').value;
+            return false;
+        }
 
-    // 检查用户名是否为空
-    if (username === "") {
-      document.getElementById('loginMessage').textContent = "用户名不能为空";
-      return;
-    }
-    // 检查密码是否为空
-    if (password === "") {
-      document.getElementById('loginMessage').textContent = "密码不能为空";
-      return;
-    }
+        function handleRegister(e) {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
 
-    const user = users.find(u => u.username === username && u.password === password);
+            const messageElement = document.getElementById('registerMessage');
+            // 密码一致性验证
+            if (password!== confirmPassword) {
+                messageElement.className = "message error";
+                messageElement.innerHTML = "两次输入的密码不一致！";
+                return false;
+            }
 
-    if (user) {
-      document.getElementById('loginMessage').textContent = '登录成功';
-      window.location.href = "https://lcy20.netlify.app/gd.html";
-    } else {
-      document.getElementById('loginMessage').textContent = '用户名或密码错误，临时账号只能使用一次，若要永久账号请联系管理员！';
-    }
-  }
+            // 检查初始用户数组中用户是否已存在
+            if (users.some(u => u.username === username)) {
+                messageElement.className = "message error";
+                messageElement.innerHTML = "用户名已被注册！";
+                return false;
+            }
+
+            // 检查本地存储用户数组中用户是否已存在
+            if (localUsers.some(u => u.username === username)) {
+                messageElement.className = "message error";
+                messageElement.innerHTML = "用户名已被注册！";
+                return false;
+            }
+
+            // 保存新用户到初始用户数组
+            const newUser = {
+                username: username,
+                password: password
+            };
+            users.push(newUser);
+
+            // 将新用户添加到本地存储的用户数组中，并更新本地存储
+            localUsers.push(newUser);
+            localStorage.setItem('users', JSON.stringify(localUsers));
+
+            messageElement.className = "message success";
+            messageElement.innerHTML = "注册成功！";
+            setTimeout(() => {
+                switchForm('login');
+            }, 1500);
+
+            return false;
+        }
