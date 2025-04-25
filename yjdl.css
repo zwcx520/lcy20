@@ -1,4 +1,4 @@
-   body {
+ body {
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
@@ -81,4 +81,4 @@
    .error {
       background-color: #f8d7da;
       color: #721c24;
-   }
+    }

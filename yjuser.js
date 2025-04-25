@@ -1,4 +1,4 @@
-  // 初始化本地存储的用户数据
+   // 初始化本地存储的用户数据
     const users = JSON.parse(localStorage.getItem('users')) || [
       { username: '廖聪颖', password: 'lcy' },
       { username: '追吻辰星', password: 'zwcx' }
@@ -16,7 +16,7 @@
         loginMessage.className ='message success';
         loginMessage.textContent = '登录成功！';
         setTimeout(() => {
-          window.location.href = 'https://www.baidu.com'; // 跳转到百度
+          window.location.href = 'https://lcy20.netlify.app/yj/yj.html'; // 跳转到百度
         }, 1500);
       } else {
         loginMessage.className ='message error';
