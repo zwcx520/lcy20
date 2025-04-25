@@ -1,71 +1,57 @@
 body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden; /* 禁止滚动 */
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            transition: height 0.3s ease; /* 平滑过渡高度变化 */
-            height: 100%; /* 设置容器高度为100% */
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .form-group input[type="submit"] {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        .form-group input[type="submit"]:hover {
-            background-color: #218838;
-        }
-        .switch-form {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .switch-form a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .switch-form a:hover {
-            text-decoration: underline;
-        }
-        .message {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .success {
-            color: green;
-        }
-        .error {
-            color: red;
-        }
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      /* 将登录框向上移动50像素 */
+      margin-top: -200px;
+    }
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .form-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+    .switch-mode {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .switch-mode a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .switch-mode a:hover {
+      text-decoration: underline;
+    }
