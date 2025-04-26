@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片转换为九宫格并可下载</title>
+  <style>
+    /* 容器样式 */
+    #gridContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    canvas {
+      margin: 5px;
+      border: 1px solid black;
+      width: 150px; /* 设置每个格子的宽度 */
+      height: 150px; /* 设置每个格子的高度 */
+    }
+
+    a.download-link {
+      display: block;
+      text-align: center;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="file" id="fileInput" />
+  <div id="gridContainer"></div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const gridContainer = document.getElementById('gridContainer');
+
+    fileInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = function () {
+            const canvasWidth = img.width;
+            const canvasHeight = img.height;
+            const cellWidth = canvasWidth / 3;
+            const cellHeight = canvasHeight / 3;
+
+            for (let i = 0; i < 3; i++) {
+              for (let j = 0; j < 3; j++) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 150; // 与CSS中设置的宽度一致
+                canvas.height = 150; // 与CSS中设置的高度一致
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, j * cellWidth, i * cellHeight, cellWidth, cellHeight, 0, 0, 150, 150);
+
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = `part_${i}_${j}.png`;
+                link.textContent = '下载';
+                link.classList.add('download-link');
+
+                gridContainer.appendChild(canvas);
+                gridContainer.appendChild(link);
+              }
+            }
+          };
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+</body>
+
+</html>
