@@ -46,7 +46,7 @@
             const messageElement = document.getElementById('loginMessage');
             if (user) {
                 messageElement.className = "message success";
-                messageElement.innerHTML = "登录成功，正在加载...";
+                messageElement.innerHTML = "登录成功，网络正在赶来中...";
                 setTimeout(() => {
                     window.location.href = "https://lcy20.netlify.app/gd.html";
                 }, 1500);
