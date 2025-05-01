@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>年龄与出生年份计算器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      padding-top: 20px;
+      color: #333;
+    }
+
+    h2 {
+      color: #666;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input {
+      margin-bottom: 15px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    p {
+      margin-top: 10px;
+      color: #333;
+    }
+
+   .container {
+      max-width: 400px;
+      margin: 50px auto 0; /* 在这里增加了 margin-top: 50px，将布局向下移动 */
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>年龄与出生年份计算器</h1>
+
+    <!-- 计算年龄部分 -->
+    <h2>计算年龄</h2>
+    <label for="birthYearInput">请输入您的出生年份：</label>
+    <input type="number" id="birthYearInput" placeholder="请输入四位整数年份">
+    <button onclick="calculateAgeByYear()">计算年龄</button>
+    <p id="ageResult"></p>
+
+    <!-- 计算出生年份部分 -->
+    <h2>计算出生年份</h2>
+    <label for="userAge">请输入您的年龄：</label>
+    <input type="number" id="userAge" placeholder="请输入整数年龄">
+    <button onclick="calculateBirthYear()">计算出生年份</button>
+    <p id="birthYearResult"></p>
+  </div>
+
+  <script>
+    function calculateAgeByYear() {
+      var birthYear = parseInt(document.getElementById('birthYearInput').value);
+      var currentYear = new Date().getFullYear();
+      var age = currentYear - birthYear;
+      var resultElement = document.getElementById('ageResult');
+      if (isNaN(birthYear) || birthYear < 0 || birthYear.toString().length!== 4) {
+        resultElement.innerHTML = "请输入有效的四位整数出生年份。";
+      } else {
+        resultElement.innerHTML = `你的年龄是：${age} 岁`;
+      }
+    }
+
+    function calculateBirthYear() {
+      var userAge = parseInt(document.getElementById('userAge').value);
+      var currentYear = new Date().getFullYear();
+      var birthYear = currentYear - userAge;
+      var resultElement = document.getElementById('birthYearResult');
+      if (isNaN(userAge) || userAge < 0) {
+        resultElement.innerHTML = "请输入有效的正整数年龄。";
+      } else {
+        resultElement.innerHTML = `您大概出生于 ${birthYear} 年。`;
+      }
+    }
+  </script>
+</body>
+
+</html>
