@@ -1,0 +1,8 @@
+    #targetDiv {
+      border: 1px solid #FFE4E1; /* 设置1像素的实线边框，颜色为桃花色 */
+      background-color: #FFE4E1; /* 设置背景颜色为桃花色 */
+      width: fit-content; /* 让div宽度随内容自动调整 */
+      border-radius: 5px; /* 设置四个角的圆角半径为25px */
+      position:absolute;
+      bottom:15%;
+    }
