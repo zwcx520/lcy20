@@ -1,84 +1,77 @@
- body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f4f4f9;
-    }
+body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
 
-   .container {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      /* 将登录框向上移动50像素 */
-      margin-top: -200px;
-    }
+       .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-   .container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
 
-   .form-group {
-      margin-bottom: 15px;
-    }
+       .form-group {
+            margin-bottom: 15px;
+        }
 
-   .form-group label {
-      display: block;
-      margin-bottom: 5px;
-    }
+       .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-   .form-group input {
-      width: 100%;
-      padding: 8px;
-      box-sizing: border-box;
-    }
+       .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-   .form-group button {
-      width: 100%;
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+       .form-group input[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
 
-   .form-group button:hover {
-      background-color: #0056b3;
-    }
+       .form-group input[type="submit"]:hover {
+            background-color: #4cae4c;
+        }
 
-   .switch-mode {
-      text-align: center;
-      margin-top: 10px;
-    }
+       .links {
+            text-align: center;
+            margin-top: 10px;
+        }
 
-   .switch-mode a {
-      color: #007bff;
-      text-decoration: none;
-    }
+       .links a {
+            color: #5cb85c;
+            text-decoration: none;
+            margin: 0 10px;
+        }
 
-   .switch-mode a:hover {
-      text-decoration: underline;
-    }
+       .links a:hover {
+            text-decoration: underline;
+        }
 
-   .message {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 4px;
-      text-align: center;
-    }
+       .message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            color: white;
+        }
 
-   .success {
-      background-color: #d4edda;
-      color: #155724;
-    }
+       .success {
+            background-color: #5cb85c;
+        }
 
-   .error {
-      background-color: #f8d7da;
-      color: #721c24;
-    }
+       .error {
+            background-color: #d9534f;
+       }
