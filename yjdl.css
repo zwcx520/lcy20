@@ -1,77 +1,79 @@
-body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+      /* 全局样式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
         }
 
-       .container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* 登录容器 */
+        .login-container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 350px;
         }
 
-        h2 {
+        .login-container h2 {
             text-align: center;
-            color: #333;
+            margin-bottom: 25px;
+            color: #333333;
         }
 
-       .form-group {
-            margin-bottom: 15px;
+        /* 表单元素 */
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
         }
 
-       .form-group label {
+        .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #555555;
+            font-size: 14px;
         }
 
-       .form-group input {
+        .form-group input {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 16px;
             box-sizing: border-box;
+            transition: border-color 0.3s;
         }
 
-       .form-group input[type="submit"] {
-            background-color: #5cb85c;
+        .form-group input:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        /* 提交按钮 */
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
             color: white;
             border: none;
+            border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-       .form-group input[type="submit"]:hover {
-            background-color: #4cae4c;
+        .submit-btn:hover {
+            background-color: #45a049;
         }
 
-       .links {
+        /* 错误消息 */
+        .error-message {
+            color: #ff3860;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
+            font-size: 14px;
+            display: none; /* 初始隐藏 */
         }
-
-       .links a {
-            color: #5cb85c;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-
-       .links a:hover {
-            text-decoration: underline;
-        }
-
-       .message {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 4px;
-            color: white;
-        }
-
-       .success {
-            background-color: #5cb85c;
-        }
-
-       .error {
-            background-color: #d9534f;
-       }
