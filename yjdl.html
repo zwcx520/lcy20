@@ -7,109 +7,37 @@
   <title>月记</title>
   <link rel="stylesheet" href="yjdl.css">
   <style>
-   
+     /* 摇动动画 */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
   </style>
 </head>
 <body>
-    <!-- 注册页面 -->
-    <div id="register-container" class="container">
-        <h2>注册</h2>
-        <div id="register-message" class="message"></div>
-        <form id="register-form">
+    <div class="login-container">
+        <h2>管理员登录</h2>
+        <form id="loginForm">
             <div class="form-group">
-                <label for="register-username">用户名</label>
-                <input type="text" id="register-username" name="username" required>
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username" placeholder="请输入用户名" required>
             </div>
+            
             <div class="form-group">
-                <label for="register-password">密码</label>
-                <input type="password" id="register-password" name="password" required>
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password" placeholder="请输入密码" required>
             </div>
-            <div class="form-group">
-                <input type="submit" value="注册">
-            </div>
+            
+            <button type="submit" class="submit-btn">登录</button>
         </form>
-        <div class="links">
-            <a href="#" id="login-link">登录</a>
-            <a href="#" id="forgot-link">查询密码</a>
-            <a href="#" id="change-password-link">修改密码</a>
-        </div>
+        <div id="errorMessage" class="error-message"></div>
     </div>
-
-    <!-- 登录页面 -->
-    <div id="login-container" class="container" style="display: none;">
-        <h2>登录</h2>
-        <div id="login-message" class="message"></div>
-        <form id="login-form">
-            <div class="form-group">
-                <label for="login-username">用户名</label>
-                <input type="text" id="login-username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="login-password">密码</label>
-                <input type="password" id="login-password" name="password" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="登录">
-            </div>
-        </form>
-        <div class="links">
-            <a href="#" id="register-link">注册</a>
-            <a href="#" id="forgot-link-from-login">查询密码</a>
-            <a href="#" id="change-password-link-from-login">修改密码</a>
-        </div>
-    </div>
-
-    <!-- 查询密码页面 -->
-    <div id="forgot-container" class="container" style="display: none;">
-        <h2>查询密码</h2>
-        <div id="forgot-message" class="message"></div>
-        <form id="forgot-form">
-            <div class="form-group">
-                <label for="forgot-username">请输入用户名</label>
-                <input type="text" id="forgot-username" name="username" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="查询密码">
-            </div>
-        </form>
-        <div class="links">
-            <a href="#" id="login-link-from-forgot">登录</a>
-            <a href="#" id="register-link-from-forgot">注册</a>
-            <a href="#" id="change-password-link-from-forgot">修改密码</a>
-        </div>
-    </div>
-
-    <!-- 修改密码页面 -->
-    <div id="change-password-container" class="container" style="display: none;">
-        <h2>修改密码</h2>
-        <div id="change-password-message" class="message"></div>
-        <form id="change-password-form">
-            <div class="form-group">
-                <label for="change-username">用户名</label>
-                <input type="text" id="change-username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="old-password">旧密码</label>
-                <input type="password" id="old-password" name="oldPassword" required>
-            </div>
-            <div class="form-group">
-                <label for="new-password">新密码</label>
-                <input type="password" id="new-password" name="newPassword" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="修改密码">
-            </div>
-        </form>
-        <div class="links">
-            <a href="#" id="login-link-from-change">登录</a>
-            <a href="#" id="register-link-from-change">注册</a>
-            <a href="#" id="forgot-link-from-change">查询密码</a>
-        </div>
-    </div>
-
-  <script>
- 
-  </script>
 </body>
 <script src="yjuser.js"></script>
 </html>
