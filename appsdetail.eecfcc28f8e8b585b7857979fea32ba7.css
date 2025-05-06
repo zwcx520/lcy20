@@ -4176,7 +4176,7 @@ footer .security .item img {
 }
 .static-brand {
   margin: 16px 0;
-  padding: 0 16px;
+  padding: -1px 16px;
 }
 .static-brand.has-bt-border {
   padding-bottom: 16px;
