@@ -11,8 +11,20 @@
     <style>
     .dh{
       position:absolute;
-      top:2%;
+      top:1px;
       left:10px;
+      text-align:center;
+      padding:5px;
+      border-radius:0px 10px 10px 10px;
+      padding-bottom:15px;
+      padding-top:15px;
+      text-align:left;
+      color:#fff;
+      }
+     .dh0{
+      position:absolute;
+      top:1px;
+      right:10px;
       text-align:center;
       padding:5px;
       border-radius:0px 10px 10px 10px;
@@ -27,15 +39,41 @@
       }
      .dh1{
       position:absolute;
-      bottom:5%;
+      bottom:15%;
+      left:0px;
       width:20%;
       background-color:#ffe2e2;
       text-align:center;
       padding:5px;
-      border-radius:10px 10px 10px 10px;
+      border-radius:0px 10px 10px 0px;
+     
+      } 
+    .dh2{
+      position:absolute;
+      bottom:11%;
+      left:0px;
+      width:20%;
+      background-color:#ffe2e2;
+      text-align:center;
+      padding:5px;
+      border-radius:0px 10px 10px 0px;
      
       }
-   
+    .sj{
+      position:absolute;
+      bottom:2%;
+      
+      padding:5px;
+      border-radius:10px 10px 10px 10px;
+     
+      } 
+    .bjyy{
+      position:absolute;
+      left:0px;
+      padding:5px;
+      border-radius:0px 10px 10px 0px;
+     
+      }
     /*网络监测弹窗 自定义弹窗样式 */
    .custom-alert {
       position: fixed;
@@ -62,7 +100,6 @@ background-image: url(https://lcy20.netlify.app/bj.gif);
 
 <body >
     <div class="container"> 
-     <div style="text-align:center;font-size:20px;color:#fff"><span id="runtime_span"></span></div>
          
         <div class="tabs">
         <div class="tab active" onclick="switchForm('login')">登录</div>
@@ -106,20 +143,26 @@ background-image: url(https://lcy20.netlify.app/bj.gif);
     
     <div class="dh">
     <p><img class="app" src="https://lcy20.netlify.app/app.jpg"/>归档-时光卷轴</p>
+     </div>  
+      <div class="dh0">
+    <p><img class="app" src="https://lcy20.netlify.app/app.jpg"/></p>
      </div>
-    <div class="dh1"> <a href="https://lcy20.netlify.app/wode.html"> <p>软件作者</p></a>
+    <div class="dh1"> <a href="https://lcy20.netlify.app/wode.html"> <p>作者简介</p></a>
+    </div> 
+    <div class="dh2"> <a href="rzzq.png"> <p>著作权证</p></a>
     </div>
  
+      <div class="sj" style="font-size:20px;color:#fff"><span id="runtime_span"></span></div>
+   
     
-    
-  <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href='https://lcy20.netlify.app/gonggao'>APP版本1.5及公告</a>&nbsp;&nbsp; <a href='gdq/index.html'>游戏</a>&nbsp;&nbsp;[2024·9] © <a href="rzzq.png">著作权</a>  ICP 未备案 <hr /></div> 
+  <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href='https://lcy20.netlify.app/gonggao'>APP版本1.5及公告</a>&nbsp;&nbsp; <a href='gdq/index.html'>游戏</a>&nbsp;&nbsp;[2024·9] ©  追吻辰星 ICP 未备案 <hr /></div> 
        </div>
  <a href="https://lcy20.netlify.app/lianxierweima.jpg"> <img class="image" alt="联系二维码" src="https://lcy20.netlify.app/lianxierweima.jpg"/>
       </a>  
       <audio autoplay="true"  loop="loop" src="https://lcy20.netlify.app/yy.mp3"></audio>
       
       
-       <div id="targetDiv"></div>
+       <div class="bjyy" id="targetDiv"></div>
        
         <script src="https://lcy20.netlify.app/yyts.js"></script>
   <script src="https://lcy20.netlify.app/user.js"></script>
