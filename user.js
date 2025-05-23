@@ -60,7 +60,7 @@
 
         // 登录成功
         function loginSuccess() {
-            alert('登录成功！正在跳转...');
+            alert('登录成功！');
             window.location.href = 'https://lcy20.netlify.app/gd.html';
         }
 
