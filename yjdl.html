@@ -1,43 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>月记</title>
-  <link rel="stylesheet" href="yjdl.css">
-  <style>
-     /* 摇动动画 */
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-5px); }
-            100% { transform: translateX(0); }
-        }
-        .shake {
-            animation: shake 0.5s;
-        }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="denglu.css">
+     <title>用户登陆</title>
+    <style>
+      
+    </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>管理员登录</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">用户名</label>
-                <input type="text" id="username" name="username" placeholder="请输入用户名" required>
+    <div class="card">
+        <!-- 登录页面 -->
+        <div id="loginTab" class="tab-content active">
+            <h2 class="page-title">管理员登录</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" id="loginUsername" class="input-field" required>
+                    <label for="loginUsername" class="input-label">用户名:</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="loginPassword" class="input-field" required>
+                    <label for="loginPassword" class="input-label">密码:</label>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="handleLogin()">登录</button>
+            </form>
+
+            <div class="switch-link">
+                还没有账号？ <a href="javascript:showTab('registerTab')">立即注册</a>
             </div>
-            
-            <div class="form-group">
-                <label for="password">密码</label>
-                <input type="password" id="password" name="password" placeholder="请输入密码" required>
+
+            <div class="switch-link">
+                忘记密码？ <a href="javascript:showTab('forgotTab')">找回密码</a>
             </div>
-            
-            <button type="submit" class="submit-btn">登录</button>
-        </form>
-        <div id="errorMessage" class="error-message"></div>
+
+            <div id="loginError" class="error-message"></div>
+        </div>
+
+        <!-- 注册页面 -->
+        <div id="registerTab" class="tab-content">
+            <h2 class="page-title">注册</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" id="registerUsername" class="input-field" required>
+                    <label for="registerUsername" class="input-label">用户名:</label>
+                    <div id="usernameError" class="error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" id="registerPassword" class="input-field" required minlength="6">
+                    <label for="registerPassword" class="input-label">密码:（至少1位）</label>
+                </div>
+
+                <div class="form-group captcha-container">
+                    <input type="text" id="captchaInput" class="input-field" required placeholder="请输入验证码">
+                    <span id="captcha" class="input-field" onclick="refreshCaptcha()"></span>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="handleRegister()">注册</button>
+            </form>
+
+            <div class="switch-link">
+                已有账号？ <a href="javascript:showTab('loginTab')">返回登录</a>
+            </div>
+
+            <div id="registerError" class="error-message"></div>
+        </div>
+
+        <!-- 忘记密码页面 -->
+        <div id="forgotTab" class="tab-content">
+            <h2 class="page-title">找回密码</h2>
+            <form>
+                <div class="form-group">
+                    <input type="text" id="forgotUsername" class="input-field" required>
+                    <label for="forgotUsername" class="input-label">用户名:</label>
+                </div>
+
+                <button type="button" class="submit-btn" onclick="handleForgotPassword()">获取新密码</button>
+            </form>
+
+            <div class="switch-link">
+                返回登录 <a href="javascript:showTab('loginTab')">点击这里</a>
+            </div>
+
+            <div id="forgotError" class="error-message"></div>
+            <div id="newPasswordMsg" class="error-message" style="color: #2ecc71;"></div>
+        </div>
     </div>
+
+    <script>
+ 
+    </script>
 </body>
-<script src="yjuser.js"></script>
+  <script src="user.js"></script>
 </html>

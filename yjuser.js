@@ -1,37 +1,131 @@
-        // 预设的用户数据（在实际应用中应存储在安全的后端数据库中）
-        const users = [
-            { username: '廖聪颖', password: 'lcy' },
-            { username: '追吻辰星', password: 'zwcx' }
-        ];
+       // 初始化用户
+        const INITIAL_USERS = {
+            廖聪颖: 'lcy',
+            追吻辰星: 'zwcx'
+        };
 
-        // 获取表单和错误消息元素
-        const loginForm = document.getElementById('loginForm');
-        const errorMessage = document.getElementById('errorMessage');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-
-        // 表单提交事件处理
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // 阻止默认提交行为
-
-            const enteredUsername = usernameInput.value.trim();
-            const enteredPassword = passwordInput.value.trim();
-            errorMessage.style.display = 'none'; // 隐藏之前的错误消息
-
-            // 查找匹配的用户
-            const user = users.find(u => u.username === enteredUsername && u.password === enteredPassword);
-
-            if (user) {
-                // 登录成功，跳转到百度
-                window.location.href = 'https://lcy20.netlify.app/yj/yj.html';
-            } else {
-                // 显示错误消息
-                errorMessage.textContent = '用户名或密码错误！';
-                errorMessage.style.display = 'block';
-                // 可选：轻微摇动效果提示错误
-                document.querySelector('.login-container').classList.add('shake');
-                setTimeout(() => {
-                    document.querySelector('.login-container').classList.remove('shake');
-                }, 500);
+        // 初始化本地存储
+        function initLocalStorage() {
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify(INITIAL_USERS));
             }
-        });
+        }
+
+        // 生成随机验证码
+        function generateCaptcha() {
+            return Math.floor(10000 + Math.random() * 90000).toString();
+        }
+
+        // 刷新验证码
+        function refreshCaptcha() {
+            const captcha = generateCaptcha();
+            document.getElementById('captcha').textContent = captcha;
+            return captcha;
+        }
+
+        // 切换页面
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => 
+                tab.classList.remove('active')
+            );
+            document.getElementById(tabId).classList.add('active');
+            
+            // 注册页面刷新验证码
+            if (tabId === 'registerTab') {
+                refreshCaptcha();
+            }
+        }
+
+        // 处理登录
+        function handleLogin() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+            // 检查本地存储用户
+            if (users[username] && users[username] === password) {
+                loginSuccess();
+                return;
+            }
+
+            // 检查初始化用户
+            if (INITIAL_USERS[username] && INITIAL_USERS[username] === password) {
+                loginSuccess();
+                return;
+            }
+
+            errorDiv.textContent = '用户名或密码错误';
+        }
+
+        // 登录成功
+        function loginSuccess() {
+            alert('登录成功！');
+            window.location.href = 'https://lcy20.netlify.app/yj/yj.html';
+        }
+
+        // 处理注册
+        function handleRegister() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const captchaInput = document.getElementById('captchaInput').value;
+            const captcha = document.getElementById('captcha').textContent;
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            const usernameError = document.getElementById('usernameError');
+            const errorDiv = document.getElementById('registerError');
+
+            // 验证用户名
+            if (!/^[a-zA-Z0-9_]{3,16}$/.test(username)) {
+                usernameError.textContent = '用户名需3-16位字母/数字/下划线';
+                return;
+            }
+            if (users[username] || INITIAL_USERS[username]) {
+                usernameError.textContent = '用户名已存在';
+                return;
+            }
+            usernameError.textContent = '';
+
+            // 验证验证码
+            if (captchaInput !== captcha) {
+                errorDiv.textContent = '验证码错误';
+                refreshCaptcha(); // 刷新验证码
+                return;
+            }
+            errorDiv.textContent = '';
+
+            // 保存用户
+            users[username] = password;
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('注册成功！请登录');
+            showTab('loginTab');
+        }
+
+        // 处理忘记密码
+        function handleForgotPassword() {
+            const username = document.getElementById('forgotUsername').value;
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            const errorDiv = document.getElementById('forgotError');
+            const msgDiv = document.getElementById('newPasswordMsg');
+
+            if (!username) {
+                errorDiv.textContent = '请输入用户名';
+                return;
+            }
+
+            if (!users[username] && !INITIAL_USERS[username]) {
+                errorDiv.textContent = '用户名不存在';
+                return;
+            }
+
+            // 生成8位随机新密码
+            const newPassword = Math.random().toString(36).substr(2, 8);
+            users[username] = newPassword;
+            localStorage.setItem('users', JSON.stringify(users));
+            msgDiv.textContent = `新密码已生成：${newPassword}`;
+            errorDiv.textContent = '';
+        }
+
+        // 初始化
+        initLocalStorage();
+        refreshCaptcha();
+        showTab('loginTab');
