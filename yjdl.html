@@ -3,96 +3,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="yjdl.css">
-     <title>管理员登陆</title>
-    <style>
-      
+    <title>管理员登录</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#6366f1',
+                        accent: '#8b5cf6',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+		body{
+			 background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+		}
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #3b82f6 0%, #6366f1 50%, #8b5cf6 100%);
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .card-hover {
+                @apply hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
+            }
+        }
     </style>
 </head>
-<body>
-    <div class="card">
-        <!-- 登录页面 -->
-        <div id="loginTab" class="tab-content active">
-            <h2 class="page-title">管理员登录</h2>
-            <form>
-                <div class="form-group">
-                    <input type="text" id="loginUsername" class="input-field" required>
-                    <label for="loginUsername" class="input-label">用户名:</label>
+<body class="font-inter bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <!-- 卡片容器 -->
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+            <!-- 顶部渐变区域 -->
+            <div class="bg-gradient-primary p-6 text-white text-center relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10">
+                    <div class="absolute top-0 left-0 w-20 h-20 rounded-full bg-white"></div>
+                    <div class="absolute bottom-0 right-0 w-32 h-32 rounded-full bg-white"></div>
                 </div>
-
-                <div class="form-group">
-                    <input type="password" id="loginPassword" class="input-field" required>
-                    <label for="loginPassword" class="input-label">密码:</label>
+                <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-shadow relative z-10">归档-月记</h1>
+                <p class="mt-2 opacity-90 relative z-10">管理员登陆</p>
+            </div>
+            
+            <!-- 表单切换标签 -->
+            <div class="flex border-b">
+                <button id="login-tab" class="flex-1 py-4 px-6 text-center font-medium text-primary border-b-2 border-primary">
+                    <i class="fa fa-sign-in mr-2"></i>登录
+                </button>
+                <button id="register-tab" class="flex-1 py-4 px-6 text-center font-medium text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-user-plus mr-2"></i>注册
+                </button>
+            </div>
+            
+            <!-- 登录表单 -->
+            <div id="login-form" class="p-6">
+                <div class="mb-4">
+                    <label for="login-username" class="block text-sm font-medium text-gray-700 mb-1">用户名：</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" id="login-username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-custom" placeholder="请输入用户名" required>
+                    </div>
                 </div>
-
-                <button type="button" class="submit-btn" onclick="handleLogin()">登录</button>
-            </form>
-
-            <div class="switch-link">
-                还没有账号？ <a href="javascript:showTab('registerTab')">立即注册</a>
+                
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">密码：</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" id="login-password" class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-custom" placeholder="请输入密码" required>
+                        <button type="button" id="toggle-login-password" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                            <i class="fa fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center">
+                        <input id="remember-me" type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/50">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">记住我</label>
+                    </div>
+                    <a href="#" class="text-sm text-primary hover:text-primary/80">忘记密码?</a>
+                </div>
+                
+                <button id="login-button" class="w-full bg-primary hover:bg-primary/90 text-white font-medium py-2.5 px-4 rounded-lg transition-custom shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center">
+                    <span>登录</span>
+                    <i class="fa fa-arrow-right ml-2"></i>
+                </button>
+                
+                <div class="mt-6 text-center text-gray-600">
+                    <span>还没有账户? </span>
+                    <button id="switch-to-register" class="text-primary hover:text-primary/80 font-medium">立即注册</button>
+                </div>
             </div>
-
-            <div class="switch-link">
-                忘记密码？ <a href="javascript:showTab('forgotTab')">找回密码</a>
+            
+            <!-- 注册表单 -->
+            <div id="register-form" class="p-6 hidden">
+                <div class="mb-4">
+                    <label for="register-username" class="block text-sm font-medium text-gray-700 mb-1">用户名：</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" id="register-username" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-custom" placeholder="请设置用户名" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">密码：</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" id="register-password" class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-custom" placeholder="请设置密码" required>
+                        <button type="button" id="toggle-register-password" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                            <i class="fa fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="register-confirm-password" class="block text-sm font-medium text-gray-700 mb-1">确认密码：</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                            <i class="fa fa-lock"></i>
+                        </span>
+                        <input type="password" id="register-confirm-password" class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-custom" placeholder="请再次输入密码" required>
+                        <button type="button" id="toggle-register-confirm-password" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600">
+                            <i class="fa fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center mb-6">
+                    <input id="terms" type="checkbox" class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary/50" required>
+                    <label for="terms" class="ml-2 block text-sm text-gray-700">我同意<a href="#" class="text-primary hover:text-primary/80">服务条款</a>和<a href="#" class="text-primary hover:text-primary/80">隐私政策</a></label>
+                </div>
+                
+                <button id="register-button" class="w-full bg-secondary hover:bg-secondary/90 text-white font-medium py-2.5 px-4 rounded-lg transition-custom shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center">
+                    <i class="fa fa-user-plus mr-2"></i>
+                    <span>注册</span>
+                </button>
+                
+                <div class="mt-6 text-center text-gray-600">
+                    <span>已有账户? </span>
+                    <button id="switch-to-login" class="text-primary hover:text-primary/80 font-medium">立即登录</button>
+                </div>
             </div>
-
-            <div id="loginError" class="error-message"></div>
+            
+            <!-- 提示信息区域 -->
+            <div id="message" class="p-4 text-center hidden">
+                <div id="message-content" class="py-2 px-4 rounded-lg"></div>
+            </div>
         </div>
-
-        <!-- 注册页面 -->
-        <div id="registerTab" class="tab-content">
-            <h2 class="page-title">注册</h2>
-            <form>
-                <div class="form-group">
-                    <input type="text" id="registerUsername" class="input-field" required>
-                    <label for="registerUsername" class="input-label">用户名:</label>
-                    <div id="usernameError" class="error-message"></div>
-                </div>
-
-                <div class="form-group">
-                    <input type="password" id="registerPassword" class="input-field" required minlength="6">
-                    <label for="registerPassword" class="input-label">密码:（至少1位）</label>
-                </div>
-
-                <div class="form-group captcha-container">
-                    <input type="text" id="captchaInput" class="input-field" required placeholder="请输入验证码">
-                    <span id="captcha" class="input-field" onclick="refreshCaptcha()"></span>
-                </div>
-
-                <button type="button" class="submit-btn" onclick="handleRegister()">注册</button>
-            </form>
-
-            <div class="switch-link">
-                已有账号？ <a href="javascript:showTab('loginTab')">返回登录</a>
-            </div>
-
-            <div id="registerError" class="error-message"></div>
-        </div>
-
-        <!-- 忘记密码页面 -->
-        <div id="forgotTab" class="tab-content">
-            <h2 class="page-title">找回密码</h2>
-            <form>
-                <div class="form-group">
-                    <input type="text" id="forgotUsername" class="input-field" required>
-                    <label for="forgotUsername" class="input-label">用户名:</label>
-                </div>
-
-                <button type="button" class="submit-btn" onclick="handleForgotPassword()">获取新密码</button>
-            </form>
-
-            <div class="switch-link">
-                返回登录 <a href="javascript:showTab('loginTab')">点击这里</a>
-            </div>
-
-            <div id="forgotError" class="error-message"></div>
-            <div id="newPasswordMsg" class="error-message" style="color: #2ecc71;"></div>
+        
+        <!-- 页脚 -->
+        <div class="mt-6 text-center text-gray-500 text-sm">
+            <p>© 2025 追吻辰星.保留所有权利</p>
         </div>
     </div>
 
     <script>
- 
+        // DOM元素
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const switchToRegister = document.getElementById('switch-to-register');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const loginButton = document.getElementById('login-button');
+        const registerButton = document.getElementById('register-button');
+        const message = document.getElementById('message');
+        const messageContent = document.getElementById('message-content');
+        
+        // 密码显示/隐藏切换
+        const toggleLoginPassword = document.getElementById('toggle-login-password');
+        const loginPassword = document.getElementById('login-password');
+        const toggleRegisterPassword = document.getElementById('toggle-register-password');
+        const registerPassword = document.getElementById('register-password');
+        const toggleRegisterConfirmPassword = document.getElementById('toggle-register-confirm-password');
+        const registerConfirmPassword = document.getElementById('register-confirm-password');
+        
+        // 切换登录表单密码可见性
+        toggleLoginPassword.addEventListener('click', () => {
+            const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            loginPassword.setAttribute('type', type);
+            toggleLoginPassword.querySelector('i').classList.toggle('fa-eye');
+            toggleLoginPassword.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        // 切换注册表单密码可见性
+        toggleRegisterPassword.addEventListener('click', () => {
+            const type = registerPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerPassword.setAttribute('type', type);
+            toggleRegisterPassword.querySelector('i').classList.toggle('fa-eye');
+            toggleRegisterPassword.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        toggleRegisterConfirmPassword.addEventListener('click', () => {
+            const type = registerConfirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            registerConfirmPassword.setAttribute('type', type);
+            toggleRegisterConfirmPassword.querySelector('i').classList.toggle('fa-eye');
+            toggleRegisterConfirmPassword.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+        
+        // 切换表单显示
+        function showLoginForm() {
+            loginTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            loginTab.classList.remove('text-gray-500');
+            registerTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+            registerTab.classList.add('text-gray-500');
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+            hideMessage();
+        }
+        
+        function showRegisterForm() {
+            registerTab.classList.add('text-primary', 'border-b-2', 'border-primary');
+            registerTab.classList.remove('text-gray-500');
+            loginTab.classList.remove('text-primary', 'border-b-2', 'border-primary');
+            loginTab.classList.add('text-gray-500');
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+            hideMessage();
+        }
+        
+        // 显示消息提示
+        function showMessage(text, isError = false) {
+            message.classList.remove('hidden');
+            messageContent.textContent = text;
+            
+            if (isError) {
+                messageContent.classList.add('bg-red-100', 'text-red-700');
+                messageContent.classList.remove('bg-green-100', 'text-green-700');
+            } else {
+                messageContent.classList.add('bg-green-100', 'text-green-700');
+                messageContent.classList.remove('bg-red-100', 'text-red-700');
+            }
+            
+            // 3秒后自动隐藏消息
+            setTimeout(hideMessage, 3000);
+        }
+        
+        function hideMessage() {
+            message.classList.add('hidden');
+        }
+        
+        // 表单提交处理
+        loginButton.addEventListener('click', () => {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                showMessage('用户名和密码不能为空', true);
+                return;
+            }
+            
+            // 从本地存储获取用户数据
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            
+            if (!users[username]) {
+                showMessage('用户不存在', true);
+                return;
+            }
+            
+            if (users[username].password !== password) {
+                showMessage('密码错误', true);
+                return;
+            }
+            
+            // 登录成功，保存登录状态
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUser', username);
+            
+            showMessage('登录成功，即将跳转...');
+            
+            // 2秒后跳转到百度
+            setTimeout(() => {
+                window.location.href = 'https://lcy20.netlify.app/yj/yj.html';
+            }, 2000);
+        });
+        
+        registerButton.addEventListener('click', () => {
+            const username = document.getElementById('register-username').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            if (!username || !password) {
+                showMessage('用户名和密码不能为空', true);
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage('两次输入的密码不一致', true);
+                return;
+            }
+            
+            // 从本地存储获取用户数据
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            
+            if (users[username]) {
+                showMessage('用户名已存在', true);
+                return;
+            }
+            
+            // 保存用户数据到本地存储
+            users[username] = {
+                password: password,
+                createdAt: new Date().toISOString()
+            };
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            showMessage('注册成功，请登录');
+            
+            // 自动切换到登录表单
+            setTimeout(showLoginForm, 1500);
+        });
+        
+        // 绑定事件
+        loginTab.addEventListener('click', showLoginForm);
+        registerTab.addEventListener('click', showRegisterForm);
+        switchToRegister.addEventListener('click', showRegisterForm);
+        switchToLogin.addEventListener('click', showLoginForm);
+        
+        // 检查是否已登录
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                // 已登录，直接跳转到百度
+                window.location.href = 'https://www.baidu.com';
+            }
+        });
     </script>
 </body>
-  <script src="yjuser.js"></script>
 </html>
+    
