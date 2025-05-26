@@ -1,0 +1,282 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #654ea3, #eaafc8);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    width: 420px;
+    max-width: 90%;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, #654ea3, #eaafc8);
+    z-index: -1;
+}
+
+.form-header {
+    text-align: center;
+    padding: 40px 0 20px;
+    color: white;
+}
+
+.form-icon {
+    margin-bottom: 15px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 3px solid white;
+}
+
+.form-container {
+    padding: 40px 45px;
+    background-color: white;
+    border-radius: 20px;
+    margin-top: -15px;
+    position: relative;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 0px;
+    color: #333;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.input-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 45px 15px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #654ea3;
+    box-shadow: 0 0 0 3px rgba(101, 78, 163, 0.1);
+    background-color: white;
+}
+
+.input-group i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    transition: color 0.3s ease;
+}
+
+.input-group input:focus + i {
+    color: #654ea3;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.remember-me input {
+    margin-right: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #654ea3, #eaafc8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(101, 78, 163, 0.2);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(101, 78, 163, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(101, 78, 163, 0.2);
+}
+
+.toggle-form {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 15px;
+    color: #666;
+}
+
+.toggle-form span {
+    color: #654ea3;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.toggle-form span:hover {
+    color: #eaafc8;
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.success-message {
+    color: #2ecc71;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+/* 页脚样式 */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 0;
+}
+
+.footer-content {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.copyright, .beian, .additional-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    margin: 5px 0;
+}
+
+.beian a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.beian a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* 背景装饰 */
+.bg-decoration {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.bg-decoration::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://picsum.photos/id/1/1920/1080');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+}
+
+.bg-decoration span {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    animation: float 20s infinite ease-in-out;
+    backdrop-filter: blur(5px);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    50% { transform: translateY(-40px) rotate(180deg); opacity: 0.3; }
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+        margin: 15px 5%;
+    }
+    
+    .form-container {
+        padding: 35px 30px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        margin-bottom: 0px;
+    }
+    
+    .footer {
+        position: relative;
+        bottom: 0;
+        margin-top: 20px;
+    }
+    
+    .footer-content {
+        width: 90%;
+    }
+}
+    
