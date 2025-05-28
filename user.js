@@ -1,7 +1,7 @@
    // 初始化用户
         const INITIAL_USERS = {
-            廖聪颖: 'lcy',
-            追吻辰星: 'zwcx'
+            lcy: 'lcy',
+            zwcx: 'zwcx'
         };
 
         // 初始化本地存储
