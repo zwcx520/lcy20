@@ -1,0 +1,293 @@
+/*
+* ==============================================================
+*                   Dark Theme Default CSS
+* ==============================================================
+*/
+body.dark {
+  background-image: url('../image/bg-black.png');
+  background-color: var(--clr-black);
+  background-size: auto;
+}
+
+.dark .btn-primary:hover {
+  color: var(--clr-white) !important;
+}
+
+.dark .btn-secondary {
+  color: var(--clr-white) !important;
+}
+
+.dark .btn-secondary:hover {
+  color: var(--clr-black) !important;
+}
+
+.dark .site-menu-main .sub-menu {
+  background-color: var(--clr-black);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.dark .site-menu-main .sub-menu-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+@media (min-width: 992px) {
+  .dark .site-menu-main .sub-menu-item {
+    color: var(--clr-white);
+  }
+}
+
+@media (max-width: 991px) {
+  .dark .site-header {
+    background-color: var(--clr-black) !important;
+  }
+
+  .dark .site-header .mobile-menu-trigger span {
+    background-color: var(--clr-white);
+  }
+
+  .dark .site-header .mobile-menu-trigger span:before,
+  .dark .site-header .mobile-menu-trigger span:after {
+    background-color: var(--clr-white);
+  }
+}
+
+/*
+*==============================================================
+*                       Header 
+*==============================================================
+*/
+.dark .reveal-header {
+  background: var(--clr-black) !important;
+}
+
+.dark .site-menu-main .nav-link-item {
+  color: var(--clr-white);
+}
+
+.dark .site-menu-main .nav-link-item:hover,
+.dark .site-menu-main li.current-menu .nav-link-item {
+  color: var(--clr-primary);
+}
+
+.dark .site-header .social-media li a {
+  color: var(--clr-primary);
+}
+
+.dark .site-header .social-media li a:hover {
+  color: var(--clr-white);
+}
+/*
+*==============================================================
+*                       Hero Section 
+*==============================================================
+*/
+.dark .hero-section .intro-inner .mail::before {
+  -webkit-text-stroke-color: var(--clr-white);
+}
+
+.dark .hero-section .exp-year span,
+.dark .hero-section .exp-year h2 {
+  color: var(--clr-primary);
+}
+
+@media only screen and (max-width: 767px) {
+  .dark .hero-section .social-media a {
+    color: var(--clr-white) !important;
+  }
+
+  .dark .hero-section .social-media a:hover,
+  .dark .hero-section .social-media a:focus {
+    color: var(--clr-black) !important;
+  }
+}
+/*
+*==============================================================
+*                     Funfact Section  
+*==============================================================
+*/
+.dark .funfact-section {
+  background: linear-gradient(90deg, #090b0e 0%, rgba(15, 17, 21, 0.01) 100%);
+  background-size: 60%;
+  background-repeat: no-repeat;
+}
+
+/*
+*==============================================================
+*                      Project Section  
+*==============================================================
+*/
+.dark .project-section ul li.active {
+  color: var(--clr-black) !important;
+}
+
+.dark .project-section .project-item .project-title-wrapper {
+  background-color: #112721;
+}
+
+.dark .project-section .project-item:hover .project-title-wrapper h5,
+.dark .project-section .project-item:focus .project-title-wrapper h5 {
+  color: var(--clr-black);
+}
+
+.dark .project-section .view-all-ptflo-btn-wrapper .btn {
+  color: var(--clr-white) !important;
+  transition: 0.4s;
+}
+
+.dark .project-section .view-all-ptflo-btn-wrapper .btn:hover {
+  color: var(--clr-black) !important;
+}
+
+/*
+*==============================================================
+*                     Brands Section  
+*==============================================================
+*/
+.dark .brands-section .brands-wrapper {
+  background: linear-gradient(90deg, #090b0e 0%, rgba(15, 17, 21, 0.01) 100%);
+  background-size: 60%;
+  background-repeat: no-repeat;
+}
+
+/*
+*==============================================================
+*                 Education & Experience Section  
+*==============================================================
+*/
+.dark .edu-experience-section .experience-area .remote-job {
+  color: var(--clr-white);
+}
+
+/*
+*==============================================================
+*                     Skills Section  
+*==============================================================
+*/
+.dark .skills-section .section-wrapper {
+  background: linear-gradient(90deg, #090b0e 0%, rgba(15, 17, 21, 0.01) 100%);
+  background-size: 60%;
+  background-repeat: no-repeat;
+}
+
+.dark .skills-section .skill-item .skill-img-wrapper span {
+  color: var(--clr-white);
+}
+
+/*
+*==============================================================
+*                     Testimonial Section  
+*==============================================================
+*/
+.dark .testimonial-section .section-wrapper {
+  background: linear-gradient(90deg, #090b0e 0%, rgba(15, 17, 21, 0.01) 100%);
+  background-size: 60%;
+  background-repeat: no-repeat;
+}
+
+.dark .testimonial-section .slider-item .client-feedback,
+.dark .testimonial-section .slider-item .client-meta h6 {
+  color: var(--clr-white);
+}
+
+/*
+*==============================================================
+*                     Blogs Section  
+*==============================================================
+*/
+.dark .blogs-section .read-more {
+  color: var(--clr-white);
+}
+
+/*
+*==============================================================
+*                     Contact Section  
+*==============================================================
+*/
+.dark .contact-section .section-wrapper {
+  background: linear-gradient(90deg, #090b0e 0%, rgba(15, 17, 21, 0.01) 100%);
+  background-size: 60%;
+  background-repeat: no-repeat;
+}
+
+.dark .contact-section h2 {
+  color: var(--clr-white);
+}
+
+.dark .subject-details .checkbox .checkbox-mark:after {
+  content: '';
+  position: absolute;
+  left: 4.5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.dark .subject-details .checkbox input:checked ~ .checkbox-mark:after {
+  opacity: 1;
+}
+
+.dark .contact-section .location-widget span,
+.dark .contact-section .contact-widget span {
+  color: var(--clr-white);
+}
+
+/*
+*==============================================================
+*                     Footer Section  
+*==============================================================
+*/
+.dark .copy-right-wrapper .copy-right {
+  color: var(--clr-white);
+}
+
+/*
+* ===============================
+*  Popup Section
+* ===============================
+*/
+.dark .popup_content_area {
+  border: 5px solid var(--clr-primary);
+}
+
+.dark .popup_modal_content {
+  background-color: var(--clr-black);
+}
+
+.dark .popup_modal_content p {
+  color: var(--clr-gray) !important;
+}
+
+.dark .project-info-wrapper .client-meta h6 {
+  color: var(--clr-white);
+}
+
+.dark .project-info-wrapper h3 {
+  color: var(--clr-white);
+}
+
+.dark .project-info-wrapper .project-details p {
+  color: var(--clr-white);
+}
+
+.dark .project-info-wrapper .hr {
+  color: var(--clr-white);
+}
+
+.dark .project-info-wrapper .footer-modal button {
+  color: var(--clr-white);
+}
+
+.dark .project-info-wrapper .footer-modal button:hover {
+  color: var(--clr-black);
+  background-color: var(--clr-primary);
+}
+
+/* Blog popup  */
+.dark #blog-popup form label {
+  color: var(--clr-white);
+}

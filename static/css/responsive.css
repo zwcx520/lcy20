@@ -1,0 +1,771 @@
+/*******************************************************/
+/******************** Responsive Css *******************/
+/*******************************************************/
+
+/*------------ start: Header Area ------------ */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .site-menu-main li {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .site-menu-main .nav-link-item {
+    text-align: left;
+  }
+
+  .site-menu-main {
+    padding-left: 45px;
+    padding-top: 15px;
+  }
+
+  .site-menu-main > li > a {
+    line-height: 50px;
+    height: 50px;
+  }
+
+  #append-menu-header {
+    display: flex;
+    margin-left: auto;
+    flex-wrap: wrap;
+  }
+
+  .mobile-menu-head {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .site-menu-main .sub-menu {
+    background-color: #0f0f10;
+  }
+
+  .site-menu-main .sub-menu-item {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .sub-menu li .nav-link-item {
+    padding: 8px 32px !important;
+  }
+
+  .menu-auth {
+    display: none;
+  }
+
+  .site-menu-main > li .sub-menu.mega-menu,
+  .site-menu-main > li .sub-menu {
+    padding-top: 73px;
+  }
+
+  .site-header .menu-block {
+    width: 65%;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 767px) {
+  .site-menu-main .nav-link-item {
+    text-align: left;
+  }
+
+  .site-menu-main {
+    padding-left: 20px;
+    padding-top: 15px;
+  }
+
+  .site-menu-main > li > a {
+    line-height: 48px;
+    height: 48px;
+  }
+
+  .site-menu-main .sub-menu {
+    background-color: #0f0f10;
+  }
+
+  .site-menu-main .sub-menu-item {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .sub-menu li .nav-link-item {
+    padding: 8px 32px !important;
+  }
+
+  #append-menu-header {
+    display: flex;
+    margin-left: auto;
+    flex-wrap: wrap;
+    width: 65%;
+  }
+
+  .mobile-menu-head {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .site-menu-main > li .sub-menu.mega-menu,
+  .site-menu-main > li .sub-menu {
+    padding-top: 73px;
+  }
+
+  .sidebar-single-blog h4 {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+  .side-bar--menu-icon a {
+    font-size: 18px;
+  }
+}
+/*------------ end: Header Area ------------ */
+
+/* Xtra Xtra Large Devices */
+@media only screen and (min-width: 1400px) and (max-width: 1600px) {
+  /*--------------- Hero Section ---------------*/
+  .hero-section .thumbnail-wrapper .profile-pic {
+    width: auto;
+    height: 100%;
+  }
+
+  .hero-section .thumbnail-wrapper .rec-shape {
+    width: auto;
+    height: 100%;
+    left: 20px;
+    top: 20px;
+  }
+}
+
+/* Xtra Large Devices */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {
+  .section-p {
+    padding-top: 100px;
+  }
+
+  .section-m {
+    margin-top: 100px;
+  }
+  /*--------------- Hero Section ---------------*/
+  .hero-section.section-p {
+    padding-top: 150px !important;
+  }
+
+  .hero-section .thumbnail-wrapper .profile-pic {
+    width: auto;
+    height: 100%;
+  }
+
+  .hero-section .thumbnail-wrapper .rec-shape {
+    width: auto;
+    height: 100%;
+    left: 20px;
+    top: 20px;
+  }
+
+  .hero-section .exp-year {
+    height: 182px;
+  }
+
+  /*--------------- Funfact Section ---------------*/
+  .funfact-section .funfact-wrapper {
+    padding: 50px 0px;
+    margin-top: 100px;
+  }
+
+  /*--------------- About Section ---------------*/
+  .about-section .about-info-title h2 {
+    font-size: 92px;
+  }
+
+  .about-section ul li {
+    font-size: var(--dm-fs-20px);
+  }
+
+  .about-section ul li::before {
+    margin-right: 20px;
+    margin-top: 9px;
+  }
+
+  /*--------------- Skill Section ---------------*/
+  .skills-section .section-wrapper {
+    padding-top: 100px;
+  }
+
+  /*--------------- Testimonial Section ---------------*/
+  .testimonial-section .section-wrapper {
+    padding: 100px 0;
+  }
+
+  /*--------------- Contact Section ---------------*/
+  .contact-section h2 {
+    font-size: 200px;
+  }
+}
+
+/* Large Devices */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  h1 {
+    font-size: 74px;
+  }
+
+  h2 {
+    font-size: 55px;
+  }
+
+  h3 {
+    font-size: 45px;
+  }
+
+  .section-p {
+    padding-top: 100px;
+  }
+
+  .section-m {
+    margin-top: 100px;
+  }
+
+  /*--------------- Hero Section ---------------*/
+  .hero-section.section-p {
+    padding-top: 150px !important;
+  }
+
+  .hero-section .thumbnail-wrapper .profile-pic {
+    width: auto;
+    height: 100%;
+  }
+
+  .hero-section .thumbnail-wrapper .rec-shape {
+    width: auto;
+    height: 100%;
+    left: 20px;
+    top: 20px;
+  }
+
+  .hero-section .social-media {
+    margin-top: 85px;
+  }
+
+  .hero-section .intro-inner h1 span::after {
+    content: '';
+    height: 32px;
+    width: 100%;
+    background-color: var(--clr-green-100);
+    position: absolute;
+    left: 2px;
+    top: 40px;
+    z-index: -1;
+  }
+
+  .hero-section .intro-inner p {
+    margin-bottom: 25px;
+  }
+
+  .hero-section .exp-year {
+    height: 172px;
+    position: inherit;
+    margin-left: auto;
+  }
+
+  /*--------------- Funfact Section ---------------*/
+  .funfact-section .funfact-wrapper {
+    padding: 50px 0px;
+    margin-top: 100px;
+  }
+
+  .funfact-item .number {
+    font-size: 45px;
+  }
+
+  .funfact-item .text {
+    font-size: var(--dm-fs-20px);
+  }
+
+  /*--------------- Project Section ---------------*/
+  .project-section ul {
+    margin-bottom: 45px;
+  }
+
+  /*--------------- About Section ---------------*/
+  .about-section .about-info-title h2 {
+    font-size: 65px;
+  }
+
+  .about-section ul li {
+    font-size: var(--dm-fs-18px);
+  }
+
+  .about-section ul li::before {
+    margin-right: 20px;
+    margin-top: 9px;
+  }
+
+  /*--------------- Skill Section ---------------*/
+  .skills-section .section-wrapper {
+    padding-top: 100px;
+  }
+
+  /*--------------- Testimonial Section ---------------*/
+  .testimonial-section .section-wrapper {
+    padding: 100px 0;
+  }
+}
+
+/* Tablet Devices */
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  h1 {
+    font-size: 50px;
+  }
+  h2 {
+    font-size: 40px;
+  }
+  h3 {
+    font-size: 25px;
+  }
+  h4 {
+    font-size: 22px;
+  }
+  h5 {
+    font-size: 20px;
+  }
+  h6 {
+    font-size: 16px;
+  }
+
+  .section-p {
+    padding-top: 60px;
+  }
+
+  .section-m {
+    margin-top: 60px;
+  }
+
+  /*--------------- Hero Section ---------------*/
+  .hero-section.section-p {
+    padding-top: 100px !important;
+  }
+
+  .hero-section .thumbnail-wrapper .profile-pic {
+    width: auto;
+    height: 100%;
+  }
+
+  .hero-section .thumbnail-wrapper .rec-shape {
+    width: auto;
+    height: 100%;
+    left: 20px;
+    top: 20px;
+  }
+
+  .hero-section .social-media {
+    margin-top: 80px;
+  }
+
+  .hero-section .intro-inner h1 span::after {
+    content: '';
+    height: 25px;
+    width: 100%;
+    background-color: var(--clr-green-100);
+    position: absolute;
+    left: 2px;
+    top: 24px;
+    z-index: -1;
+  }
+
+  .hero-section .intro-inner p {
+    margin-bottom: 20px;
+  }
+
+  .hero-section .exp-year {
+    height: 120px;
+    width: 100%;
+    margin-top: 25px;
+    position: inherit;
+  }
+
+  /*--------------- Funfact Section ---------------*/
+  .funfact-section .funfact-wrapper {
+    padding: 50px 0px;
+    margin-top: 60px;
+  }
+
+  .funfact-section .col-lg-3 {
+    border-right: none;
+    padding: 0px;
+  }
+
+  .funfact-section .col-lg-3:first-child {
+    padding-left: 0px;
+  }
+
+  .funfact-section .col-lg-3:nth-child(3) {
+    padding-top: 20px;
+  }
+
+  .funfact-section .col-lg-3:last-child {
+    border-right: none;
+    padding-right: 0px;
+    padding-top: 20px;
+  }
+
+  .funfact-item:first-child,
+  .funfact-item:nth-child(3) {
+    margin-right: 20px;
+  }
+
+  .funfact-item .number {
+    font-size: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .funfact-item .text {
+    font-size: var(--dm-fs-18px);
+  }
+
+  /*--------------- Service Section ---------------*/
+  .service-section .service-item {
+    padding: 15px !important;
+  }
+
+  .service-section .service-item span {
+    font-size: var(--dm-fs-18px);
+  }
+
+  /*--------------- Project Section ---------------*/
+  .project-section ul {
+    margin-bottom: 35px;
+  }
+
+  /*--------------- About Section ---------------*/
+  .about-section .text-end img {
+    width: 130px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .about-section .about-info-title h2 {
+    font-size: 50px;
+  }
+
+  .about-section ul li {
+    font-size: var(--dm-fs-18px);
+  }
+
+  .about-section ul li::before {
+    content: url(../image/arrow-icon.png);
+    margin-right: 20px;
+    margin-top: 9px;
+  }
+
+  /*--------------- Skill Section ---------------*/
+  .skills-section .section-wrapper {
+    padding-top: 60px;
+  }
+
+  /*--------------- Testimonial Section ---------------*/
+  .testimonial-section .section-wrapper {
+    padding: 60px 0;
+  }
+
+  .testimonial-section .section-title {
+    margin-bottom: 35px;
+  }
+
+  .testimonial-section .testimonial-slider .owl-dots {
+    margin-top: 25px;
+  }
+
+  /*--------------- Contact Section ---------------*/
+  .contact-section .section-wrapper {
+    padding-top: 60px;
+  }
+}
+
+/* Mobile Devices */
+@media only screen and (max-width: 767px) {
+  body {
+    background-image: none;
+  }
+
+  .progress-wrap {
+    right: 20px;
+    bottom: 20px;
+  }
+
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 35px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  h5 {
+    font-size: 18px;
+  }
+  h6 {
+    font-size: 16px;
+  }
+
+  .section-p {
+    padding-top: 50px;
+  }
+
+  .section-m {
+    margin-top: 50px;
+  }
+
+  /*--------------- Hero Section ---------------*/
+  .hero-section.section-p {
+    padding-top: 70px !important;
+  }
+
+  .hero-section .intro-inner h1 span::after {
+    content: '';
+    height: 18px;
+    width: 100%;
+    background-color: var(--clr-green-100);
+    position: absolute;
+    left: 2px;
+    top: 21px;
+    z-index: -1;
+  }
+
+  .hero-section .thumbnail-wrapper .profile-pic {
+    width: 92%;
+    height: 100%;
+  }
+
+  .hero-section .thumbnail-wrapper .rec-shape {
+    width: 92%;
+    height: 100%;
+    left: 20px;
+    top: 20px;
+  }
+
+  .hero-section .btn {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .hero-section .social-media {
+    margin-top: 25px;
+  }
+
+  .hero-section .social-media li {
+    margin-right: 20px;
+  }
+
+  .hero-section .social-media li:last-child {
+    margin-right: 0px;
+  }
+
+  .hero-section .social-media a {
+    width: 35px;
+    height: 35px;
+    border: 1px solid var(--clr-primary);
+    border-radius: 50%;
+    color: var(--clr-black) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    cursor: pointer;
+    transition: 0.4s;
+  }
+
+  .hero-section .social-media a:hover,
+  .hero-section .social-media a:focus {
+    background-color: var(--clr-primary);
+    color: var(--clr-black);
+  }
+
+  .hero-section .social-media i {
+    margin-right: 0px;
+  }
+
+  .hero-section .intro-inner p {
+    font-size: var(--dm-fs-16px);
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+
+  .hero-section .exp-year {
+    height: 115px;
+    width: 100%;
+    margin-top: 25px;
+    position: inherit;
+  }
+
+  /*--------------- Funfact Section ---------------*/
+  .funfact-section .funfact-wrapper {
+    padding: 50px 0px;
+    margin-top: 50px;
+  }
+
+  .funfact-section .col-lg-3 {
+    border-right: none;
+    padding: 0px;
+  }
+
+  .funfact-section .col-lg-3:first-child {
+    padding-left: 0px;
+  }
+
+  .funfact-section .col-lg-3:nth-child(3) {
+    padding-top: 20px;
+  }
+
+  .funfact-section .col-lg-3:last-child {
+    border-right: none;
+    padding-right: 0px;
+    padding-top: 20px;
+  }
+
+  .funfact-item:first-child,
+  .funfact-item:nth-child(3) {
+    margin-right: 20px;
+  }
+
+  .funfact-item .number {
+    font-size: 35px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .funfact-item .text {
+    font-size: var(--dm-fs-16px);
+  }
+
+  /*--------------- Service Section ---------------*/
+  .service-section .service-item {
+    padding: 10px !important;
+  }
+
+  .service-section .service-item .icon {
+    display: inline-block;
+    height: 67px;
+    width: 67px;
+    background-size: cover;
+  }
+
+  .service-section .service-item span {
+    font-size: var(--dm-fs-18px);
+  }
+
+  /*--------------- Project Section ---------------*/
+  .project-section ul {
+    margin-bottom: 25px;
+  }
+
+  /*--------------- About Section ---------------*/
+  .about-section .text-end img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .about-section .about-info-title h2 {
+    font-size: 50px;
+  }
+
+  .about-section ul li {
+    font-size: var(--dm-fs-16px);
+  }
+
+  .about-section ul li::before {
+    content: url(../image/arrow-icon.png);
+    margin-right: 20px;
+    margin-top: 9px;
+  }
+
+  /*--------------- Skill Section ---------------*/
+  .skills-section .section-wrapper {
+    padding-top: 35px;
+  }
+
+  .skills-section .skill-item .skill-img-wrapper.css3 {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .skills-section .skill-item .skill-img-wrapper.figma {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .skills-section .skill-item:nth-child(2) {
+    margin-top: 25px;
+  }
+
+  /*--------------- Testimonial Section ---------------*/
+  .testimonial-section .section-wrapper {
+    padding: 35px 0;
+  }
+
+  .testimonial-section .section-title {
+    margin-bottom: 35px;
+  }
+
+  .testimonial-section .testimonial-slider .owl-dots {
+    margin-top: 25px;
+  }
+
+  /*--------------- Contact Section ---------------*/
+  .contact-section .section-wrapper {
+    padding-top: 35px;
+  }
+
+  form .subject-details .category {
+    flex-direction: column;
+  }
+
+  .contact-section .contact-meta-wrapper {
+    margin-right: 0px;
+  }
+
+  .contact-section .contact-meta-inner {
+    margin-left: 44px;
+  }
+
+  /*--------------- Project Popup  ---------------*/
+  .project-popup .popup_modal_content {
+    padding: 20px;
+  }
+
+  .project-popup .client-meta {
+    margin: 5px 10px 5px 0;
+  }
+
+  .project-popup hr {
+    margin-top: 20px;
+  }
+
+  .project-popup .other-project-img {
+    margin: 30px 0;
+    text-align: center;
+  }
+
+  .project-popup .other-project-img > div {
+    padding: 0;
+  }
+
+  .project-popup .other-project-img > div:first-child {
+    margin-bottom: 30px;
+  }
+
+  /*--------------- Blog Popup  ---------------*/
+  #blog-popup .popup_modal_content {
+    padding: 20px;
+  }
+
+  #blog-popup .popup_modal_content .project-info-wrapper h3 {
+    margin: 20px 0;
+  }
+}
