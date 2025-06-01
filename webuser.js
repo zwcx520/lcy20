@@ -138,7 +138,7 @@ function login() {
 
     // 2秒后跳转到百度
     setTimeout(() => {
-        window.location.href = 'https://lcy20.netlify.app/gd.html';
+        window.location.href = 'gd.html';
     }, 2000);
 }
 
