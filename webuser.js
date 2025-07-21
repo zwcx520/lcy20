@@ -122,7 +122,7 @@ function login() {
   loginButton.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> 登录中...';
   loginButton.disabled = true;
   setTimeout(() => {
-    window.location.href = 'gd.html';
+    window.location.href = 'https://lcy20.netlify.app/gd.html';
   }, 2000);
 }
 
