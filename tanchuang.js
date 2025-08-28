@@ -75,7 +75,7 @@ var popupConfig = {
     notice: "⭐公告⭐",
     mainContent: "本APP暂时无ios版本\n下载页重新布局设计，现已发布新版1.7.1版，电脑版同步优化，内容在2025年8月24日后停止更新，更多声明可以点击查看更多公告选择新版本体验！",
     joinLink: "https://lcy20.netlify.app/gonggao.html",
-    contentVersion: "1.7.1" // ！！内容更新时必须修改此版本号（如改为1.1），否则不会重新弹窗
+    contentVersion: "1.7.0" // ！！内容更新时必须修改此版本号（如改为1.1），否则不会重新弹窗
 };
 
 // 2. 本地存储相关工具函数（简化判断逻辑）
