@@ -1,4 +1,13 @@
-   document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
+    // 新增：存储两个初始密码到本地存储，初始密码不可注册但可登录
+    const initPasswords = ['1234', '1513']; // 可自行修改初始密码
+    const storedInitPasswords = localStorage.getItem('initFourDigitPasswords');
+    
+    if (!storedInitPasswords) {
+        localStorage.setItem('initFourDigitPasswords', JSON.stringify(initPasswords));
+    }
+
+    // 原代码开始（以下仅修改登录功能逻辑，其余不变）
     const digitInputs = document.querySelectorAll('.digit-input');
     const loginBtn = document.getElementById('loginBtn');
     const registerBtn = document.getElementById('registerBtn');
@@ -57,7 +66,6 @@
         input.addEventListener('input', function() {
             this.classList.add('filled');
             updateStrengthIndicator();
-            // 输入时自动检测密码是否已注册
             checkPasswordExists();
             
             if (this.value.length === 1 && index < digitInputs.length - 1) {
@@ -65,7 +73,6 @@
             }
         });
         
-        // 处理删除键
         input.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace') {
                 this.classList.remove('filled');
@@ -87,14 +94,17 @@
         return password;
     }
     
-    // 新增：检测密码是否已注册
+    // 检测密码是否已注册
     function checkPasswordExists() {
         const password = getPassword();
         const savedPassword = localStorage.getItem('fourDigitPassword');
+        const initPasswords = JSON.parse(localStorage.getItem('initFourDigitPasswords')) || [];
         
-        // 仅当输入4位完整密码时才进行检测提示
+        // 输入4位完整密码时提示：区分初始密码、已注册密码、未注册密码
         if (password.length === 4) {
-            if (savedPassword === password) {
+            if (initPasswords.includes(password)) {
+                showMessage('该密码为初始密码，可直接登录', 'info');
+            } else if (savedPassword === password) {
                 showMessage('该密码已注册，请更换其他密码', 'warning');
             } else {
                 showMessage('该密码未注册，可进行注册', 'info');
@@ -107,7 +117,6 @@
         messageDiv.textContent = text;
         messageDiv.className = 'message ' + type;
         
-        // 3秒后自动隐藏
         setTimeout(() => {
             messageDiv.style.opacity = '0';
             setTimeout(() => {
@@ -117,26 +126,21 @@
         }, 5000);
     }
     
-    // 登录功能
+    // 登录功能（核心修改：同时校验初始密码和用户注册密码）
     loginBtn.addEventListener('click', function() {
         const password = getPassword();
+        const savedPassword = localStorage.getItem('fourDigitPassword');
+        const initPasswords = JSON.parse(localStorage.getItem('initFourDigitPasswords')) || [];
         
         if (password.length !== 4) {
             showMessage('请输入4位密码', 'error');
             return;
         }
         
-        const savedPassword = localStorage.getItem('fourDigitPassword');
-        
-        if (!savedPassword) {
-            showMessage('请先注册密码', 'error');
-            return;
-        }
-        
-        if (password === savedPassword) {
+        // 登录校验规则：输入密码是初始密码 或 是用户已注册密码，均视为登录成功
+        if (initPasswords.includes(password) || password === savedPassword) {
             showMessage('登录成功！正在登陆...', 'success');
             
-            // 添加成功动画
             digitInputs.forEach(input => {
                 input.style.borderColor = '#2ecc71';
                 input.style.boxShadow = '0 0 20px rgba(46, 204, 113, 0.6)';
@@ -148,7 +152,6 @@
         } else {
             showMessage('密码错误，请重试', 'error');
             
-            // 添加错误动画
             digitInputs.forEach(input => {
                 input.style.borderColor = '#e74c3c';
                 input.style.boxShadow = '0 0 20px rgba(231, 76, 60, 0.6)';
@@ -160,17 +163,24 @@
         }
     });
     
-    // 注册功能（新增重复注册校验）
+    // 注册功能（保持初始密码不可注册）
     registerBtn.addEventListener('click', function() {
         const password = getPassword();
         const savedPassword = localStorage.getItem('fourDigitPassword');
+        const initPasswords = JSON.parse(localStorage.getItem('initFourDigitPasswords')) || [];
         
         if (password.length !== 4) {
             showMessage('请输入4位密码', 'error');
             return;
         }
         
-        // 新增：校验密码是否已注册，避免重复注册
+        // 禁止初始密码注册
+        if (initPasswords.includes(password)) {
+            showMessage('该密码为初始密码，不可注册', 'error');
+            return;
+        }
+        
+        // 禁止重复注册
         if (savedPassword === password) {
             showMessage('该密码已注册，无需重复注册', 'error');
             return;
@@ -179,7 +189,6 @@
         localStorage.setItem('fourDigitPassword', password);
         showMessage('密码注册成功！', 'success');
         
-        // 添加注册成功动画
         digitInputs.forEach(input => {
             input.style.borderColor = '#3498db';
             input.style.boxShadow = '0 0 20px rgba(52, 152, 219, 0.6)';
