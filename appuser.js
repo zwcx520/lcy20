@@ -61,7 +61,7 @@
         // 登录成功
         function loginSuccess() {
             alert('登录成功！');
-            window.location.href = 'https://lcy20.netlify.app/gd.html';
+            window.location.href = 'gd.html';
         }
 
         // 处理注册
