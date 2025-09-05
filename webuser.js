@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 新增：存储两个初始密码到本地存储，初始密码不可注册但可登录
-    const initPasswords = ['1234', '1513']; // 可自行修改初始密码
+    const initPasswords = ['zwcx', '1513']; // 可自行修改初始密码
     const storedInitPasswords = localStorage.getItem('initFourDigitPasswords');
     
     if (!storedInitPasswords) {
