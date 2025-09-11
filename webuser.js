@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 输入4位完整密码时提示：区分初始密码、已注册密码、未注册密码
         if (password.length === 4) {
             if (initPasswords.includes(password)) {
-                showMessage('该密码为管理密码，可直接登录！', 'info');
+                showMessage('尊敬的主人，欢迎登陆！', 'info');
             } else if (savedPassword === password) {
                 showMessage('该密码已注册，请更换其他密码', 'warning');
             } else {
