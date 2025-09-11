@@ -1,7 +1,7 @@
         // 获取弹窗和倒计时元素
         const modal = document.getElementById('imageModal');
         const countdownText = document.getElementById('countdown');
-        let seconds = 3;
+        let seconds = 5;
 
         // 倒计时函数
         const countdown = setInterval(() => {
