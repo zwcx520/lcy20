@@ -213,12 +213,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
                 });
-                
+            /*
                 // 注册按钮事件
                 registerBtn.addEventListener('click', function() {
                     register();
                 });
-                
+                */
                 // 清除按钮事件
                 if (clearBtn) {
                     clearBtn.addEventListener('click', function() {
