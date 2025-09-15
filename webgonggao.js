@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 检查是否已经显示过公告
             const announcementSeen = localStorage.getItem('announcementSeen');
             const announcementVersion = localStorage.getItem('announcementVersion');
-            const currentVersion = '2025-09-15';
+            const currentVersion = '2025-09-14';
             
             // 如果公告版本已更新或者用户手动点击，则显示弹窗
             if (announcementVersion !== currentVersion) {
