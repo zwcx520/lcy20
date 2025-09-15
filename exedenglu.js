@@ -29,14 +29,14 @@ function initUsers() {
         // 添加两个初始用户
         const initialUsers = [
             {
-                username: 'admin',
-                email: 'admin@example.com',
-                password: 'Admin123' // 注意：实际应用中应使用加密存储
+                username: 'lcy',
+                email: '',
+                password: 'lcy' // 注意：实际应用中应使用加密存储
             },
             {
-                username: 'user1',
-                email: 'user1@example.com',
-                password: 'User12345'
+                username: '1513',
+                email: '',
+                password: '1513'
             }
         ];
         
