@@ -140,11 +140,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 输入4位完整密码时提示
                 if (password.length === 4) {
                     if (initPasswords.includes(password)) {
-                        showMessage('尊贵的主人大大，欢迎登陆😘', 'info');
+                        showMessage('尊贵的宝宝，欢迎登陆😘', 'info');
                     } else if (savedPassword === password) {
-                        showMessage('该密码已注册，请更换其他密码', 'warning');
+                        showMessage('亲，该密码已注册，请登陆！😊', 'warning');
                     } else {
-                        showMessage('该密码未注册，可进行注册', 'info');
+                        showMessage('亲，该密码未注册，可进行注册！🥰', 'info');
                     }
                 }
             }
@@ -156,13 +156,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const initPasswords = JSON.parse(localStorage.getItem('initFourDigitPasswords')) || [];
                 
                 if (password.length !== 4) {
-                    showMessage('请输入4位密码', 'error');
+                    showMessage('请输入4位密码😡', 'error');
                     return;
                 }
                 
                 // 登录校验规则：输入密码是初始密码 或 是用户已注册密码，均视为登录成功
                 if (initPasswords.includes(password) || password === savedPassword) {
-                    showMessage('登录成功！正在登陆...', 'success');
+                    showMessage('登录成功！正在登陆🥳...', 'success');
                     
                     digitInputs.forEach(input => {
                         input.style.borderColor = '#2ecc71';
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         window.location.href = 'gd.html';
                     }, 1500);
                 } else {
-                    showMessage('密码错误，请重试', 'error');
+                    showMessage('亲，密码错误，请重试！🥺', 'error');
                     
                     digitInputs.forEach(input => {
                         input.style.borderColor = '#e74c3c';
