@@ -1,0 +1,57 @@
+.popup-wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  width: 300px;
+  max-width: 90%;
+  background-image: url("tanchuang.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 999999999;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup-notice {
+  font-size: 25px;
+  color: #FF00CE;
+  font-weight: bold;
+  margin-bottom: 10px;
+  
+}
+
+.popup-main-content {
+  font-size: 14px;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.popup-buttons button,
+.popup-buttons a {
+  background-color: #ffaa7f;
+  color: #aaaa7f;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+.popup-buttons button:hover,
+.popup-buttons a:hover {
+  background-color: #0056b3;
+}
