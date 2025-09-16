@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多浏览器本地存储清空工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .header {
+            background: #2d3748;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+        .header p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .content {
+            padding: 30px;
+        }
+        /* 清空按钮区域 */
+        .clear-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .clear-btn {
+            padding: 14px 36px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        #clear-all {
+            background: #dc2626;
+            color: #fff;
+        }
+        #clear-all:hover {
+            background: #b91c1c;
+        }
+        #check-data {
+            background: #3b82f6;
+            color: #fff;
+        }
+        #check-data:hover {
+            background: #2563eb;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 15px;
+            color: #16a34a;
+            height: 20px;
+        }
+        /* 浏览器指引区域 */
+        .guide-section h2 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .browser-guide {
+            margin-bottom: 25px;
+        }
+        .browser-guide h3 {
+            font-size: 16px;
+            color: #334155;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .browser-guide h3::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3b82f6;
+            margin-right: 8px;
+        }
+        .browser-guide ul {
+            list-style: none;
+            padding-left: 16px;
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部标题 -->
+        <div class="header">
+            <h1>浏览器本地存储清空工具</h1>
+            <p>支持清空 localStorage（持久存储）和 sessionStorage（会话存储）</p>
+        </div>
+
+        <!-- 一键清空功能区 -->
+        <div class="content">
+            <div class="clear-section">
+                <button class="clear-btn" id="check-data">检测当前存储数据</button>
+                <button class="clear-btn" id="clear-all">一键清空所有存储数据</button>
+                <div class="status" id="status"></div>
+            </div>
+
+            <!-- 各浏览器手动清空指引 -->
+            <div class="guide-section">
+                <h2>各浏览器手动清空本地存储指引（适用于批量清空）</h2>
+                
+                <!-- 谷歌浏览器 -->
+                <div class="browser-guide">
+                    <h3>谷歌浏览器（Chrome）</h3>
+                    <ul>
+                        <li>1. 打开目标网页，按 F12（或 Ctrl+Shift+I）打开开发者工具</li>
+                        <li>2. 切换到「Application」（应用）选项卡</li>
+                        <li>3. 在左侧菜单找到「Storage」（存储），展开后可看到 localStorage/sessionStorage</li>
+                        <li>4. 右键点击对应存储项，选择「Clear」（清空）；或勾选「Clear storage」面板的「Local and session storage」，点击「Clear site data」</li>
+                    </ul>
+                </div>
+
+                <!-- 火狐浏览器 -->
+                <div class="browser-guide">
+                    <h3>火狐浏览器（Firefox）</h3>
+                    <ul>
+                        <li>1. 打开目标网页，按 F12（或 Ctrl+Shift+I）打开开发者工具</li>
+                        <li>2. 切换到「存储」选项卡（或点击右上角「更多工具」选择「存储」）</li>
+                        <li>3. 左侧选择「localStorage」或「sessionStorage」，右键点击目标域名，选择「删除」</li>
+                        <li>4. 若需批量清空，点击工具顶部「清空存储」按钮，勾选对应选项即可</li>
+                    </ul>
+                </div>
+
+                <!--  Safari浏览器 -->
+                <div class="browser-guide">
+                    <h3>Safari 浏览器（苹果电脑/手机）</h3>
+                    <ul>
+                        <li>1. 电脑端：先开启开发者模式（偏好设置 → 高级 → 勾选「在菜单栏中显示“开发”菜单」）</li>
+                        <li>2. 打开目标网页，点击顶部「开发」→「显示网页检查器」（或按 Option+Command+I）</li>
+                        <li>3. 切换到「存储」选项卡，选择「localStorage」或「sessionStorage」，右键点击域名选择「删除」</li>
+                        <li>4. 手机端：设置 → Safari 浏览器 → 高级 → 网站数据 → 找到目标域名，左滑删除；或点击「清除所有网站数据」</li>
+                    </ul>
+                </div>
+
+                <!--  Edge浏览器 -->
+                <div class="browser-guide">
+                    <h3>微软 Edge 浏览器</h3>
+                    <ul>
+                        <li>1. 打开目标网页，按 F12（或 Ctrl+Shift+I）打开开发者工具</li>
+                        <li>2. 切换到「应用」选项卡（或点击右上角「更多工具」选择「应用」）</li>
+                        <li>3. 左侧「存储」菜单下选择「localStorage」或「sessionStorage」，右键点击域名选择「清除」</li>
+                        <li>4. 批量清空：「Clear storage」面板勾选「Local and session storage」，点击「清除站点数据」</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const checkBtn = document.getElementById('check-data');
+        const clearAllBtn = document.getElementById('clear-all');
+        const statusText = document.getElementById('status');
+
+        // 检测当前存储数据
+        function checkStorageData() {
+            const localLen = localStorage.length;
+            const sessionLen = sessionStorage.length;
+            
+            if (localLen === 0 && sessionLen === 0) {
+                statusText.textContent = '✅ 当前域名下无 localStorage 和 sessionStorage 数据';
+                statusText.style.color = '#16a34a';
+            } else {
+                statusText.textContent = `ℹ️ 检测到：localStorage（${localLen}条） | sessionStorage（${sessionLen}条）`;
+                statusText.style.color = '#f59e0b';
+            }
+        }
+
+        // 一键清空所有存储数据
+        function clearAllStorage() {
+            // 清空 localStorage 和 sessionStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // 显示结果
+            statusText.textContent = '✅ 已成功清空 localStorage 和 sessionStorage 所有数据！';
+            statusText.style.color = '#16a34a';
+            
+            // 3秒后重置提示
+            setTimeout(() => {
+                checkStorageData(); // 重置为检测状态
+            }, 3000);
+        }
+
+        // 绑定事件
+        checkBtn.addEventListener('click', checkStorageData);
+        clearAllBtn.addEventListener('click', clearAllStorage);
+
+        // 页面加载时自动检测数据
+        window.addEventListener('load', checkStorageData);
+    </script>
+</body>
+</html>
