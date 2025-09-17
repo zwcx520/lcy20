@@ -3,222 +3,819 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>多本地存储清空工具</title>
+    <title>当前域名本地存储检测与恢复工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
         body {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
             min-height: 100vh;
             padding: 20px;
         }
+        
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: #fff;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .domain-info {
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 12px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .header {
-            background: #2d3748;
-            color: #fff;
             padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
             text-align: center;
         }
-        .header h1 {
-            font-size: 22px;
-            margin-bottom: 8px;
+        
+        .domain-info h2 {
+            color: #1a2a6c;
+            margin-bottom: 10px;
         }
-        .header p {
-            font-size: 14px;
-            opacity: 0.8;
+        
+        .current-domain {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #b21f1f;
+            word-break: break-all;
         }
-        .content {
-            padding: 30px;
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
         }
-        /* 清空按钮区域 */
-        .clear-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .clear-btn {
-            padding: 14px 36px;
-            margin: 0 10px;
+        
+        .btn {
+            padding: 12px 25px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-        }
-        #clear-all {
-            background: #dc2626;
-            color: #fff;
-        }
-        #clear-all:hover {
-            background: #b91c1c;
-        }
-        #check-data {
-            background: #3b82f6;
-            color: #fff;
-        }
-        #check-data:hover {
-            background: #2563eb;
-        }
-        .status {
-            margin-top: 20px;
-            font-size: 15px;
-            color: #16a34a;
-            height: 20px;
-        }
-        /* 浏览器指引区域 */
-        .guide-section h2 {
-            font-size: 18px;
-            color: #1e293b;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        .browser-guide {
-            margin-bottom: 25px;
-        }
-        .browser-guide h3 {
-            font-size: 16px;
-            color: #334155;
-            margin-bottom: 12px;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .browser-guide h3::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #3b82f6;
-            margin-right: 8px;
+        
+        .btn-primary {
+            background: linear-gradient(to right, #1a2a6c, #3a7bd5);
+            color: white;
         }
-        .browser-guide ul {
-            list-style: none;
-            padding-left: 16px;
-            font-size: 14px;
-            color: #475569;
-            line-height: 1.8;
+        
+        .btn-success {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(to right, #8e2de2, #4a00e0);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .storage-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .storage-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .storage-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-count {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.9rem;
+        }
+        
+        .localstorage .card-header { background: linear-gradient(to right, #1a2a6c, #3a7bd5); }
+        .sessionstorage .card-header { background: linear-gradient(to right, #b21f1f, #e65c00); }
+        .cookies .card-header { background: linear-gradient(to right, #11998e, #38ef7d); }
+        .indexeddb .card-header { background: linear-gradient(to right, #8e2de2, #4a00e0); }
+        
+        .card-body {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .storage-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .storage-details {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .key {
+            font-weight: bold;
+            color: #1a2a6c;
+            word-break: break-all;
+        }
+        
+        .value {
+            color: #555;
+            margin-top: 5px;
+            word-break: break-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .item-btn {
+            background: rgba(0,0,0,0.05);
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .item-btn:hover {
+            background: rgba(0,0,0,0.1);
+        }
+        
+        .empty {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .status {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .status.success {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            display: block;
+        }
+        
+        .status.error {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            display: block;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .confirmation-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .confirmation-modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-icon {
+            font-size: 2rem;
+            color: #ff4b2b;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        
+        .modal-text {
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        .modal-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .modal-btn-cancel {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .modal-btn-confirm {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            padding: 30px 0 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .storage-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 头部标题 -->
-        <div class="header">
-            <h1>本地存储清空工具</h1>
-            <p>支持清空 localStorage（持久存储）和 sessionStorage（会话存储）</p>
+        <header>
+            <h1><i class="fas fa-database"></i> 当前本地存储检测与恢复工具</h1>
+            <p class="subtitle">检测、打包、恢复和清除当前网域名的所有本地存储数据</p>
+        </header>
+        
+        <div class="domain-info">
+            <h2>当前域名</h2>
+            <div class="current-domain" id="currentDomain"></div>
         </div>
-
-        <!-- 一键清空功能区 -->
-        <div class="content">
-            <div class="clear-section">
-                <button class="clear-btn" id="check-data">检测当前存储数据</button>
-                <button class="clear-btn" id="clear-all">一键清空所有存储数据</button>
-                <div class="status" id="status"></div>
-            </div>
-
-            <!-- 各浏览器手动清空指引 -->
-            <div class="guide-section">
-                <h2>各浏览器手动清空本地存储指引（适用于批量清空）</h2>
-                
-                <!-- 谷歌浏览器 -->
-                <div class="browser-guide">
-                    <h3>谷歌浏览器（Chrome）</h3>
-                    <ul>
-                        <li>1. 打开目标网页，按 F12（或 Ctrl+Shift+I）打开开发者工具</li>
-                        <li>2. 切换到「Application」（应用）选项卡</li>
-                        <li>3. 在左侧菜单找到「Storage」（存储），展开后可看到 localStorage/sessionStorage</li>
-                        <li>4. 右键点击对应存储项，选择「Clear」（清空）；或勾选「Clear storage」面板的「Local and session storage」，点击「Clear site data」</li>
-                    </ul>
+        
+        <div class="controls">
+            <button class="btn btn-primary" id="detectBtn">
+                <i class="fas fa-search"></i> 检测存储数据
+            </button>
+            <button class="btn btn-success" id="exportBtn">
+                <i class="fas fa-file-export"></i> 打包导出数据
+            </button>
+            <button class="btn btn-warning" id="importBtn">
+                <i class="fas fa-file-import"></i> 恢复导入数据
+            </button>
+            <button class="btn btn-danger" id="clearBtn">
+                <i class="fas fa-trash-alt"></i> 清除所有数据
+            </button>
+            <input type="file" id="importFile" class="file-input" accept=".json">
+        </div>
+        
+        <div id="statusMessage" class="status"></div>
+        
+        <div class="storage-container">
+            <div class="storage-card localstorage">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-box"></i>
+                        <h3>localStorage</h3>
+                    </div>
+                    <div class="card-count" id="localStorageCount">0</div>
                 </div>
-
-                <!-- 火狐浏览器 -->
-                <div class="browser-guide">
-                    <h3>火狐浏览器（Firefox）</h3>
-                    <ul>
-                        <li>1. 打开目标网页，按 F12（或 Ctrl+Shift+I）打开开发者工具</li>
-                        <li>2. 切换到「存储」选项卡（或点击右上角「更多工具」选择「存储」）</li>
-                        <li>3. 左侧选择「localStorage」或「sessionStorage」，右键点击目标域名，选择「删除」</li>
-                        <li>4. 若需批量清空，点击工具顶部「清空存储」按钮，勾选对应选项即可</li>
-                    </ul>
-                </div>
-
-                <!--  Safari浏览器 -->
-                <div class="browser-guide">
-                    <h3>Safari 浏览器（苹果电脑/手机）</h3>
-                    <ul>
-                        <li>1. 电脑端：先开启开发者模式（偏好设置 → 高级 → 勾选「在菜单栏中显示“开发”菜单」）</li>
-                        <li>2. 打开目标网页，点击顶部「开发」→「显示网页检查器」（或按 Option+Command+I）</li>
-                        <li>3. 切换到「存储」选项卡，选择「localStorage」或「sessionStorage」，右键点击域名选择「删除」</li>
-                        <li>4. 手机端：设置 → Safari 浏览器 → 高级 → 网站数据 → 找到目标域名，左滑删除；或点击「清除所有网站数据」</li>
-                    </ul>
-                </div>
-
-                <!--  Edge浏览器 -->
-                <div class="browser-guide">
-                    <h3>微软 Edge 浏览器</h3>
-                    <ul>
-                        <li>1. 打开目标网页，按 F12（或 Ctrl+Shift+I）打开开发者工具</li>
-                        <li>2. 切换到「应用」选项卡（或点击右上角「更多工具」选择「应用」）</li>
-                        <li>3. 左侧「存储」菜单下选择「localStorage」或「sessionStorage」，右键点击域名选择「清除」</li>
-                        <li>4. 批量清空：「Clear storage」面板勾选「Local and session storage」，点击「清除站点数据」</li>
-                    </ul>
+                <div class="card-body" id="localStorageData">
+                    <div class="empty">未检测到数据</div>
                 </div>
             </div>
+            
+            <div class="storage-card sessionstorage">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-hourglass-half"></i>
+                        <h3>sessionStorage</h3>
+                    </div>
+                    <div class="card-count" id="sessionStorageCount">0</div>
+                </div>
+                <div class="card-body" id="sessionStorageData">
+                    <div class="empty">未检测到数据</div>
+                </div>
+            </div>
+            
+            <div class="storage-card cookies">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-cookie"></i>
+                        <h3>Cookies</h3>
+                    </div>
+                    <div class="card-count" id="cookiesCount">0</div>
+                </div>
+                <div class="card-body" id="cookiesData">
+                    <div class="empty">未检测到数据</div>
+                </div>
+            </div>
+            
+            <div class="storage-card indexeddb">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fas fa-server"></i>
+                        <h3>IndexedDB</h3>
+                    </div>
+                    <div class="card-count" id="indexedDBCount">-</div>
+                </div>
+                <div class="card-body" id="indexedDBData">
+                    <div class="empty">未检测到数据</div>
+                </div>
+            </div>
         </div>
+        
+        <div class="confirmation-modal" id="confirmationModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fas fa-exclamation-triangle modal-icon"></i>
+                    <h3 class="modal-title">确认清除数据</h3>
+                </div>
+                <p class="modal-text">
+                    您确定要清除当前网站的所有本地存储数据吗？<br>
+                    此操作将永久删除 localStorage、sessionStorage、Cookies 和 IndexedDB 中的所有数据，且不可恢复！
+                </p>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-cancel" id="cancelClearBtn">取消</button>
+                    <button class="modal-btn modal-btn-confirm" id="confirmClearBtn">确认清除</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 网站本地存储检测与恢复工具 | 注意：此工具仅能访问当前域名的存储数据</p>
+        </footer>
     </div>
 
     <script>
-        // 获取元素
-        const checkBtn = document.getElementById('check-data');
-        const clearAllBtn = document.getElementById('clear-all');
-        const statusText = document.getElementById('status');
-
-        // 检测当前存储数据
-        function checkStorageData() {
-            const localLen = localStorage.length;
-            const sessionLen = sessionStorage.length;
+        document.addEventListener('DOMContentLoaded', function() {
+            // 显示当前域名
+            document.getElementById('currentDomain').textContent = window.location.hostname;
             
-            if (localLen === 0 && sessionLen === 0) {
-                statusText.textContent = '✅ 当前域名下无 localStorage 和 sessionStorage 数据';
-                statusText.style.color = '#16a34a';
-            } else {
-                statusText.textContent = `ℹ️ 检测到：localStorage（${localLen}条） | sessionStorage（${sessionLen}条）`;
-                statusText.style.color = '#f59e0b';
+            const detectBtn = document.getElementById('detectBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const importBtn = document.getElementById('importBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const importFile = document.getElementById('importFile');
+            const statusMessage = document.getElementById('statusMessage');
+            const confirmationModal = document.getElementById('confirmationModal');
+            const cancelClearBtn = document.getElementById('cancelClearBtn');
+            const confirmClearBtn = document.getElementById('confirmClearBtn');
+            
+            // 显示状态消息
+            function showStatus(message, isSuccess) {
+                statusMessage.textContent = message;
+                statusMessage.className = 'status ' + (isSuccess ? 'success' : 'error');
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
             }
-        }
-
-        // 一键清空所有存储数据
-        function clearAllStorage() {
-            // 清空 localStorage 和 sessionStorage
-            localStorage.clear();
-            sessionStorage.clear();
             
-            // 显示结果
-            statusText.textContent = '✅ 已成功清空 localStorage 和 sessionStorage 所有数据！';
-            statusText.style.color = '#16a34a';
+            // 检测所有存储数据
+            detectBtn.addEventListener('click', function() {
+                detectLocalStorage();
+                detectSessionStorage();
+                detectCookies();
+                detectIndexedDB();
+                showStatus('存储数据检测完成！', true);
+            });
             
-            // 3秒后重置提示
-            setTimeout(() => {
-                checkStorageData(); // 重置为检测状态
-            }, 3000);
-        }
-
-        // 绑定事件
-        checkBtn.addEventListener('click', checkStorageData);
-        clearAllBtn.addEventListener('click', clearAllStorage);
-
-        // 页面加载时自动检测数据
-        window.addEventListener('load', checkStorageData);
+            // 导出数据
+            exportBtn.addEventListener('click', function() {
+                const storageData = {
+                    localStorage: getAllLocalStorage(),
+                    sessionStorage: getAllSessionStorage(),
+                    cookies: getAllCookies(),
+                    indexedDB: getIndexedDBInfo(),
+                    timestamp: new Date().toISOString(),
+                    domain: window.location.hostname
+                };
+                
+                const dataStr = JSON.stringify(storageData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = `storage-backup-${window.location.hostname}-${new Date().toISOString().slice(0,10)}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                showStatus('数据已打包导出！', true);
+            });
+            
+            // 导入数据
+            importBtn.addEventListener('click', function() {
+                importFile.click();
+            });
+            
+            importFile.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        
+                        // 恢复localStorage
+                        if (data.localStorage) {
+                            for (const key in data.localStorage) {
+                                localStorage.setItem(key, data.localStorage[key]);
+                            }
+                        }
+                        
+                        // 恢复sessionStorage
+                        if (data.sessionStorage) {
+                            for (const key in data.sessionStorage) {
+                                sessionStorage.setItem(key, data.sessionStorage[key]);
+                            }
+                        }
+                        
+                        // 恢复Cookies
+                        if (data.cookies) {
+                            data.cookies.forEach(cookie => {
+                                document.cookie = `${cookie.name}=${cookie.value}; path=${cookie.path || '/'}`;
+                            });
+                        }
+                        
+                        showStatus('数据恢复成功！', true);
+                        detectBtn.click(); // 刷新显示
+                    } catch (error) {
+                        showStatus('导入失败：文件格式不正确', false);
+                        console.error(error);
+                    }
+                };
+                reader.readAsText(file);
+            });
+            
+            // 清除数据
+            clearBtn.addEventListener('click', function() {
+                confirmationModal.classList.add('active');
+            });
+            
+            cancelClearBtn.addEventListener('click', function() {
+                confirmationModal.classList.remove('active');
+            });
+            
+            confirmClearBtn.addEventListener('click', function() {
+                // 清除localStorage
+                localStorage.clear();
+                
+                // 清除sessionStorage
+                sessionStorage.clear();
+                
+                // 清除Cookies
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i];
+                    const eqPos = cookie.indexOf('=');
+                    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                }
+                
+                // 清除IndexedDB（简化处理）
+                if (window.indexedDB) {
+                    indexedDB.databases().then(databases => {
+                        databases.forEach(db => {
+                            indexedDB.deleteDatabase(db.name);
+                        });
+                    });
+                }
+                
+                confirmationModal.classList.remove('active');
+                showStatus('所有本地存储数据已清除！', true);
+                
+                // 刷新显示
+                setTimeout(() => {
+                    detectBtn.click();
+                }, 500);
+            });
+            
+            // 获取所有localStorage数据
+            function getAllLocalStorage() {
+                const items = {};
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    items[key] = localStorage.getItem(key);
+                }
+                return items;
+            }
+            
+            // 获取所有sessionStorage数据
+            function getAllSessionStorage() {
+                const items = {};
+                for (let i = 0; i < sessionStorage.length; i++) {
+                    const key = sessionStorage.key(i);
+                    items[key] = sessionStorage.getItem(key);
+                }
+                return items;
+            }
+            
+            // 获取所有Cookies
+            function getAllCookies() {
+                return document.cookie.split(';').map(cookie => {
+                    const [name, value] = cookie.trim().split('=');
+                    return { name, value, path: '/' };
+                });
+            }
+            
+            // 获取IndexedDB信息（简化版）
+            function getIndexedDBInfo() {
+                if (!window.indexedDB) {
+                    return {
+                        status: '不支持',
+                        databases: []
+                    };
+                }
+                
+                return {
+                    status: '支持',
+                    note: '出于安全考虑，IndexedDB内容无法直接读取'
+                };
+            }
+            
+            // 检测并显示localStorage
+            function detectLocalStorage() {
+                const container = document.getElementById('localStorageData');
+                const countElement = document.getElementById('localStorageCount');
+                const items = getAllLocalStorage();
+                const count = Object.keys(items).length;
+                
+                countElement.textContent = count;
+                
+                if (count === 0) {
+                    container.innerHTML = '<div class="empty">未检测到数据</div>';
+                    return;
+                }
+                
+                let html = '';
+                for (const key in items) {
+                    html += `
+                        <div class="storage-item">
+                            <div class="storage-details">
+                                <div class="key">${key}</div>
+                                <div class="value">${items[key]}</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="item-btn" title="删除" onclick="deleteLocalStorageItem('${key}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            }
+            
+            // 删除localStorage项
+            window.deleteLocalStorageItem = function(key) {
+                localStorage.removeItem(key);
+                detectLocalStorage();
+                showStatus(`已删除 localStorage 项: ${key}`, true);
+            };
+            
+            // 检测并显示sessionStorage
+            function detectSessionStorage() {
+                const container = document.getElementById('sessionStorageData');
+                const countElement = document.getElementById('sessionStorageCount');
+                const items = getAllSessionStorage();
+                const count = Object.keys(items).length;
+                
+                countElement.textContent = count;
+                
+                if (count === 0) {
+                    container.innerHTML = '<div class="empty">未检测到数据</div>';
+                    return;
+                }
+                
+                let html = '';
+                for (const key in items) {
+                    html += `
+                        <div class="storage-item">
+                            <div class="storage-details">
+                                <div class="key">${key}</div>
+                                <div class="value">${items[key]}</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="item-btn" title="删除" onclick="deleteSessionStorageItem('${key}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            }
+            
+            // 删除sessionStorage项
+            window.deleteSessionStorageItem = function(key) {
+                sessionStorage.removeItem(key);
+                detectSessionStorage();
+                showStatus(`已删除 sessionStorage 项: ${key}`, true);
+            };
+            
+            // 检测并显示Cookies
+            function detectCookies() {
+                const container = document.getElementById('cookiesData');
+                const countElement = document.getElementById('cookiesCount');
+                const cookies = getAllCookies();
+                const count = cookies.length;
+                
+                countElement.textContent = count;
+                
+                if (count === 0) {
+                    container.innerHTML = '<div class="empty">未检测到数据</div>';
+                    return;
+                }
+                
+                let html = '';
+                cookies.forEach(cookie => {
+                    html += `
+                        <div class="storage-item">
+                            <div class="storage-details">
+                                <div class="key">${cookie.name}</div>
+                                <div class="value">${cookie.value}</div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="item-btn" title="删除" onclick="deleteCookie('${cookie.name}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+            
+            // 删除Cookie
+            window.deleteCookie = function(name) {
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+                detectCookies();
+                showStatus(`已删除 Cookie: ${name}`, true);
+            };
+            
+            // 检测并显示IndexedDB
+            function detectIndexedDB() {
+                const container = document.getElementById('indexedDBData');
+                const countElement = document.getElementById('indexedDBCount');
+                const info = getIndexedDBInfo();
+                
+                if (info.status === '不支持') {
+                    countElement.textContent = '0';
+                    container.innerHTML = `
+                        <div class="storage-item">
+                            <div class="key">状态</div>
+                            <div class="value">浏览器不支持IndexedDB</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                countElement.textContent = '?';
+                
+                container.innerHTML = `
+                    <div class="storage-item">
+                        <div class="key">状态</div>
+                        <div class="value">浏览器支持IndexedDB</div>
+                    </div>
+                    <div class="storage-item">
+                        <div class="key">说明</div>
+                        <div class="value">${info.note}</div>
+                    </div>
+                `;
+            }
+            
+            // 初始检测
+            detectBtn.click();
+        });
     </script>
 </body>
 </html>
