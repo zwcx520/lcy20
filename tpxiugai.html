@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片尺寸修改工具</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, #4299e1, #3182ce);
+            border-radius: 2px;
+        }
+
+        /* 上传区域 */
+        .upload-area {
+            position: relative;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(180deg, #4299e1, #3182ce);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: linear-gradient(180deg, #3182ce, #2b6cb0);
+        }
+
+        .upload-tip {
+            color: #718096;
+            font-size: 13px;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* 预览区域 */
+        .preview-wrap {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .preview-item {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .preview-label {
+            color: #4a5568;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 320px;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+            object-fit: contain;
+            background-color: #f7fafc;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* 设置区域 */
+        .setting-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .setting-item {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .setting-label {
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .setting-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .setting-input:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+
+        /* 功能按钮 */
+        .func-btn {
+            padding: 10px 24px;
+            background: linear-gradient(180deg, #48bb78, #38a169);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .func-btn:hover {
+            background: linear-gradient(180deg, #38a169, #2f855a);
+        }
+
+        .func-btn:active {
+            transform: scale(0.98);
+        }
+
+        #downloadBtn {
+            margin-top: 16px;
+            background: linear-gradient(180deg, #805ad5, #6b46c1);
+            display: none;
+        }
+
+        #downloadBtn:hover {
+            background: linear-gradient(180deg, #6b46c1, #553c9a);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 640px) {
+            .card {
+                padding: 18px;
+            }
+
+            .preview-wrap {
+                gap: 16px;
+            }
+
+            .preview-item {
+                min-width: 100%;
+            }
+
+            .setting-group {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-title">图片尺寸修改工具</h1>
+
+        <!-- 上传区域 -->
+        <div class="card upload-area">
+            <h2 class="card-title">1. 上传图片</h2>
+            <label for="fileInput" class="upload-btn">选择本地图片</label>
+            <input type="file" id="fileInput" accept="image/*">
+            <p class="upload-tip">支持 JPG、PNG、WEBP 等常见图片格式，上传后自动显示原图尺寸</p>
+            
+            <div class="preview-item">
+                <span class="preview-label">原图预览：</span>
+                <img id="originalPreview" class="preview-img" alt="原图">
+            </div>
+        </div>
+
+        <!-- 设置区域 -->
+        <div class="card setting-area">
+            <h2 class="card-title">2. 设置新尺寸</h2>
+            <div class="setting-group">
+                <div class="setting-item">
+                    <label class="setting-label">宽度（像素）</label>
+                    <input type="number" id="widthInput" class="setting-input" min="1" placeholder="输入宽度">
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">高度（像素）</label>
+                    <input type="number" id="heightInput" class="setting-input" min="1" placeholder="输入高度">
+                </div>
+            </div>
+            <button id="resizeBtn" class="func-btn">生成修改后图片</button>
+        </div>
+
+        <!-- 预览下载区域 -->
+        <div class="card preview-area">
+            <h2 class="card-title">3. 预览与下载</h2>
+            <div class="preview-item">
+                <span class="preview-label">修改后预览：</span>
+                <img id="modifiedPreview" class="preview-img" alt="修改后图片">
+            </div>
+            <button id="downloadBtn" class="func-btn">下载图片</button>
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const fileInput = document.getElementById('fileInput');
+        const originalPreview = document.getElementById('originalPreview');
+        const widthInput = document.getElementById('widthInput');
+        const heightInput = document.getElementById('heightInput');
+        const resizeBtn = document.getElementById('resizeBtn');
+        const modifiedPreview = document.getElementById('modifiedPreview');
+        const downloadBtn = document.getElementById('downloadBtn');
+        let originalImage = null; // 存储原图对象
+
+        // 1. 上传图片并预览
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // 验证图片格式
+            if (!file.type.startsWith('image/')) {
+                alert('请上传有效的图片文件（支持JPG、PNG等）！');
+                return;
+            }
+
+            // 显示原图预览
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                originalImage = new Image();
+                originalImage.src = event.target.result;
+                originalImage.onload = () => {
+                    // 自动填充原图尺寸到输入框
+                    widthInput.value = originalImage.width;
+                    heightInput.value = originalImage.height;
+                    originalPreview.src = originalImage.src;
+                    originalPreview.style.display = 'block';
+                };
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // 2. 调整图片尺寸
+        resizeBtn.addEventListener('click', () => {
+            if (!originalImage) {
+                alert('请先上传图片再进行尺寸修改！');
+                return;
+            }
+
+            const newWidth = parseInt(widthInput.value);
+            const newHeight = parseInt(heightInput.value);
+
+            // 验证尺寸输入
+            if (isNaN(newWidth) || isNaN(newHeight) || newWidth < 1 || newHeight < 1) {
+                alert('请输入有效的尺寸（宽度和高度需为大于0的整数）！');
+                return;
+            }
+
+            // 使用canvas绘制新尺寸图片
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            // 绘制图片（保持图片清晰度）
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            ctx.drawImage(originalImage, 0, 0, newWidth, newHeight);
+
+            // 显示修改后图片并生成下载链接
+            const modifiedUrl = canvas.toDataURL('image/png');
+            modifiedPreview.src = modifiedUrl;
+            modifiedPreview.style.display = 'block';
+            downloadBtn.style.display = 'inline-block';
+            
+            // 下载功能
+            downloadBtn.onclick = () => {
+                const a = document.createElement('a');
+                a.href = modifiedUrl;
+                a.download = `resized_${newWidth}x${newHeight}_${new Date().getTime()}.png`;
+                a.click();
+                // 清除临时链接（优化性能）
+                URL.revokeObjectURL(modifiedUrl);
+            };
+        });
+    </script>
+</body>
+</html>
