@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站本地存储数据打包与恢复工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --warning: #ff9e00;
+            --danger: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-blue: #e9f7fe;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -70px;
+            left: -30px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .main-content {
+            padding: 30px;
+        }
+        
+        .info-box {
+            background: var(--light-blue);
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .info-box i {
+            color: var(--success);
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+        
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #3fb0d6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: #e68f00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 158, 0, 0.3);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #e01e6d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+        }
+        
+        .storage-section {
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .badge {
+            background: var(--success);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .data-container {
+            background: var(--light);
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.5;
+        }
+        
+        .empty-data {
+            color: var(--gray);
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            border-top: 1px solid #e9ecef;
+            background: #f8f9fa;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .restore-section {
+            background: #fff8e6;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .restore-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .controls, .restore-controls {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .section-header > div {
+                width: 100%;
+                display: flex;
+                gap: 10px;
+            }
+            
+            .section-header .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-box-open"></i> 网站本地存储数据打包与恢复工具</h1>
+            <p class="subtitle">导出和恢复当前域名的本地存储数据</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i>
+                <p>此工具可帮助您打包当前网站域名下的所有本地存储数据，并支持从备份文件恢复数据。所有操作均在浏览器本地完成，数据不会被上传到任何服务器。</p>
+            </div>
+            
+            <div class="controls">
+                <button id="exportAllBtn" class="btn btn-primary">
+                    <i class="fas fa-file-export"></i>
+                    打包并导出所有数据
+                </button>
+                <button id="clearAllBtn" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                    清除所有本地数据
+                </button>
+            </div>
+            
+            <div class="restore-section">
+                <h3><i class="fas fa-file-import"></i> 数据恢复</h3>
+                <p>从之前导出的JSON文件恢复数据到本地存储：</p>
+                <div class="restore-controls">
+                    <div class="file-input-wrapper">
+                        <button class="btn btn-success">
+                            <i class="fas fa-upload"></i> 选择恢复文件
+                        </button>
+                        <input type="file" id="restoreFile" accept=".json">
+                    </div>
+                    <button id="restoreBtn" class="btn btn-warning">
+                        <i class="fas fa-history"></i> 执行恢复
+                    </button>
+                </div>
+                <div id="restoreStatus"></div>
+            </div>
+            
+            <div class="storage-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-database"></i>
+                        LocalStorage
+                        <span id="localStorageCount" class="badge">0 项</span>
+                    </h2>
+                    <div>
+                        <button id="exportLocalBtn" class="btn btn-outline">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                        <button id="clearLocalBtn" class="btn btn-outline">
+                            <i class="fas fa-trash"></i> 清除
+                        </button>
+                    </div>
+                </div>
+                <div id="localStorageData" class="data-container">
+                    <!-- LocalStorage数据将在这里显示 -->
+                </div>
+            </div>
+            
+            <div class="storage-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-window-restore"></i>
+                        SessionStorage
+                        <span id="sessionStorageCount" class="badge">0 项</span>
+                    </h2>
+                    <div>
+                        <button id="exportSessionBtn" class="btn btn-outline">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                        <button id="clearSessionBtn" class="btn btn-outline">
+                            <i class="fas fa-trash"></i> 清除
+                        </button>
+                    </div>
+                </div>
+                <div id="sessionStorageData" class="data-container">
+                    <!-- SessionStorage数据将在这里显示 -->
+                </div>
+            </div>
+            
+            <div class="storage-section">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-table"></i>
+                        IndexedDB
+                        <span id="indexedDBCount" class="badge">0 项</span>
+                    </h2>
+                    <div>
+                        <button id="exportIndexedBtn" class="btn btn-outline">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                        <button id="clearIndexedBtn" class="btn btn-outline">
+                            <i class="fas fa-trash"></i> 清除
+                        </button>
+                    </div>
+                </div>
+                <div id="indexedDBData" class="data-container">
+                    <!-- IndexedDB数据将在这里显示 -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><i class="fas fa-exclamation-triangle"></i> 注意：此工具仅访问当前域名下的本地存储数据。导出的数据可能包含敏感信息，请妥善保管。</p>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 更新所有存储数据显示
+            updateStorageDisplays();
+            
+            // 绑定按钮事件
+            document.getElementById('exportAllBtn').addEventListener('click', exportAllData);
+            document.getElementById('clearAllBtn').addEventListener('click', clearAllData);
+            
+            document.getElementById('exportLocalBtn').addEventListener('click', () => exportStorageData('local'));
+            document.getElementById('clearLocalBtn').addEventListener('click', () => clearStorage('local'));
+            
+            document.getElementById('exportSessionBtn').addEventListener('click', () => exportStorageData('session'));
+            document.getElementById('clearSessionBtn').addEventListener('click', () => clearStorage('session'));
+            
+            document.getElementById('exportIndexedBtn').addEventListener('click', () => exportStorageData('indexed'));
+            document.getElementById('clearIndexedBtn').addEventListener('click', () => clearStorage('indexed'));
+            
+            // 恢复功能
+            document.getElementById('restoreBtn').addEventListener('click', restoreData);
+        });
+        
+        // 更新存储数据显示
+        function updateStorageDisplays() {
+            updateLocalStorageDisplay();
+            updateSessionStorageDisplay();
+            updateIndexedDBDisplay();
+        }
+        
+        // 更新LocalStorage显示
+        function updateLocalStorageDisplay() {
+            const container = document.getElementById('localStorageData');
+            const countElement = document.getElementById('localStorageCount');
+            
+            let data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                data[key] = localStorage.getItem(key);
+            }
+            
+            const count = Object.keys(data).length;
+            countElement.textContent = `${count} 项`;
+            
+            if (count === 0) {
+                container.innerHTML = '<div class="empty-data">没有找到LocalStorage数据</div>';
+                return;
+            }
+            
+            container.textContent = JSON.stringify(data, null, 2);
+        }
+        
+        // 更新SessionStorage显示
+        function updateSessionStorageDisplay() {
+            const container = document.getElementById('sessionStorageData');
+            const countElement = document.getElementById('sessionStorageCount');
+            
+            let data = {};
+            for (let i = 0; i < sessionStorage.length; i++) {
+                const key = sessionStorage.key(i);
+                data[key] = sessionStorage.getItem(key);
+            }
+            
+            const count = Object.keys(data).length;
+            countElement.textContent = `${count} 项`;
+            
+            if (count === 0) {
+                container.innerHTML = '<div class="empty-data">没有找到SessionStorage数据</div>';
+                return;
+            }
+            
+            container.textContent = JSON.stringify(data, null, 2);
+        }
+        
+        // 更新IndexedDB显示
+        function updateIndexedDBDisplay() {
+            const container = document.getElementById('indexedDBData');
+            const countElement = document.getElementById('indexedDBCount');
+            
+            // 获取当前域名下的所有IndexedDB数据库
+            const dbs = [];
+            const req = indexedDB.databases ? indexedDB.databases() : Promise.resolve([]);
+            
+            req.then(databases => {
+                const count = databases.length;
+                countElement.textContent = `${count} 项`;
+                
+                if (count === 0) {
+                    container.innerHTML = '<div class="empty-data">没有找到IndexedDB数据库</div>';
+                    return;
+                }
+                
+                // 只显示数据库名称列表
+                const dbList = databases.map(db => ({
+                    name: db.name,
+                    version: db.version
+                }));
+                
+                container.textContent = JSON.stringify(dbList, null, 2);
+            }).catch(error => {
+                console.error('获取IndexedDB数据库列表失败:', error);
+                container.innerHTML = '<div class="empty-data">无法获取IndexedDB数据库列表</div>';
+                countElement.textContent = '0 项';
+            });
+        }
+        
+        // 导出所有数据
+        function exportAllData() {
+            const data = {
+                metadata: {
+                    domain: window.location.hostname,
+                    exportedAt: new Date().toISOString(),
+                    tool: "LocalStorage Packager"
+                },
+                localStorage: getAllStorageData('local'),
+                sessionStorage: getAllStorageData('session'),
+                indexedDB: getIndexedDBInfo()
+            };
+            
+            downloadAsJSON(data, `local-storage-backup-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}`);
+        }
+        
+        // 导出特定存储类型的数据
+        function exportStorageData(type) {
+            let data, filename;
+            
+            switch(type) {
+                case 'local':
+                    data = getAllStorageData('local');
+                    filename = 'local-storage-data';
+                    break;
+                case 'session':
+                    data = getAllStorageData('session');
+                    filename = 'session-storage-data';
+                    break;
+                case 'indexed':
+                    data = getIndexedDBInfo();
+                    filename = 'indexeddb-info';
+                    break;
+            }
+            
+            downloadAsJSON(data, `${filename}-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}`);
+        }
+        
+        // 获取存储数据
+        function getAllStorageData(type) {
+            const storage = type === 'local' ? localStorage : sessionStorage;
+            const data = {};
+            
+            for (let i = 0; i < storage.length; i++) {
+                const key = storage.key(i);
+                data[key] = storage.getItem(key);
+            }
+            
+            return data;
+        }
+        
+        // 获取IndexedDB信息
+        function getIndexedDBInfo() {
+            // 在实际应用中，这里需要更复杂的逻辑来读取IndexedDB的实际内容
+            // 但出于安全考虑，浏览器不允许直接读取所有IndexedDB内容
+            // 这里只返回数据库名称列表
+            return indexedDB.databases ? indexedDB.databases() : [];
+        }
+        
+        // 下载为JSON文件
+        function downloadAsJSON(data, filename) {
+            const jsonStr = JSON.stringify(data, null, 2);
+            const blob = new Blob([jsonStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${filename}.json`;
+            document.body.appendChild(a);
+            a.click();
+            
+            // 清理
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 100);
+        }
+        
+        // 清除存储
+        function clearStorage(type) {
+            if (confirm(`确定要清除所有${getStorageName(type)}数据吗？此操作不可撤销。`)) {
+                switch(type) {
+                    case 'local':
+                        localStorage.clear();
+                        break;
+                    case 'session':
+                        sessionStorage.clear();
+                        break;
+                    case 'indexed':
+                        clearIndexedDB();
+                        break;
+                }
+                
+                // 更新显示
+                setTimeout(() => {
+                    updateStorageDisplays();
+                    alert(`${getStorageName(type)}数据已清除`);
+                }, 300);
+            }
+        }
+        
+        // 清除所有数据
+        function clearAllData() {
+            if (confirm('确定要清除所有本地存储数据吗？此操作不可撤销。')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                clearIndexedDB();
+                
+                // 更新显示
+                setTimeout(() => {
+                    updateStorageDisplays();
+                    alert('所有本地存储数据已清除');
+                }, 300);
+            }
+        }
+        
+        // 清除IndexedDB
+        function clearIndexedDB() {
+            if (indexedDB.databases) {
+                indexedDB.databases().then(databases => {
+                    databases.forEach(db => {
+                        indexedDB.deleteDatabase(db.name);
+                    });
+                });
+            }
+        }
+        
+        // 获取存储类型名称
+        function getStorageName(type) {
+            switch(type) {
+                case 'local': return 'LocalStorage';
+                case 'session': return 'SessionStorage';
+                case 'indexed': return 'IndexedDB';
+                default: return '';
+            }
+        }
+        
+        // 恢复数据功能
+        function restoreData() {
+            const fileInput = document.getElementById('restoreFile');
+            const statusElement = document.getElementById('restoreStatus');
+            
+            if (!fileInput.files.length) {
+                statusElement.innerHTML = '<div style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i> 请先选择要恢复的JSON文件</div>';
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    statusElement.innerHTML = '<div style="color: var(--success);"><i class="fas fa-spinner fa-spin"></i> 正在恢复数据...</div>';
+                    
+                    // 恢复LocalStorage
+                    if (data.localStorage) {
+                        for (const [key, value] of Object.entries(data.localStorage)) {
+                            localStorage.setItem(key, value);
+                        }
+                    }
+                    
+                    // 恢复SessionStorage
+                    if (data.sessionStorage) {
+                        for (const [key, value] of Object.entries(data.sessionStorage)) {
+                            sessionStorage.setItem(key, value);
+                        }
+                    }
+                    
+                    // 更新显示
+                    setTimeout(() => {
+                        updateStorageDisplays();
+                        statusElement.innerHTML = `<div style="color: var(--success);"><i class="fas fa-check-circle"></i> 数据恢复成功！已恢复 ${Object.keys(data.localStorage || {}).length + Object.keys(data.sessionStorage || {}).length} 项数据</div>`;
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('恢复数据失败:', error);
+                    statusElement.innerHTML = `<div style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i> 恢复失败：${error.message}</div>`;
+                }
+            };
+            
+            reader.onerror = function() {
+                statusElement.innerHTML = '<div style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i> 读取文件失败</div>';
+            };
+            
+            reader.readAsText(file);
+        }
+    </script>
+</body>
+</html>
