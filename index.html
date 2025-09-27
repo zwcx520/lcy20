@@ -25,8 +25,252 @@
       color:#ffffff;
       }
     </style>
+
+  <style>
+        /* 导航按钮*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            top:45px;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 5px;
+            background: #e4c6d0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-toggle:hover {
+            background: #ffe2e2;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .sidebar-toggle span {
+            display: block;
+            width: 20px;
+            height: 1px;
+            background: white;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-toggle span::before,
+        .sidebar-toggle span::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-toggle span::before {
+            top: -8px;
+        }
+        
+        .sidebar-toggle span::after {
+            top: 8px;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            border-radius:20px 0px 0px 20px;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #edd1d8;
+            color: white;
+            z-index: 999;
+            transition: right 0.4s ease;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            padding: 25px;
+            border-radius:20px 0px 0px 0px;
+            background: #e5deb9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        
+        .sidebar-menu ul {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            padding: 15px 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-left: 3px solid transparent;
+        }
+        
+        .sidebar-menu li:hover {
+            background: #34495e;
+            border-left: 3px solid #3498db;
+        }
+        
+        .sidebar-menu li i {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+        
+        .sidebar-footer {
+            padding: 20px;
+            text-align: center;
+            background: #e5deb9;
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 250px;
+            }
+            
+            .sidebar-toggle {
+                right: 10px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+  </style>
+	
 </head>
 <body>  
+
+  <div class="sidebar-toggle" id="sidebarToggle">
+        <span></span>
+    </div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>导航菜单</h2>
+            <button class="close-btn" id="closeSidebar">×</button>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <i class="fas fa-home"></i>  <a href="https://lcy20.pages.dev/qc.html">一键清除功能</a>
+   
+                </li>
+                <li>
+                    <i class="fas fa-chart-bar"></i>   <a href="https://lcy20.pages.dev/yinyue/index.html">归档音乐播放器</a>
+   
+                </li>
+                <li>
+                    <i class="fas fa-cog"></i>   <a href="https://lcy20.pages.dev/tpxiugai.html">图片尺寸修改</a>
+   
+                </li>
+                <li>
+                    <i class="fas fa-users"></i> <a href="https://lcy20.pages.dev/wode.html">作者简介</a>
+    
+                </li>
+                <li>
+                    <i class="fas fa-folder"></i> 文件管理
+                </li>
+                <li>
+                    <i class="fas fa-bell"></i> 通知中心
+                </li>
+                <li>
+                    <i class="fas fa-question-circle"></i> 帮助中心
+                </li>
+                <li>
+                    <i class="fas fa-calendar"></i> 日程安排
+                </li>
+                <li>
+                    <i class="fas fa-envelope"></i> 消息中心
+                </li>
+                <li>
+                      <a href="rzzq.png"><img width="100%" src="rzzq.png"/></a>
+   
+                </li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+           <div class="sj" style="font-size:20px;color:#fff"><span id="runtime_span"></span></div>
+ 
+        </div>
+    </div>
+    
+    <script>
+        const toggleBtn = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const closeBtn = document.getElementById('closeSidebar');
+        
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+        
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+        
+        // 点击侧边栏外部关闭
+        document.addEventListener('click', (e) => {
+            if (sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                !toggleBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+        
+        // 添加键盘支持：ESC键关闭侧边栏
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+	</script>
+
+	
   <!-- 流星雨和星空背景 -->
   <div class="stars"></div>
   <div class="meteor-shower"></div>
