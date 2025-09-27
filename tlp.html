@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘塔罗牌占卜</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a0f35, #2c1b5e);
+            color: #f0e6ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        header {
+            text-align: center;
+            padding: 15px 0;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            text-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+            background: linear-gradient(to right, #d9b8ff, #a855f7, #7e22ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 0.95rem;
+            color: #c7b3e5;
+            max-width: 90%;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+        
+        .controls {
+            background: rgba(46, 16, 101, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #7e22ce, #a855f7);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.4);
+            flex: 1;
+            min-width: 120px;
+            max-width: 180px;
+            justify-content: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(126, 34, 206, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #a855f7;
+        }
+        
+        .spread-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .spread-option {
+            background: rgba(64, 27, 119, 0.7);
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            min-width: 100px;
+            flex: 1;
+            max-width: 150px;
+            font-size: 0.9rem;
+        }
+        
+        .spread-option.active {
+            background: linear-gradient(to right, #7e22ce, #a855f7);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+        }
+        
+        .spread-option:hover:not(.active) {
+            background: rgba(84, 41, 150, 0.7);
+        }
+        
+        .table-area {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 60vh;
+            min-height: 400px;
+            background: rgba(30, 10, 70, 0.4);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .table-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, transparent 20%, rgba(168, 85, 247, 0.1) 100%),
+                repeating-conic-gradient(
+                    rgba(126, 34, 206, 0.1) 0% 25%, 
+                    transparent 0% 50%
+                )
+                50% / 40px 40px;
+            border-radius: 15px;
+            opacity: 0.7;
+        }
+        
+        .deck-container {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+        }
+        
+        .deck-card {
+            width: 120px;
+            height: 180px;
+            background: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') center/cover;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            border: 3px solid #7e22ce;
+            transition: transform 0.3s;
+        }
+        
+        .deck-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .fan-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+        }
+        
+        .card {
+            position: absolute;
+            width: 100px;
+            height: 150px;
+            perspective: 1000px;
+            cursor: pointer;
+            transform-origin: bottom center;
+            transition: transform 0.5s ease-out;
+        }
+        
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #3a1c71, #6a3093);
+            transform: rotateY(180deg);
+            padding: 8px;
+            text-align: center;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .card-back {
+            background: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80') center/cover;
+            border: 2px solid #7e22ce;
+        }
+        
+        .card-name {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #f8f0ff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.1;
+        }
+        
+        .card-image {
+            width: 70px;
+            height: 90px;
+            background: linear-gradient(135deg, #4a2587, #7e3fc2);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .card-orientation {
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .position-indicator {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background: rgba(126, 34, 206, 0.8);
+            color: white;
+            font-size: 0.65rem;
+            padding: 2px 5px;
+            border-radius: 8px;
+            z-index: 2;
+        }
+        
+        .instructions {
+            text-align: center;
+            margin: 10px 0;
+            color: #c7b3e5;
+            font-style: italic;
+            font-size: 0.85rem;
+            max-width: 90%;
+        }
+        
+        .card-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #2c1b5e, #1a0f35);
+            width: 90%;
+            max-width: 500px;
+            max-height: 85vh;
+            border-radius: 15px;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+            position: relative;
+            text-align: center;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            color: #a855f7;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+            color: #ffd700;
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .modal-name {
+            font-size: 1.8rem;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+        
+        .modal-orientation {
+            font-size: 1.1rem;
+            color: #a855f7;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .modal-image {
+            width: 150px;
+            height: 220px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #4a2587, #7e3fc2);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .modal-meaning {
+            background: rgba(46, 16, 101, 0.6);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .modal-section {
+            margin-bottom: 15px;
+        }
+        
+        .modal-section h3 {
+            color: #d9b8ff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .modal-section p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+        
+        /* 动画效果 */
+        @keyframes fanOut {
+            0% {
+                transform: translate(0, 0) rotate(0) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        .card.fan-out {
+            animation: fanOut 0.8s ease-out forwards;
+        }
+        
+        @keyframes dealCard {
+            0% {
+                transform: translateY(-60px) rotate(-10deg);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) rotate(0);
+                opacity: 1;
+            }
+        }
+        
+        .shuffle-animation {
+            animation: shuffle 0.5s ease-in-out;
+        }
+        
+        @keyframes shuffle {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 0.85rem;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 0.85rem;
+                min-width: 100px;
+            }
+            
+            .spread-option {
+                min-width: 80px;
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .table-area {
+                height: 50vh;
+                min-height: 350px;
+            }
+            
+            .deck-card {
+                width: 100px;
+                height: 150px;
+            }
+            
+            .card {
+                width: 85px;
+                height: 130px;
+            }
+            
+            .card-image {
+                width: 60px;
+                height: 75px;
+                font-size: 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .modal-name {
+                font-size: 1.5rem;
+            }
+            
+            .modal-image {
+                width: 120px;
+                height: 180px;
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .controls {
+                padding: 12px;
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 7px 12px;
+                font-size: 0.8rem;
+                min-width: 90px;
+            }
+            
+            .spread-option {
+                min-width: 70px;
+                padding: 6px 10px;
+                font-size: 0.75rem;
+            }
+            
+            .table-area {
+                height: 45vh;
+                min-height: 300px;
+            }
+            
+            .deck-card {
+                width: 90px;
+                height: 135px;
+            }
+            
+            .card {
+                width: 75px;
+                height: 115px;
+            }
+            
+            .card-name {
+                font-size: 0.75rem;
+            }
+            
+            .card-image {
+                width: 50px;
+                height: 65px;
+                font-size: 1.3rem;
+            }
+            
+            .modal-name {
+                font-size: 1.3rem;
+            }
+            
+            .modal-image {
+                width: 100px;
+                height: 150px;
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-star-and-crescent"></i> 神秘塔罗牌占卜</h1>
+            <p class="subtitle">探索未知，揭示命运。扇形抽牌布局，点击卡片查看详细解读</p>
+        </header>
+        
+        <div class="controls">
+            <button class="btn" id="shuffleBtn">
+                <i class="fas fa-random"></i> 洗牌
+            </button>
+            
+            <div class="spread-selector">
+                <div class="spread-option active" data-spread="single">单张牌</div>
+                <div class="spread-option" data-spread="three">三张牌</div>
+                <div class="spread-option" data-spread="celtic">凯尔特十字</div>
+            </div>
+            
+            <button class="btn" id="drawBtn">
+                <i class="fas fa-hand-paper"></i> 抽牌
+            </button>
+        </div>
+        
+        <div class="instructions">
+            <p>点击"抽牌"按钮后，牌将以扇形展开。点击任何一张牌可查看详细解读</p>
+        </div>
+        
+        <div class="table-area">
+            <div class="table-pattern"></div>
+            
+            <div class="deck-container" id="deckContainer">
+                <div class="deck-card" id="deckCard"></div>
+            </div>
+            
+            <div class="fan-container" id="fanContainer">
+                <!-- 卡片将通过JavaScript动态生成 -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-modal" id="cardModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-header">
+                <div class="modal-name" id="modalName">愚者</div>
+                <div class="modal-orientation" id="modalOrientation">正位</div>
+            </div>
+            
+            <div class="modal-image" id="modalImage">
+                <i class="fas fa-hat-cowboy"></i>
+            </div>
+            
+            <div class="modal-meaning">
+                <div class="modal-section">
+                    <h3><i class="fas fa-sun"></i> 基本含义</h3>
+                    <p id="basicMeaning">愚者代表新的开始、冒险和自发性。这张牌象征着无畏的精神，愿意踏上未知的旅程，相信宇宙会支持你。</p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-user"></i> 爱情含义</h3>
+                    <p id="loveMeaning">在爱情中，愚者表示一段新的关系或冒险的开始。它可能意味着跟随内心而不是逻辑，或者以一种天真无邪的方式进入一段关系。</p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-briefcase"></i> 事业含义</h3>
+                    <p id="careerMeaning">在事业方面，愚者可能表示新的职业道路、创业或承担风险。它鼓励你相信自己的直觉，即使别人认为你的想法不切实际。</p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-brain"></i> 心灵成长</h3>
+                    <p id="spiritualMeaning">愚者邀请你拥抱未知，相信宇宙的指引。它提醒你，真正的智慧有时来自于愿意显得愚蠢，愿意冒险进入未知领域。</p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-exclamation-triangle"></i> 逆位警告</h3>
+                    <p id="reversedWarning">当愚者逆位时，可能表示鲁莽、不负责任或忽视警告信号。你可能在逃避现实或拒绝考虑行动的后果。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 塔罗牌数据 - 大阿卡纳（包含详细解读）
+        const majorArcana = [
+            {
+                name: "愚者",
+                upright: "新的开始,冒险,自发性",
+                reversed: "鲁莽,风险,愚蠢",
+                image: "fas fa-hat-cowboy",
+                basic: "愚者代表新的开始、冒险和自发性。这张牌象征着无畏的精神，愿意踏上未知的旅程，相信宇宙会支持你。",
+                love: "在爱情中，愚者表示一段新的关系或冒险的开始。它可能意味着跟随内心而不是逻辑，或者以一种天真无邪的方式进入一段关系。",
+                career: "在事业方面，愚者可能表示新的职业道路、创业或承担风险。它鼓励你相信自己的直觉，即使别人认为你的想法不切实际。",
+                spiritual: "愚者邀请你拥抱未知，相信宇宙的指引。它提醒你，真正的智慧有时来自于愿意显得愚蠢，愿意冒险进入未知领域。",
+                reversedWarn: "当愚者逆位时，可能表示鲁莽、不负责任或忽视警告信号。你可能在逃避现实或拒绝考虑行动的后果。"
+            },
+            {
+                name: "魔术师",
+                upright: "意志力,创造力,技能",
+                reversed: "操纵,欺骗,未使用的潜力",
+                image: "fas fa-magic",
+                basic: "魔术师代表将想法转化为现实的力量。他象征着创造力、技能和将潜力转化为有形结果的能力。",
+                love: "在爱情中，魔术师表示魅力和吸引力。它可能意味着用你的魅力吸引伴侣，或者在一段关系中创造你想要的动态。",
+                career: "在事业上，魔术师表示利用你的技能和资源取得成功。它鼓励你相信自己有能力创造你想要的结果。",
+                spiritual: "魔术师提醒你，你拥有创造自己现实的力量。通过集中意志和意图，你可以将梦想变为现实。",
+                reversedWarn: "逆位时，魔术师可能表示操纵、欺骗或滥用权力。你可能在试图控制他人或情况，而不是创造双赢的局面。"
+            },
+            {
+                name: "女祭司",
+                upright: "直觉,神圣知识,潜意识",
+                reversed: "秘密,断开连接,缺乏理解",
+                image: "fas fa-moon",
+                basic: "女祭司代表直觉、内在智慧和神圣知识。她象征着与潜意识和精神领域的联系。",
+                love: "在爱情中，女祭司表示需要倾听你的直觉。它可能意味着一段关系中有隐藏的真相，或者你需要更深入地了解你的感受。",
+                career: "在事业上，女祭司表示需要相信你的直觉而不是逻辑。它可能暗示一个情况比你看到的更多，或者你需要寻求内在指导。",
+                spiritual: "女祭司邀请你深入内在智慧。她提醒你，答案并不总是显而易见的，有时需要通过直觉和梦境来获得。",
+                reversedWarn: "逆位时，女祭司可能表示忽视直觉、隐藏秘密或精神上的脱节。你可能在拒绝倾听内心的声音。"
+            },
+            {
+                name: "皇后",
+                upright: "女性力量,性感,丰富",
+                reversed: "依赖, smothering,空虚",
+                image: "fas fa-crown",
+                basic: "皇后代表女性力量、养育和丰富。她象征着与自然和创造力的联系，以及无条件的爱。",
+                love: "在爱情中，皇后表示一段滋养、充满爱的关系。它可能意味着浪漫、感官享受和情感满足。",
+                career: "在事业上，皇后表示创造力和繁荣。它鼓励你培养你的项目或业务，就像母亲培养孩子一样。",
+                spiritual: "皇后提醒你与自然和你的身体连接。她象征着接受和给予爱的能力，以及创造丰富生活的能力。",
+                reversedWarn: "逆位时，皇后可能表示过度依赖、窒息的爱或情感空虚。你可能在给予太多而忽视了自己的需求。"
+            },
+            {
+                name: "皇帝",
+                upright: "权威,结构,控制",
+                reversed: "暴政,僵化,支配",
+                image: "fas fa-chess-king",
+                basic: "皇帝代表权威、结构和控制。他象征着建立秩序、设定界限和承担责任的能力。",
+                love: "在爱情中，皇帝可能表示一段传统或有结构的伴侣关系。它也可能意味着需要设定健康的界限。",
+                career: "在事业上，皇帝表示领导力、组织和成功。它鼓励你掌控局面，建立坚实的基础。",
+                spiritual: "皇帝提醒你结构和纪律的重要性。他象征着通过负责任的行为和清晰的界限创造稳定。",
+                reversedWarn: "逆位时，皇帝可能表示控制问题、僵化或滥用权力。你可能在试图过度控制人或情况。"
+            },
+            {
+                name: "教皇",
+                upright: "精神智慧,传统,道德",
+                reversed: "教条,顺从,过度传统",
+                image: "fas fa-church",
+                basic: "教皇代表精神指导、传统和道德价值观。他象征着寻求更高智慧和遵循既定道路。",
+                love: "在爱情中，教皇可能表示传统的伴侣关系或婚姻。它也可能意味着寻求精神上的联系或指导。",
+                career: "在事业上，教皇表示遵循既定程序或寻求导师指导。它鼓励你尊重传统和结构化的方法。",
+                spiritual: "教皇邀请你探索精神传统和信仰体系。他提醒你，智慧可以通过导师和既定传统获得。",
+                reversedWarn: "逆位时，教皇可能表示教条主义、盲从或拒绝新思想。你可能在过分依赖他人指导而忽视自己的直觉。"
+            },
+            {
+                name: "恋人",
+                upright: "爱情,和谐,关系",
+                reversed: "不平衡,失调,价值观冲突",
+                image: "fas fa-heart",
+                basic: "恋人代表爱情、和谐和关系选择。这张牌象征着在关系中做出重要决定或找到平衡。",
+                love: "在爱情中，恋人表示深刻的联系、和谐和重要选择。它可能意味着承诺或评估一段关系的价值。",
+                career: "在事业上，恋人可能表示与同事的良好关系或需要做出重要的职业选择。它鼓励你平衡工作与个人生活。",
+                spiritual: "恋人提醒你关系在精神成长中的重要性。他象征着在二元性中寻找统一和和谐。",
+                reversedWarn: "逆位时，恋人可能表示关系问题、不平衡或价值观冲突。你可能在做出不符合你真实自我的选择。"
+            }
+        ];
+        
+        // 小阿卡纳 - 权杖、圣杯、宝剑、星币
+        const suits = ["权杖", "圣杯", "宝剑", "星币"];
+        const suitIcons = ["fas fa-fire", "fas fa-heart", "fas fa-wind", "fas fa-coins"];
+        const courtCards = ["侍从", "骑士", "王后", "国王"];
+        const pipMeanings = {
+            upright: ["新开始", "决策", "合作", "稳定", "冲突", "胜利", "挑战", "快速行动", "韧性", "负担", "探索", "成熟"],
+            reversed: ["延迟", "困难", "庆祝", "不和谐", "损失", "过渡", "欺骗", "匆忙", "疲惫", "压迫", "谨慎", "不负责任"]
+        };
+        
+        // 生成完整的78张塔罗牌
+        function generateTarotDeck() {
+            const deck = [];
+            
+            // 添加大阿卡纳
+            for (let i = 0; i < majorArcana.length; i++) {
+                deck.push({
+                    id: i,
+                    name: majorArcana[i].name,
+                    arcana: "major",
+                    suit: null,
+                    value: i,
+                    upright: majorArcana[i].upright,
+                    reversed: majorArcana[i].reversed,
+                    image: majorArcana[i].image,
+                    basic: majorArcana[i].basic,
+                    love: majorArcana[i].love,
+                    career: majorArcana[i].career,
+                    spiritual: majorArcana[i].spiritual,
+                    reversedWarn: majorArcana[i].reversedWarn
+                });
+            }
+            
+            // 添加小阿卡纳
+            let id = majorArcana.length;
+            for (let suitIndex = 0; suitIndex < suits.length; suitIndex++) {
+                const suit = suits[suitIndex];
+                const suitIcon = suitIcons[suitIndex];
+                
+                // 添加数字牌（1-10）
+                for (let value = 1; value <= 10; value++) {
+                    const pipIndex = value - 1;
+                    deck.push({
+                        id: id++,
+                        name: `${value} of ${suit}`,
+                        arcana: "minor",
+                        suit: suit,
+                        suitIcon: suitIcon,
+                        value: value,
+                        upright: pipMeanings.upright[pipIndex],
+                        reversed: pipMeanings.reversed[pipIndex],
+                        basic: `这张牌代表${pipMeanings.upright[pipIndex]}。在${suit}牌组中，它强调行动、创造力和能量方面。`,
+                        love: `在爱情中，${value} of ${suit}表示${pipMeanings.upright[pipIndex]}。它可能意味着关系中的新开始或需要解决冲突。`,
+                        career: `在事业上，这张牌表示${pipMeanings.upright[pipIndex]}。它鼓励你在职业生活中采取行动或做出决定。`,
+                        spiritual: `在心灵成长方面，${value} of ${suit}邀请你关注${pipMeanings.upright[pipIndex]}。它提醒你平衡行动与反思。`,
+                        reversedWarn: `逆位时，这张牌警告${pipMeanings.reversed[pipIndex]}。你可能在回避必要的行动或决策。`
+                    });
+                }
+                
+                // 添加宫廷牌
+                for (let courtIndex = 0; courtIndex < courtCards.length; courtIndex++) {
+                    deck.push({
+                        id: id++,
+                        name: `${courtCards[courtIndex]} of ${suit}`,
+                        arcana: "minor",
+                        suit: suit,
+                        suitIcon: suitIcon,
+                        value: courtIndex + 11,
+                        upright: `${courtCards[courtIndex]} - 行动, 能量`,
+                        reversed: `${courtCards[courtIndex]} - 延迟, 犹豫`,
+                        basic: `这张牌代表${courtCards[courtIndex]}的能量在${suit}牌组中的表现。它象征着特定的人格类型或生活态度。`,
+                        love: `在爱情中，${courtCards[courtIndex]} of ${suit}可能表示一个具有这些特质的人进入你的生活，或者你需要展现这些特质。`,
+                        career: `在事业上，这张牌鼓励你采取${courtCards[courtIndex]}的特质：自信、行动导向或领导能力。`,
+                        spiritual: `在心灵成长方面，这张牌邀请你平衡${courtCards[courtIndex]}的能量，避免极端行为。`,
+                        reversedWarn: `逆位时，这张牌警告你可能在滥用${courtCards[courtIndex]}的能量，或者这些特质被压抑。`
+                    });
+                }
+            }
+            
+            return deck;
+        }
+        
+        // 洗牌算法
+        function shuffleDeck(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+            return deck;
+        }
+        
+        // 创建卡片元素
+        function createCardElement(card, isReversed = false, position = null) {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
+            cardElement.dataset.id = card.id;
+            
+            const orientation = isReversed ? 'reversed' : 'upright';
+            const orientationText = isReversed ? '逆位' : '正位';
+            
+            cardElement.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-back"></div>
+                    <div class="card-front">
+                        ${position ? `<div class="position-indicator">${position}</div>` : ''}
+                        <div class="card-name">
+                            ${card.arcana === "major" ? 
+                                `<span class="major-arcana">${card.name}</span>` : 
+                                `<span class="minor-arcana"><i class="${card.suitIcon} suit-icon"></i>${card.name}</span>`}
+                        </div>
+                        <div class="card-image">
+                            <i class="${card.image || card.suitIcon}"></i>
+                        </div>
+                        <div class="card-orientation">${orientationText}</div>
+                    </div>
+                </div>
+            `;
+            
+            return cardElement;
+        }
+        
+        // 显示卡片详情弹窗
+        function showCardModal(card, isReversed, position = null) {
+            const modalElement = document.getElementById('cardModal');
+            const orientationText = isReversed ? '逆位' : '正位';
+            
+            document.getElementById('modalName').textContent = card.name;
+            document.getElementById('modalOrientation').textContent = orientationText;
+            document.getElementById('modalImage').innerHTML = `<i class="${card.image || card.suitIcon}"></i>`;
+            
+            document.getElementById('basicMeaning').textContent = card.basic;
+            document.getElementById('loveMeaning').textContent = card.love;
+            document.getElementById('careerMeaning').textContent = card.career;
+            document.getElementById('spiritualMeaning').textContent = card.spiritual;
+            document.getElementById('reversedWarning').textContent = isReversed ? card.reversedWarn : "";
+            
+            modalElement.style.display = 'flex';
+        }
+        
+        // 初始化游戏
+        let tarotDeck = generateTarotDeck();
+        let currentSpread = 'single';
+        let drawnCards = [];
+        
+        // DOM元素
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const drawBtn = document.getElementById('drawBtn');
+        const spreadOptions = document.querySelectorAll('.spread-option');
+        const fanContainer = document.getElementById('fanContainer');
+        const deckContainer = document.getElementById('deckContainer');
+        const deckCard = document.getElementById('deckCard');
+        const closeModal = document.getElementById('closeModal');
+        const cardModal = document.getElementById('cardModal');
+        
+        // 洗牌功能
+        shuffleBtn.addEventListener('click', () => {
+            tarotDeck = shuffleDeck([...tarotDeck]);
+            deckCard.classList.add('shuffle-animation');
+            setTimeout(() => {
+                deckCard.classList.remove('shuffle-animation');
+            }, 500);
+        });
+        
+        // 抽牌功能
+        drawBtn.addEventListener('click', () => {
+            // 清除之前的卡片
+            fanContainer.innerHTML = '';
+            drawnCards = [];
+            
+            // 根据当前牌阵抽牌
+            let numCards = 1;
+            if (currentSpread === 'three') numCards = 3;
+            if (currentSpread === 'celtic') numCards = 10;
+            
+            // 确保不会抽超过牌堆数量的牌
+            numCards = Math.min(numCards, tarotDeck.length);
+            
+            // 计算扇形排列的角度
+            const totalAngle = 60; // 扇形总角度
+            const angleStep = totalAngle / (numCards - 1);
+            const startAngle = -totalAngle / 2;
+            const radius = 150; // 扇形半径
+            
+            // 抽牌
+            for (let i = 0; i < numCards; i++) {
+                const card = tarotDeck.pop();
+                const isReversed = Math.random() > 0.7; // 30%几率逆位
+                drawnCards.push({...card, reversed: isReversed});
+                
+                // 计算位置和旋转角度
+                const angle = startAngle + i * angleStep;
+                const radian = angle * (Math.PI / 180);
+                const x = radius * Math.sin(radian);
+                const y = -radius * Math.cos(radian);
+                
+                const position = getPositionLabel(i, currentSpread);
+                const cardElement = createCardElement(card, isReversed, position);
+                cardElement.classList.add('fan-out');
+                cardElement.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+                cardElement.style.animationDelay = `${i * 0.15}s`;
+                
+                // 添加点击事件显示弹窗
+                cardElement.addEventListener('click', () => {
+                    showCardModal(card, isReversed, position);
+                });
+                
+                fanContainer.appendChild(cardElement);
+            }
+        });
+        
+        // 牌阵选择
+        spreadOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                spreadOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                currentSpread = option.dataset.spread;
+                
+                // 清除卡片区域
+                fanContainer.innerHTML = '';
+                drawnCards = [];
+            });
+        });
+        
+        // 关闭弹窗
+        closeModal.addEventListener('click', () => {
+            cardModal.style.display = 'none';
+        });
+        
+        // 点击外部关闭弹窗
+        cardModal.addEventListener('click', (e) => {
+            if (e.target === cardModal) {
+                cardModal.style.display = 'none';
+            }
+        });
+        
+        // 获取牌阵位置标签
+        function getPositionLabel(index, spreadType) {
+            if (spreadType === 'three') {
+                const positions = ['过去', '现在', '未来'];
+                return positions[index] || '';
+            }
+            if (spreadType === 'celtic') {
+                const positions = ['现状', '挑战', '潜意识', '过去', '目标', '未来', '自我', '环境', '希望与恐惧', '结果'];
+                return positions[index] || '';
+            }
+            return null;
+        }
+        
+        // 初始洗牌
+        tarotDeck = shuffleDeck(tarotDeck);
+    </script>
+</body>
+</html>
