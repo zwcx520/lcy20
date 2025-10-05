@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精致日记簿</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6d28d9;
+            --primary-light: #8b5cf6;
+            --primary-dark: #5b21b6;
+            --secondary: #f5f3ff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --border: #e5e7eb;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gray-100: #f9fafb;
+            --gray-200: #f3f4f6;
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 登录注册页面样式 */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image:url("bj.gif");
+            background-size: cover; /* 修改为cover，使图片铺满满屏 */
+      background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
+      margin: 0; /* 去除默认边距 */
+      padding: 0; /* 去除默认内边距 */
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            padding: 2.5rem;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+            background-color: rgba(0, 0, 255, 0);
+        }
+
+        .auth-card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .auth-form .input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .auth-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .auth-form input:focus {
+            border-color: var(--primary-light);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .auth-form button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .auth-form button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-switch {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .auth-switch a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline;
+        }
+
+        /* 主应用布局 */
+        .app-container {
+            display: none;
+            height: 100vh;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px var(--shadow);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info span {
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .new-entry-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .new-entry-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-container {
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .search-container input:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .entries-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .entry-item {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .entry-item:hover {
+            background: var(--secondary);
+            transform: translateX(4px);
+        }
+
+        .entry-item.active {
+            background: var(--secondary);
+            border-left-color: var(--primary);
+        }
+
+        .entry-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .entry-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .entry-preview {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 主内容区样式 */
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: var(--gray-100);
+            display: flex;
+            justify-content: center;
+            
+        }
+
+        .entry-content {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 800px;
+            height: fit-content;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .entry-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .entry-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .entry-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn {
+            background: var(--secondary);
+            color: var(--primary);
+            border: 1px solid var(--border);
+        }
+
+        .edit-btn:hover {
+            background: #e0e7ff;
+        }
+
+        .delete-btn {
+            background: #fef2f2;
+            color: var(--danger);
+            border: 1px solid #fee2e2;
+        }
+
+        .delete-btn:hover {
+            background: #fee2e2;
+        }
+
+        .entry-body-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-top: 1rem;
+        }
+
+        .entry-body {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: var(--text);
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .entry-body p {
+            margin-bottom: 1.2rem;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--text-light);
+            padding: 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--border);
+            opacity: 0.7;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            background-image:url("bj.gif");
+            background-size: cover; /* 修改为cover，使图片铺满满屏 */
+      background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
+      margin: 0; /* 去除默认边距 */
+      padding: 0; /* 去除默认内边距 */
+     
+        }
+
+        .modal-content {
+            
+     
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.4s ease-out;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--text);
+        }
+
+        .modal-body .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-body label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .modal-body input,
+        .modal-body textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-image:url("bj.gif");
+            background-size: cover; /* 修改为cover，使图片铺满满屏 */
+      background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */
+      margin: 0; /* 去除默认边距 */
+      padding: 0; /* 去除默认内边距 */
+     
+        }
+
+        .modal-body input:focus,
+        .modal-body textarea:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .modal-body textarea {
+            min-height: 250px;
+            resize: vertical;
+            line-height: 1.6;
+            font-family: inherit;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e7ff;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 20;
+                transform: translateX(-100%);
+                width: 280px;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+                box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+            }
+
+            .menu-toggle {
+                display: block;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+                color: var(--primary);
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .logo span {
+                display: none;
+            }
+
+            .content-area {
+                padding: 1rem;
+            }
+
+            .entry-content {
+                padding: 1.5rem;
+            }
+
+            .entry-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .entry-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .entry-body-container {
+                max-height: 50vh;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 滚动条样式 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-200);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录/注册页面 -->
+    <div class="auth-container" id="auth-container">
+        <div class="auth-card">
+            <div id="login-form">
+                <h2>欢迎使用日记簿</h2>
+                <form class="auth-form">
+                    <div class="input-group">
+                        <label for="login-username">用户名</label>
+                        <input type="text" id="login-username" placeholder="输入用户名" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" placeholder="输入密码" required>
+                    </div>
+                    <button type="button" id="login-btn">登录</button>
+                </form>
+                <div class="auth-switch">
+                    还没有账号？ <a href="#" id="show-register">注册</a>
+                </div>
+            </div>
+
+            <div id="register-form" style="display: none;">
+                <h2>创建账号</h2>
+                <form class="auth-form">
+                    <div class="input-group">
+                        <label for="register-username">用户名</label>
+                        <input type="text" id="register-username" placeholder="创建用户名" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-password">密码</label>
+                        <input type="password" id="register-password" placeholder="创建密码" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-confirm">确认密码</label>
+                        <input type="password" id="register-confirm" placeholder="确认密码" required>
+                    </div>
+                    <button type="button" id="register-btn">注册</button>
+                </form>
+                <div class="auth-switch">
+                    已有账号？ <a href="#" id="show-login">登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主应用界面 -->
+    <div class="app-container" id="app-container">
+        <header class="header">
+            <button class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>精致日记簿</span>
+            </div>
+            <a href="qc.html">备份</a>
+            <div class="user-info">
+                <span id="current-user">用户名</span>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> 退出
+                </button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <button class="new-entry-btn" id="new-entry-btn">
+                        <i class="fas fa-plus"></i> 新建日记
+                    </button>
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="搜索日记...">
+                    </div>
+                </div>
+                <div class="entries-list" id="entries-list">
+                    <!-- 日记列表将通过JS动态生成 -->
+                </div>
+            </aside>
+
+            <main class="content-area">
+                <div class="empty-state" id="empty-state">
+                    <i class="fas fa-book-open"></i>
+                    <h3>欢迎使用日记簿</h3>
+                    <p>选择一篇日记开始阅读，或点击"新建日记"按钮记录今天的想法和经历</p>
+                </div>
+                
+                <div class="entry-content" id="entry-content" style="display: none;">
+                    <div class="entry-header">
+                        <div>
+                            <h2 id="entry-title">日记标题</h2>
+                            <div class="entry-meta">
+                                <span id="entry-date">2023年10月15日</span>
+                                <span id="entry-time">下午 3:20</span>
+                            </div>
+                        </div>
+                        <div class="entry-actions">
+                            <button class="action-btn edit-btn" id="edit-entry-btn">
+                                <i class="fas fa-edit"></i> 编辑
+                            </button>
+                            <button class="action-btn delete-btn" id="delete-entry-btn">
+                                <i class="fas fa-trash"></i> 删除
+                            </button>
+                        </div>
+                    </div>
+                    <div class="entry-body-container">
+                        <div class="entry-body" id="entry-body">
+                            日记内容将在这里显示...
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 新建/编辑日记弹窗 -->
+    <div class="modal" id="entry-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">新建日记</h3>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="entry-title-input">标题</label>
+                    <input type="text" id="entry-title-input" placeholder="输入日记标题">
+                </div>
+                <div class="form-group">
+                    <label for="entry-content-input">内容</label>
+                    <textarea id="entry-content-input" placeholder="写下今天的想法..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-entry">取消</button>
+                <button class="btn btn-primary" id="save-entry">保存日记</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除弹窗 -->
+    <div class="modal" id="delete-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>删除日记</h3>
+                <button class="close-btn" id="close-delete-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>确定要删除这篇日记吗？此操作无法撤销。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-delete">取消</button>
+                <button class="btn btn-primary" id="confirm-delete" style="background: var(--danger);">删除</button>
+            </div>
+        </div>
+        <audio src="https://lcy20.pages.dev/appyy.mp3" loop="true" autoplay="true"></audio>
+    </div>
+
+    <script>
+        // DOM元素
+        const authContainer = document.getElementById('auth-container');
+        const appContainer = document.getElementById('app-container');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const currentUserSpan = document.getElementById('current-user');
+        const newEntryBtn = document.getElementById('new-entry-btn');
+        const entriesList = document.getElementById('entries-list');
+        const entryContent = document.getElementById('entry-content');
+        const emptyState = document.getElementById('empty-state');
+        const entryModal = document.getElementById('entry-modal');
+        const closeModal = document.getElementById('close-modal');
+        const cancelEntry = document.getElementById('cancel-entry');
+        const saveEntry = document.getElementById('save-entry');
+        const searchInput = document.getElementById('search-input');
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const editEntryBtn = document.getElementById('edit-entry-btn');
+        const deleteEntryBtn = document.getElementById('delete-entry-btn');
+        const deleteModal = document.getElementById('delete-modal');
+        const closeDeleteModal = document.getElementById('close-delete-modal');
+        const cancelDelete = document.getElementById('cancel-delete');
+        const confirmDelete = document.getElementById('confirm-delete');
+        const modalTitle = document.getElementById('modal-title');
+        
+        // 日记数据
+        let currentUser = null;
+        let entries = [];
+        let selectedEntryId = null;
+        let isEditing = false;
+
+        // 显示注册表单
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'block';
+        });
+
+        // 显示登录表单
+        showLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        });
+
+        // 登录功能
+        loginBtn.addEventListener('click', () => {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!username || !password) {
+                alert('请输入用户名和密码');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('diaryUsers') || '[]');
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = username;
+                currentUserSpan.textContent = username;
+                authContainer.style.display = 'none';
+                appContainer.style.display = 'block';
+                loadEntries();
+            } else {
+                alert('用户名或密码错误');
+            }
+        });
+
+        // 注册功能
+        registerBtn.addEventListener('click', () => {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!username || !password) {
+                alert('请输入用户名和密码');
+                return;
+            }
+            
+            if (password !== confirm) {
+                alert('两次输入的密码不一致');
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('diaryUsers') || '[]');
+            
+            if (users.some(u => u.username === username)) {
+                alert('用户名已存在');
+                return;
+            }
+            
+            users.push({ username, password });
+            localStorage.setItem('diaryUsers', JSON.stringify(users));
+            
+            alert('注册成功！请登录');
+            showLogin.click();
+        });
+
+        // 退出登录
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            appContainer.style.display = 'none';
+            authContainer.style.display = 'flex';
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+        });
+
+        // 打开新建日记弹窗
+        newEntryBtn.addEventListener('click', () => {
+            isEditing = false;
+            modalTitle.textContent = '新建日记';
+            document.getElementById('entry-title-input').value = '';
+            document.getElementById('entry-content-input').value = '';
+            entryModal.style.display = 'flex';
+        });
+
+        // 关闭弹窗
+        closeModal.addEventListener('click', () => {
+            entryModal.style.display = 'none';
+        });
+
+        cancelEntry.addEventListener('click', () => {
+            entryModal.style.display = 'none';
+        });
+
+        // 保存新日记
+        saveEntry.addEventListener('click', () => {
+            const title = document.getElementById('entry-title-input').value;
+            const content = document.getElementById('entry-content-input').value;
+            
+            if (!title || !content) {
+                alert('请填写标题和内容');
+                return;
+            }
+            
+            if (isEditing && selectedEntryId) {
+                // 编辑现有日记
+                const entryIndex = entries.findIndex(e => e.id === selectedEntryId);
+                if (entryIndex !== -1) {
+                    entries[entryIndex].title = title;
+                    entries[entryIndex].content = content;
+                    entries[entryIndex].date = new Date().toISOString();
+                }
+            } else {
+                // 新建日记
+                const newEntry = {
+                    id: Date.now(),
+                    title,
+                    content,
+                    date: new Date().toISOString()
+                };
+                entries.push(newEntry);
+                selectedEntryId = newEntry.id;
+            }
+            
+            saveEntries();
+            renderEntries();
+            selectEntry(selectedEntryId);
+            entryModal.style.display = 'none';
+        });
+
+        // 编辑日记
+        editEntryBtn.addEventListener('click', () => {
+            if (!selectedEntryId) return;
+            
+            const entry = entries.find(e => e.id === selectedEntryId);
+            if (entry) {
+                isEditing = true;
+                modalTitle.textContent = '编辑日记';
+                document.getElementById('entry-title-input').value = entry.title;
+                document.getElementById('entry-content-input').value = entry.content;
+                entryModal.style.display = 'flex';
+            }
+        });
+
+        // 删除日记
+        deleteEntryBtn.addEventListener('click', () => {
+            deleteModal.style.display = 'flex';
+        });
+
+        closeDeleteModal.addEventListener('click', () => {
+            deleteModal.style.display = 'none';
+        });
+
+        cancelDelete.addEventListener('click', () => {
+            deleteModal.style.display = 'none';
+        });
+
+        confirmDelete.addEventListener('click', () => {
+            if (selectedEntryId) {
+                entries = entries.filter(e => e.id !== selectedEntryId);
+                saveEntries();
+                renderEntries();
+                
+                if (entries.length > 0) {
+                    selectEntry(entries[0].id);
+                } else {
+                    entryContent.style.display = 'none';
+                    emptyState.style.display = 'flex';
+                }
+            }
+            deleteModal.style.display = 'none';
+        });
+
+        // 搜索功能
+        searchInput.addEventListener('input', () => {
+            renderEntries();
+        });
+
+        // 移动端菜单切换
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // 点击内容区域关闭移动端侧边栏
+        document.querySelector('.content-area').addEventListener('click', () => {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // 加载日记
+        function loadEntries() {
+            const data = localStorage.getItem(`diaryEntries_${currentUser}`);
+            entries = data ? JSON.parse(data) : [];
+            renderEntries();
+            
+            // 如果有日记，默认选择第一篇
+            if (entries.length > 0) {
+                selectEntry(entries[0].id);
+            }
+        }
+
+        // 保存日记
+        function saveEntries() {
+            localStorage.setItem(`diaryEntries_${currentUser}`, JSON.stringify(entries));
+        }
+
+        // 渲染日记列表
+        function renderEntries() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredEntries = entries.filter(entry => 
+                entry.title.toLowerCase().includes(searchTerm) || 
+                entry.content.toLowerCase().includes(searchTerm)
+            );
+            
+            entriesList.innerHTML = '';
+            
+            if (filteredEntries.length === 0) {
+                entriesList.innerHTML = '<div class="empty-list" style="text-align: center; padding: 2rem; color: var(--text-light);">没有找到日记</div>';
+                return;
+            }
+            
+            filteredEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            filteredEntries.forEach(entry => {
+                const date = new Date(entry.date);
+                const formattedDate = date.toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                // 创建预览文本（前50个字符）
+                const preview = entry.content.length > 50 
+                    ? entry.content.substring(0, 50) + '...' 
+                    : entry.content;
+                
+                const entryItem = document.createElement('div');
+                entryItem.className = 'entry-item';
+                if (selectedEntryId === entry.id) {
+                    entryItem.classList.add('active');
+                }
+                entryItem.innerHTML = `
+                    <div class="entry-title">
+                        <span>${entry.title}</span>
+                        <i class="fas fa-circle" style="color: ${entry.id === selectedEntryId ? '#8b5cf6' : '#e5e7eb'}; font-size: 0.5rem;"></i>
+                    </div>
+                    <div class="entry-date">${formattedDate}</div>
+                    <div class="entry-preview">${preview}</div>
+                `;
+                
+                entryItem.addEventListener('click', () => {
+                    selectEntry(entry.id);
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('active');
+                    }
+                });
+                
+                entriesList.appendChild(entryItem);
+            });
+        }
+
+        // 选择日记
+        function selectEntry(id) {
+            selectedEntryId = id;
+            const entry = entries.find(e => e.id === id);
+            
+            if (entry) {
+                const date = new Date(entry.date);
+                const formattedDate = date.toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                const formattedTime = date.toLocaleTimeString('zh-CN', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                document.getElementById('entry-title').textContent = entry.title;
+                document.getElementById('entry-date').textContent = formattedDate;
+                document.getElementById('entry-time').textContent = formattedTime;
+                document.getElementById('entry-body').textContent = entry.content;
+                
+                entryContent.style.display = 'block';
+                emptyState.style.display = 'none';
+            }
+            
+            renderEntries();
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 添加一些示例日记（仅用于演示）
+            if (!localStorage.getItem('diaryUsers')) {
+                const demoEntries = [
+                    {
+                        id: 1,
+                        title: "美好的一天",
+                        content: "今天天气晴朗，我和朋友去了公园散步。公园里的花开得特别美，我们还看到了一只可爱的小松鼠。中午在一家新开的餐厅吃了午餐，食物非常美味。\n\n下午我们去看了艺术展览，展出的作品很有创意，让我获得了不少灵感。晚上回家后，我决定开始学习绘画，记录生活中的美好瞬间。",
+                        date: "2023-10-15T09:30:00Z"
+                    },
+                    {
+                        id: 2,
+                        title: "项目进展",
+                        content: "今天完成了项目的主要功能开发，虽然遇到了一些技术难题，但最终都顺利解决了。团队合作非常愉快，期待下周的测试阶段。\n\n在解决数据库性能问题时，我发现了一种新的索引优化方法，这让我对数据库设计有了更深的理解。晚上和团队成员一起庆祝了这个里程碑。",
+                        date: "2023-10-14T18:45:00Z"
+                    },
+                    {
+                        id: 3,
+                        title: "读书笔记",
+                        content: "今天读完了《时间简史》，对宇宙的起源和黑洞理论有了更深的理解。特别对时间膨胀的概念印象深刻，这让我思考了很多关于时间和空间的问题。\n\n书中提到，时间并不是绝对的，而是相对的。这让我联想到我们的生活节奏，有时候感觉时间飞逝，有时候又觉得时间漫长。或许我们对时间的感知也是相对的。",
+                        date: "2023-10-12T20:15:00Z"
+                    }
+                ];
+                
+                localStorage.setItem('diaryEntries_demo', JSON.stringify(demoEntries));
+            }
+        });
+    </script>
+</body>
+</html>
