@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="webdenglu.css">
 <link rel="stylesheet" href="tptc.css">
      <link rel="stylesheet" href="webgonggao.css">
+	 <link rel="stylesheet" href="yykp.css">
+    
     <style>
     .appico{
       position:absolute;
@@ -186,6 +188,55 @@
 </head>
 <body>  
 
+<! -- 音乐卡片 --->
+<div class="music-player">
+        <div class="toggle-btn">
+            <i class="fas fa-music"></i>
+        </div>
+        
+        <div class="player-content">
+            <div class="album-cover">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="专辑封面">
+            </div>
+            
+            <div class="player-details">
+                <div class="song-info">
+                    <div class="song-title">难生恨 - 阮言</div>
+                  
+                </div>
+                
+                <div class="progress-area">
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                    <div class="timer">
+                        <span class="current">0:00</span>
+                        <span class="duration">4:30</span>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <i class="fas fa-random"></i>
+                    <i class="fas fa-step-backward"></i>
+                    <div class="play-pause">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <i class="fas fa-step-forward"></i>
+                    <i class="fas fa-redo"></i>
+                </div>
+                
+                <div class="volume-control">
+                    <i class="fas fa-volume-up"></i>
+                    <div class="volume-slider">
+                        <div class="volume-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+	
   <div class="sidebar-toggle" id="sidebarToggle">
         <span></span>
     </div>
@@ -476,7 +527,7 @@
     </div>
 </div>
 
-    
+       <script src="yykp.js"></script>
     <script src="webuser.js">    </script>
   <script src="tptc.js">    </script>
  <script src="webgonggao.js"></script>
