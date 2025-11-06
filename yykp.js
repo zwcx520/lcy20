@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 模拟音频对象
             const audio = new Audio();
-            audio.src = "https://lcy20.netlify.app/appyy.mp3"; // 示例音频
+            audio.src = "webyy.mp3"; // 示例音频
             
             // 设置自动播放和循环
             audio.loop = true; // 启用循环播放
