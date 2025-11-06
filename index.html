@@ -467,7 +467,131 @@
             <p>记录美好时刻，分享甜蜜时光。在这里，每一刻都值得珍藏。</p>
         </div>
 	</div>
-
+    <script>
+        // 初始化用户数据
+        function initUsers() {
+            // 检查本地存储中是否已有用户数据
+            if (!localStorage.getItem('users')) {
+                // 创建初始用户
+                const initialUsers = {
+                    'lcy': 'lcy',
+                    'zwcx': 'zwcx'
+                };
+                
+                // 存储到本地
+                localStorage.setItem('users', JSON.stringify(initialUsers));
+            }
+        }
+        
+        // 显示消息
+        function showMessage(element, message, isError = false) {
+            element.textContent = message;
+            element.className = isError ? 'message error' : 'message success';
+            element.style.display = 'block';
+            
+            // 3秒后隐藏消息
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 3000);
+        }
+        
+        // 切换表单显示
+        document.getElementById('show-register').addEventListener('click', function() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.remove('hidden');
+        });
+        
+        document.getElementById('show-login').addEventListener('click', function() {
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+        });
+        
+        // 注册功能
+        document.getElementById('register-btn').addEventListener('click', function() {
+            const username = document.getElementById('register-username').value.trim();
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageElement = document.getElementById('register-message');
+            
+            // 验证输入
+            if (!username || !password || !confirmPassword) {
+                showMessage(messageElement, '请填写所有字段', true);
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage(messageElement, '两次输入的密码不一致', true);
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage(messageElement, '密码长度至少为6位', true);
+                return;
+            }
+            
+            // 获取现有用户数据
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            // 检查用户名是否已存在
+            if (users[username]) {
+                showMessage(messageElement, '用户名已存在', true);
+                return;
+            }
+            
+            // 添加新用户
+            users[username] = password;
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            showMessage(messageElement, '注册成功！请登录');
+            
+            // 清空表单
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            
+            // 切换到登录表单
+            setTimeout(() => {
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('login-form').classList.remove('hidden');
+            }, 1500);
+        });
+        
+        // 登录功能
+        document.getElementById('login-btn').addEventListener('click', function() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            const messageElement = document.getElementById('login-message');
+            
+            // 验证输入
+            if (!username || !password) {
+                showMessage(messageElement, '请填写用户名和密码', true);
+                return;
+            }
+            
+            // 获取用户数据
+            const users = JSON.parse(localStorage.getItem('users') || '{}');
+            
+            // 验证用户名和密码
+            if (users[username] && users[username] === password) {
+                showMessage(messageElement, '登录成功！正在登陆...');
+                
+                // 保存当前登录用户
+                localStorage.setItem('currentUser', username);
+                
+                // 跳转到百度
+                setTimeout(() => {
+                    window.location.href = 'gd.html';
+                }, 1500);
+            } else {
+                showMessage(messageElement, '用户名或密码错误', true);
+            }
+        });
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initUsers();
+        });
+	</script>
        <script src="yykp.js"></script>
     <script src="webuser.js">    </script>
   <script src="tptc.js">    </script>
