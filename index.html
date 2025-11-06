@@ -11,25 +11,7 @@
      <link rel="stylesheet" href="webgonggao.css">
 	 <link rel="stylesheet" href="yykp.css">
     
-    <style>
-    .appico{
-      position:absolute;
-      top:15px;
-      left:15px;
-      font-size:30px;
-      color:#ffffff;
-      }
-    footer{
-      position:absolute;
-      bottom:2px;
-      right:10px;
-      text-align:left;
-      color:#ffffff;
-      }
-    </style>
-
-  <style>
-        /* 导航按钮*/
+     <style>
         * {
             margin: 0;
             padding: 0;
@@ -37,153 +19,377 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        .sidebar-toggle {
-            position: fixed;
-            top:45px;
-            right: 20px;
-            transform: translateY(-50%);
-            width: 5px;
-            height: 5px;
-            background: #e4c6d0;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .sidebar-toggle:hover {
-            background: #ffe2e2;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .sidebar-toggle span {
-            display: block;
-            width: 20px;
-            height: 1px;
-            background: white;
+        body {
+            background: linear-gradient(135deg, #f9c5d1, #c2a6e3, #a1c4fd);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 0;
             position: relative;
-            transition: all 0.3s ease;
+            overflow: hidden;
         }
         
-        .sidebar-toggle span::before,
-        .sidebar-toggle span::after {
+        /* 背景装饰元素 */
+        .bg-heart {
+            position: absolute;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.15);
+            z-index: 0;
+            animation: float 15s infinite linear;
+        }
+        
+        .bg-heart:nth-child(1) {
+            top: 5%;
+            left: 5%;
+        }
+        
+        .bg-heart:nth-child(2) {
+            top: 15%;
+            right: 8%;
+            animation-duration: 18s;
+        }
+        
+        .bg-heart:nth-child(3) {
+            bottom: 10%;
+            left: 12%;
+            animation-duration: 22s;
+        }
+        
+        .bg-heart:nth-child(4) {
+            bottom: 20%;
+            right: 6%;
+            animation-duration: 16s;
+        }
+        
+        .bg-heart:nth-child(5) {
+            top: 50%;
+            left: 8%;
+            animation-duration: 20s;
+        }
+        
+        .bg-heart:nth-child(6) {
+            top: 60%;
+            right: 12%;
+            animation-duration: 14s;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+        
+        .container {
+            width: 100vw;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+        }
+        
+        .container::before {
             content: '';
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: white;
-            transition: all 0.3s ease;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path fill="%23ffb6c1" opacity="0.1" d="M50,30 A20,20 0 1,1 50,70 A20,20 0 1,1 50,30 Z"/></svg>');
+            opacity: 0.2;
+            z-index: 0;
         }
         
-        .sidebar-toggle span::before {
-            top: -8px;
-        }
-        
-        .sidebar-toggle span::after {
-            top: 8px;
-        }
-        
-        .sidebar {
-            position: fixed;
-            top: 0;
-            border-radius:20px 0px 0px 20px;
-            right: -300px;
-            width: 300px;
-            height: 100%;
-            background: #edd1d8;
-            color: white;
-            z-index: 999;
-            transition: right 0.4s ease;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        .form-side {
+            padding: 40px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            z-index: 1;
         }
         
-        .sidebar.active {
-            right: 0;
-        }
-        
-        .sidebar-header {
-            padding: 25px;
-            border-radius:20px 0px 0px 0px;
-            background: #e5deb9;
+        .welcome-side {
+            background: linear-gradient(45deg, rgba(255, 154, 158, 0.7), rgba(250, 208, 196, 0.7));
+            padding: 40px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-        }
-        
-        .sidebar-header h2 {
-            font-size: 1.5rem;
-        }
-        
-        .close-btn {
-            background: none;
-            border: none;
+            text-align: center;
             color: white;
-            font-size: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-side::before {
+            content: '';
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: -80px;
+            right: -80px;
+        }
+        
+        .welcome-side::after {
+            content: '';
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .heart {
+            font-size: 80px;
+            color: #ff4d6d;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #ff4d6d;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        h2 {
+            font-size: 26px;
+            margin-bottom: 30px;
+            color: #6a5acd;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        
+        .welcome-side h2 {
+            color: white;
+            font-size: 32px;
+        }
+        
+        .welcome-side p {
+            font-size: 18px;
+            max-width: 80%;
+            line-height: 1.6;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff4d6d;
+            z-index: 1;
+            font-size: 18px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 18px 20px 18px 55px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            color: #333;
+        }
+        
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.6);
+        }
+        
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        button {
+            background: linear-gradient(to right, rgba(255, 77, 109, 0.8), rgba(255, 143, 163, 0.8));
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 50px;
+            font-size: 18px;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            width: 100%;
+            transition: all 0.3s;
+            font-weight: bold;
+            margin-top: 10px;
+            backdrop-filter: blur(5px);
         }
         
-        .close-btn:hover {
-            transform: rotate(90deg);
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4);
+            background: linear-gradient(to right, rgba(255, 77, 109, 0.9), rgba(255, 143, 163, 0.9));
         }
         
-        .sidebar-menu {
-            padding: 20px 0;
-            flex-grow: 1;
-            overflow-y: auto;
+        .toggle-form {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
         }
         
-        .sidebar-menu ul {
-            list-style: none;
-        }
-        
-        .sidebar-menu li {
-            padding: 15px 25px;
-            transition: all 0.3s ease;
+        .toggle-form a {
+            color: #ff4d6d;
+            text-decoration: none;
+            font-weight: bold;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            border-left: 3px solid transparent;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
         }
         
-        .sidebar-menu li:hover {
-            background: #34495e;
-            border-left: 3px solid #3498db;
+        .toggle-form a:hover {
+            text-decoration: underline;
         }
         
-        .sidebar-menu li i {
-            margin-right: 15px;
-            font-size: 1.2rem;
-            width: 25px;
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
             text-align: center;
+            display: none;
+            backdrop-filter: blur(5px);
         }
         
-        .sidebar-footer {
-            padding: 20px;
-            text-align: center;
-            background: #e5deb9;
-            font-size: 0.9rem;
-            color: #95a5a6;
+        .success {
+            background-color: rgba(212, 237, 218, 0.8);
+            color: #155724;
         }
         
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 250px;
+        .error {
+            background-color: rgba(248, 215, 218, 0.8);
+            color: #721c24;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-rows: 1fr 1fr;
             }
             
-            .sidebar-toggle {
-                right: 10px;
-                width: 50px;
-                height: 50px;
+            .welcome-side, .form-side {
+                padding: 30px;
+            }
+            
+            .heart {
+                font-size: 60px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            .welcome-side h2 {
+                font-size: 26px;
             }
         }
-  </style>
+        
+        @media (max-width: 600px) {
+            .welcome-side, .form-side {
+                padding: 25px;
+            }
+            
+            .heart {
+                font-size: 50px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
+            
+            .welcome-side h2 {
+                font-size: 22px;
+            }
+            
+            .welcome-side p {
+                font-size: 16px;
+            }
+            
+            input {
+                padding: 15px 15px 15px 45px;
+            }
+            
+            button {
+                padding: 15px;
+            }
+            
+            .bg-heart {
+                font-size: 80px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .welcome-side, .form-side {
+                padding: 20px;
+            }
+            
+            .heart {
+                font-size: 40px;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            h2 {
+                font-size: 18px;
+            }
+            
+            .welcome-side h2 {
+                font-size: 20px;
+            }
+            
+            .welcome-side p {
+                font-size: 14px;
+            }
+            
+            .bg-heart {
+                font-size: 60px;
+            }
+        }
+        
+        /* 小屏幕竖屏优化 */
+        @media (max-width: 900px) and (orientation: portrait) {
+            .container {
+                grid-template-rows: 1.2fr 0.8fr;
+            }
+        }
+	 </style>
+
 	
 </head>
 
