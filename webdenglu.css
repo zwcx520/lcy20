@@ -1,0 +1,169 @@
+
+
+  /* 添加禁止滚动样式*/
+        html,
+        body {
+            overflow: hidden;
+            height: 100%;
+        
+        }
+
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+          
+            
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+
+          margin-top: -65px; 
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(50,50,93,0), 0 5px 15px rgba(0,0,0,0);
+            padding: 3rem 2.5rem;
+            max-width: 450px;
+            width: 80%;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .page-title {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -8px;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            transform: translateX(-50%);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: transparent;
+            outline: none;
+            transition: 0.3s ease;
+        }
+
+        .input-label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            pointer-events: none;
+            transition: 0.3s ease;
+        }
+
+        .input-field:focus ~ .input-label,
+        .input-field:not(:placeholder-shown) ~ .input-label {
+            top: -12px;
+            font-size: 0.8rem;
+            color: #3498db;
+        }
+
+        .input-field:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 12px rgba(52, 152, 219, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            color: white;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+
+        .captcha-container {
+            display: flex;
+            align-items: center;
+        }
+
+        #captcha {
+            padding: 10px 18px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-left: 1rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        #captcha:hover {
+            background: #f8f9fa;
+            transform: scale(1.02);
+        }
+
+        .switch-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7f8c8d;
+        }
+
+        .switch-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .switch-link a:hover {
+            color: #2980b9;
+        }
