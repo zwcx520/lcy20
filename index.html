@@ -278,101 +278,6 @@ background-image: url(bj.gif);
     </div>
 
 
-<!--  导航菜单-->
-  
-    <div class="sidebar-toggle" id="sidebarToggle">
-        <span></span>
-    </div>
-    
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h2>导航菜单</h2>
-            <button class="close-btn" id="closeSidebar">×</button>
-        </div>
-        <div class="sidebar-menu">
-            <ul>
-                <li>
-                    <i class="fas fa-chart-bar"></i>  <a href="https://lcy20.netlify.app/qc.html">一键清除功能</a>
-   
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i>   <a href="https://lcy20.netlify.app/yinyue/index.html">归档音乐播放器</a>
-   
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i>   <a href="https://lcy20.netlify.app/tpxiugai.html">图片尺寸修改</a>
-   
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i> <a href="https://lcy20.netlify.app/wode.html">作者简介</a>
-    
-                </li>
-               <li>
-                    <i class="fas fa-chart-bar"></i> <a href="https://wenjian.netlify.app">个人文件库</a>
-    
-              
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i> 通知中心
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i> 帮助中心
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i> 日程安排
-                </li>
-                <li>
-                    <i class="fas fa-chart-bar"></i> 消息中心
-                </li>
-                <li>
-                      <a href="rzzq.png"><img width="100%" src="rzzq.png"/></a>
-   
-                </li> 
-                 <li>
-                      <a href="rj.png"><img width="100%" src="rj.png"/></a>
-   
-                </li>
-                  <li>
-                      <a href="https://lcy20.netlify.app/lianxierweima.jpg"><img width="100%" src="https://lcy20.netlify.app/lianxierweima.jpg"/></a>
-   
-                </li>
-            </ul>
-        </div>
-        <div class="sidebar-footer">
-           <div class="sj" style="font-size:20px;color:#fff"><span id="runtime_span"></span></div>
- 
-        </div>
-    </div>
-    
-    <script>
-        const toggleBtn = document.getElementById('sidebarToggle');
-        const sidebar = document.getElementById('sidebar');
-        const closeBtn = document.getElementById('closeSidebar');
-        
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-        
-        closeBtn.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-        });
-        
-        // 点击侧边栏外部关闭
-        document.addEventListener('click', (e) => {
-            if (sidebar.classList.contains('active') && 
-                !sidebar.contains(e.target) && 
-                !toggleBtn.contains(e.target)) {
-                sidebar.classList.remove('active');
-            }
-        });
-        
-        // 添加键盘支持：ESC键关闭侧边栏
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-            }
-        });
-    </script>
 
 
 
@@ -476,9 +381,8 @@ background-image: url(bj.gif);
      
   <div style="font-size: 70%;color:#000000;position: fixed;  bottom: 0; width: 100%;list-style-type: none;margin: 0;  padding: 0; overflow: hidden;z-index: 9999; background:linear-gradient(to left,rgb(198, 255, 221), rgb(251, 215, 134) );text-align: center;"><a href='gdq/index.html'>游戏</a>&nbsp;&nbsp;[2024·9] ©  追吻辰星 ICP 未备案 <hr /></div> 
        </div>
- <a href="https://lcy20.netlify.app/lianxierweima.jpg"> <img class="image" alt="联系二维码" src="https://lcy20.netlify.app/lianxierweima.jpg"/>
-      </a>  
-      
+
+
       
       
        <! -- <div class="bjyy" id="targetDiv"></div> 
