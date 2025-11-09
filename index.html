@@ -73,7 +73,63 @@ background-image: url(bj.jpg);
 </head>
 
 <body >
-
+ <!-- 广告容器 -->
+    <div class="ad-container" id="adContainer">
+        <button class="skip-btn" id="skipBtn">跳过</button>
+        
+        <div class="brand-logo">『-----特别庆祝-----』</div><br>
+        
+        <div class="product-image"><img width="100%" src="tp/89bf7a1264442738698385a073404fd6.jpg"/></div>
+        
+        <div class="ad-content">
+            <h1 class="ad-title">不见桃花不见秋</h1>
+            <p class="ad-description">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;本站热烈庆祝本站创始人------不见桃花不见秋 二零二五年十一月二十二岁生辰快乐，愿走出半生归来仍然少年，愿浮华遍身初心未曾更改。时间不停，看透了很多，放下了很多，慢慢没了棱角，没了拼劲，慢慢被生活所缚，即使这样，依然在尽全力的苦中作乐，独自在陌生的城市里祝自己生日快乐 致谢参与和维护本站的好友，归档-时光卷轴的诞生才有了无上限的意义， 致，生日快乐！</p>
+            
+            <div class="countdown" id="countdown">5</div>
+        </div>
+    </div>
+        <script>
+        let countdownValue = 5;
+        const countdownElement = document.getElementById('countdown');
+        const adContainer = document.getElementById('adContainer');
+        const mainContent = document.getElementById('mainContent');
+        const skipBtn = document.getElementById('skipBtn');
+        let countdownInterval;
+        
+        function startCountdown() {
+            countdownInterval = setInterval(() => {
+                countdownValue--;
+                countdownElement.textContent = countdownValue;
+                
+                if (countdownValue <= 0) {
+                    clearInterval(countdownInterval);
+                    closeAd();
+                }
+            }, 1000);
+        }
+        
+        function closeAd() {
+            // 添加淡出效果
+            adContainer.style.opacity = '0';
+            
+            // 等待淡出动画完成后隐藏广告并显示主内容
+            setTimeout(() => {
+                adContainer.style.display = 'none';
+                mainContent.style.display = 'block';
+            }, 500);
+        }
+        
+        function skipAd() {
+            clearInterval(countdownInterval);
+            closeAd();
+        }
+        
+        // 添加事件监听器
+        skipBtn.addEventListener('click', skipAd);
+        
+        // 页面加载后开始倒计时
+        window.addEventListener('load', startCountdown);
+		</script>
 
 <! -- 音乐卡片 --->
 <div class="music-player">
