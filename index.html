@@ -14,6 +14,19 @@
     
     <title id="targetTitle"></title>  
 
+  <!-- 核心viewport配置 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <style>
+    /* CSS禁止缩放补充 */
+    * {
+      touch-action: manipulation;
+      -ms-touch-action: manipulation;
+      -webkit-text-size-adjust: 100%;
+    }
+    html {
+      -ms-content-zooming: none;
+    }
+  </style>
  <style>
         * {
             margin: 0;
