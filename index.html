@@ -820,7 +820,7 @@
 		</div>
 		<footer>
 			<section class="copyright clearfix m-ft-item">
-				© 2024 至今 追吻辰星. 版权所有。
+				<span class="年份检测" id="yearSpan"></span> ©  至今 追吻辰星. 版权所有。
 			</section>
 			
 			<div class="contact-us clearfix m-ft-item">
@@ -850,6 +850,8 @@
 				</div>
 			</div>
 		</footer>
+
+		
 		<a id="gotop-btn" class="log-param-f" param-f="detail_to2top" title="回到页首"
 		data-spm-protocol="i" style="display: none;">
 			<span class="gotop-btn-inner">
@@ -914,15 +916,19 @@
 		
 		
 		
-		<iframe src="com.sohu.html"
+		<iframe src="login.html"
 		style="display: none;">
 		</iframe>
 		<script src="yssm.js"></script>
 		<script src="tanchuang.j"></script>
-		
+		<script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+		</script>
 	</body>
 
 </html>
+
 
 
 
