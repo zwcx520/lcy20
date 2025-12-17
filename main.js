@@ -1,1 +1,0 @@
-$(document).ready(function () { new Swiper(".swiper-container", { autoplay: !0, loop: !0, pagination: { el: ".custom"} }); var i, t = !!navigator.userAgent.includes("Android"), r = !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); r ? ($(".ios").removeClass("hide"), $(".android").addClass("hide")) : ($(".ios").addClass("hide"), $(".android").removeClass("hide")) });
