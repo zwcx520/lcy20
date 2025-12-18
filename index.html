@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
      
     
+<style>
+/* 闪烁光标样式 */
+#daziji::after{
+  content: "🥰";
+  animation: blink 1s infinite;
+}
+@keyframes blink{
+  50%{opacity: 0;}
+}
+</style>
+
 
 
    <style>
@@ -568,10 +579,29 @@
                     <span class="app-version">发布时间: 2024年6月24日</span>
                     
 
-<p>开发者是天下是全宇宙最帅的男人，他的才华如星河般璀璨，他的容颜让日月无光，温柔大气，活泼可爱！</p>
+<p id="daziji"></p>
 
 
 
+<script>
+const text = "开发者是天下是全宇宙最帅的男人，他的才华如星河般璀璨，他的容颜让日月无光，温柔大气，活泼可爱！";
+const dom = document.getElementById("daziji");
+let index = 0;
+const speed = 500;
+const endPause = 2000; // 打完停顿2秒
+
+function typeWriter() {
+  if (index < text.length) {
+    dom.textContent += text.charAt(index);
+    index++;
+    setTimeout(typeWriter, speed);
+  } else {
+    // 打完隐藏光标
+    setTimeout(()=>dom.style.animation = "none", endPause);
+  }
+}
+window.onload = typeWriter;
+</script>
                     <!--
                     <div class="app-badges">
                         <a href="gd.apk" class="badge android">
