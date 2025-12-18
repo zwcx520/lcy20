@@ -5,17 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>归档-时光卷轴 官方APP下载页面</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <style>
-    /* CSS禁止缩放补充 */
-    * {
-      touch-action: manipulation;
-      -ms-touch-action: manipulation;
-      -webkit-text-size-adjust: 100%;
-    }
-    html {
-      -ms-content-zooming: none;
-    }
-  </style>
+     
     
 
 
@@ -867,29 +857,6 @@ document.getElementById("yearSpan").innerText = new Date().getFullYear();
             console.log('归档-时光卷轴 v1.7.4 下载页面已加载');
         });
     </script>
-    <script>
-        // 1. 禁止键盘缩放（Ctrl+/-, Ctrl+滚轮, 浏览器快捷键）
-document.addEventListener('keydown', function(e) {
-  if((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '-' || e.key === '=' || e.keyCode === 107 || e.keyCode === 109 || e.keyCode === 187 || e.keyCode === 189)){
-    e.preventDefault();
-  }
-});
 
-// 2. 禁止鼠标滚轮缩放（Ctrl+滚轮）
-document.addEventListener('wheel', function(e) {
-  if(e.ctrlKey || e.metaKey) e.preventDefault();
-}, {passive: false}); // 关键：passive=false 才能阻止默认行为
-
-// 3. 锁定页面缩放比例为100%，防止手动调后生效
-function lockZoom(){
-  document.body.style.zoom = "100%";
-  document.documentElement.style.zoom = "100%";
-  // 兼容webkit内核浏览器
-  document.documentElement.style.transform = "scale(1)";
-  document.documentElement.style.transformOrigin = "0 0";
-}
-lockZoom();
-window.addEventListener('resize', lockZoom);
-    </script>
 </body>
 </html>
