@@ -16,6 +16,18 @@
       -ms-content-zooming: none;
     }
   </style>
+    <style>
+/* 闪烁光标样式 */
+#daziji::after{
+  content: "|";
+  animation: blink 1s infinite;
+}
+@keyframes blink{
+  50%{opacity: 0;}
+}
+</style>
+
+
    <style>
         * {
             margin: 0;
@@ -571,8 +583,37 @@
                     <span class="app-version">开发者: 追吻辰星</span><hr>
                     <span class="app-version">APP备案: 未备案</span><hr>
                     <span class="app-version">发布时间: 2024年6月24日</span>
-                    <p>记录生活点滴，珍藏美好回忆。归档-时光卷轴是一款创新的数字记忆管理应用，让您轻松整理、归档和回顾生活中的每一个珍贵瞬间。</p>
-                    <!--
+                    <style>
+/* 闪烁光标样式 */
+#daziji::after{
+  content: "|";
+  animation: blink 1s infinite;
+}
+@keyframes blink{
+  50%{opacity: 0;}
+}
+</style>
+
+<p id="daziji"></p>
+<script>
+const text = "记录生活点滴，珍藏美好回忆。归档-时光卷轴是一款创新的数字记忆管理应用，让您轻松整理、归档和回顾生活中的每一个珍贵瞬间。";
+const dom = document.getElementById("daziji");
+let index = 0;
+const speed = 50;
+const endPause = 2000; // 打完停顿2秒
+
+function typeWriter() {
+  if (index < text.length) {
+    dom.textContent += text.charAt(index);
+    index++;
+    setTimeout(typeWriter, speed);
+  } else {
+    // 打完隐藏光标
+    setTimeout(()=>dom.style.animation = "none", endPause);
+  }
+}
+window.onload = typeWriter;
+</script><!--
                     <div class="app-badges">
                         <a href="gd.apk" class="badge android">
                             <i class="fab fa-google-play"></i>
