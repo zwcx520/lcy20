@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作历程时间轴</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --timeline-color: #3498db;
+            --card-bg: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-container {
+            background: white;
+            padding: 25px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            margin-right: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .stats {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        
+        .stat-item {
+            margin-right: 20px;
+            color: var(--gray-color);
+        }
+        
+        .stat-item span {
+            color: var(--primary-color);
+        }
+        
+        .timeline {
+            position: relative;
+            width: 100%;
+            margin: 0 auto 50px;
+        }
+        
+        /* 时间轴中心线 */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background-color: var(--timeline-color);
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: calc(50% + 20px);
+            position: relative;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: calc(50% + 20px);
+        }
+        
+        /* 折叠式卡片设计 */
+        .timeline-content {
+            background-color: var(--card-bg);
+            padding: 0;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px var(--shadow-color);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+            overflow: hidden;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 5px solid var(--accent-color);
+        }
+        
+        .timeline-content:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        /* 卡片头部（折叠时显示） */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .card-header:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .timeline-item:nth-child(even) .card-header:hover {
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+        
+        .header-left {
+            flex: 1;
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1rem;
+            margin-bottom: 5px;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            color: var(--accent-color);
+            background: rgba(231, 76, 60, 0.1);
+        }
+        
+        .card-header h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+        
+        .company {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), #2ecc71);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .timeline-item:nth-child(even) .company {
+            background: linear-gradient(135deg, var(--accent-color), #e67e22);
+        }
+        
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-left: 15px;
+        }
+        
+        .job-duration {
+            font-size: 0.9rem;
+            color: #666;
+            background-color: #f5f5f5;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .toggle-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-item:nth-child(even) .toggle-icon {
+            color: var(--accent-color);
+        }
+        
+        .toggle-icon.expanded {
+            transform: rotate(180deg);
+        }
+        
+        /* 卡片内容（可折叠部分） */
+        .card-body {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-body.expanded {
+            max-height: 1000px;
+            padding: 25px 25px;
+        }
+        
+        .description {
+            color: var(--gray-color);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .tags-title {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .tag {
+            background: #f1f8ff;
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .timeline-item:nth-child(even) .tag {
+            background: #ffeaea;
+            color: var(--accent-color);
+        }
+        
+        /* 时间轴节点 */
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--timeline-color);
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px var(--timeline-color);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -32px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -32px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 50px 20px;
+            display: none;
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--gray-color);
+            border-top: 1px solid #eee;
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        /* 展开所有/折叠所有按钮 */
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        
+        .control-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .control-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .control-btn.collapse-all {
+            background: var(--accent-color);
+        }
+        
+        .control-btn.collapse-all:hover {
+            background: #c0392b;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 20px 40px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                justify-content: flex-start;
+                padding-right: 0;
+                padding-left: 80px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                padding-left: 80px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+                max-width: 100%;
+            }
+            
+            .timeline-content::before {
+                left: -32px !important;
+                right: auto;
+            }
+            
+            .search-box {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .stats {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card-header h3 {
+                font-size: 1.2rem;
+            }
+            
+            .timeline-date {
+                font-size: 0.9rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .timeline-item {
+                padding-left: 50px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                padding-left: 50px;
+            }
+            
+            .timeline-content::before {
+                left: -25px !important;
+                width: 15px;
+                height: 15px;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .card-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .header-right {
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
+                margin-top: 10px;
+                margin-left: 0;
+            }
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        /* 搜索匹配高亮动画 */
+        .search-match {
+            animation: highlightPulse 1.5s ease-in-out;
+        }
+        
+        @keyframes highlightPulse {
+            0% { background-color: #fff9c4; }
+            50% { background-color: #ffeb3b; }
+            100% { background-color: #fff9c4; }
+        }
+        
+        /* 搜索匹配时自动展开卡片 */
+        .search-match-card {
+            border-color: #ffeb3b;
+            box-shadow: 0 5px 20px rgba(255, 235, 59, 0.3);
+        }
+        
+        /* 添加全宽容器以确保内容适应屏幕 */
+        .full-width {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="full-width">
+            <h1><i class="fas fa-briefcase"></i> 工作历程轴</h1>
+            
+        </header>
+        
+        <div class="search-container full-width">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="搜索职位、公司、技能或描述...">
+            </div>
+            <div class="stats">
+                <div class="stat-item">工作历程: <span id="totalCount">8</span></div>
+                <div class="stat-item">显示: <span id="visibleCount">8</span></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="control-btn expand-all" id="expandAllBtn">
+                <i class="fas fa-expand-alt"></i> 展开所有
+            </button>
+            <button class="control-btn collapse-all" id="collapseAllBtn">
+                <i class="fas fa-compress-alt"></i> 折叠所有
+            </button>
+        </div>
+        
+        <div class="timeline">
+            <!-- 直接在HTML中添加工作经历 -->
+            
+            
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2025.10- 至今</div>
+                            <h3>服务员</h3>
+                            <span class="company">佛山市锦官虎鱼蛙火锅店</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">3月+</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责店里卫生打扫餐具摆放，点单传菜上锅，清理垃圾，前台收银</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">美蛙现杀</span>
+                            <span class="tag">收银</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2025.7 - 2025.8</div>
+                            <h3>造型组取形</h3>
+                            <span class="company">四川金镭重工有限公司</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">2月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责给生产大型船只使用的模具，取下对应的定型模具</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">切割机使用</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2025.3 - 2025.6</div>
+                            <h3>物业安管员</h3>
+                            <span class="company">广州中海物业管理有限公司</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">3月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责管理园区东西北三门岗进出，管理防止可疑人员进出，保护园区业主财产，巡查地下车库，园区楼层安全设施设备以及园区周边消防通道和商铺安全</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">巡查打点机使用</span>
+                            <span class="tag">灭火器使用</span>
+                            <span class="tag">消防器材使用</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2024.11 - 2025.02</div>
+                            <h3>休闲服务员</h3>
+                            <span class="company">广州原生态南美大酒店</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">4月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责区域接待指引客人，卫生清理，水疗沙发收，铺，介绍酒店水疗按摩项目，休闲饮品小吃点单及出品，巡查按摩房</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">水疗系统</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2024.04 - 2024.10</div>
+                            <h3>商务文员</h3>
+                            <span class="company">广州原生态南美大酒店</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">7月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责商务中心内外线电话接听，介绍酒店订购相关业务和水疗，客房项目，还负责管理客房管理，安排客人入住提供客房一切服务需要及解决住房客人水疗需求服务，管理客房浴服盘点，管理可疑人员进去商务和客房区，巡查商务和客房区域安全设施设备</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">客服接听</span>
+                            <span class="tag">翻译机使用</span>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2024.01 - 2024.03</div>
+                            <h3>压形员</h3>
+                            <span class="company">成都拓米制造有限公司</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">1.5月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责折叠屏手机零件转轴形状冲压，使用镭雕机镭雕模型</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">镭雕机</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2023.11 - 2023.12</div>
+                            <h3>资材员</h3>
+                            <span class="company">绵阳京东方</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">1.5月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责检查清线上所需生产物品材料，从仓库下单拿取物料，送到所负责线上备好。</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">无</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2023.04 - 2023.07</div>
+                            <h3>安检员</h3>
+                            <span class="company">成都恒博保安服务有限公司</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">3.5月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责富士康厂区车间的进出安检，防止富士康员工携带违禁物品进出车间，以及管理外来人员进入车间</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">安检门使用</span>
+                            <span class="tag">手持扫描仪使用</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2023.01 - 2023.02</div>
+                            <h3>永辉超市理货员</h3>
+                            <span class="company">永辉超市</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">1月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责货架上的货品整理摆放，补齐空缺货品，检查货品日期</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">理货</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2022.07 - 2022.10</div>
+                            <h3>研磨员</h3>
+                            <span class="company">江苏昆山竟陆电子有限公司</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">3.5月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责操作机台，将产线上机器用过的钻针回收，放进研磨机研磨钻针</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">调试研磨机</span>
+                            <span class="tag">操作钻针研磨机</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item" data-id="1">
+                <div class="timeline-content">
+                    <div class="card-header">
+                        <div class="header-left">
+                            <div class="timeline-date">2021.07 - 2021.9</div>
+                            <h3>显检员</h3>
+                            <span class="company">江苏昆山郡琨科技有限公司</span>
+                        </div>
+                        <div class="header-right">
+                            <span class="job-duration">3月</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="description">负责将生产线上的手机排线板放在显微镜下，观察物料是否损坏，检查不良物料</p>
+                        <div class="tags-title">相关技能:</div>
+                        <div class="tags">
+                            <span class="tag">显微镜使用</span>
+                            <span class="tag">QC机使用</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <h3>未找到匹配的工作经历</h3>
+            <p>尝试使用其他关键词搜索，如职位名称、公司或技能关键词</p>
+        </div>
+        
+        <footer class="full-width">
+            <p><span class="年份检测" id="yearSpan"></span> ©  折叠式工作历程轴 | 归档-时光卷轴提供</p>
+        </footer>
+    </div>
+    <script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+</script>
+    <script>
+        // 折叠/展开功能
+        function initToggleCards() {
+            const cardHeaders = document.querySelectorAll('.card-header');
+            
+            cardHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const timelineItem = this.closest('.timeline-item');
+                    const cardBody = timelineItem.querySelector('.card-body');
+                    const toggleIcon = timelineItem.querySelector('.toggle-icon');
+                    
+                    // 切换展开状态
+                    cardBody.classList.toggle('expanded');
+                    toggleIcon.classList.toggle('expanded');
+                    
+                    // 如果是搜索匹配的卡片，移除搜索匹配样式
+                    timelineItem.classList.remove('search-match-card');
+                });
+            });
+        }
+        
+        // 展开所有卡片
+        function expandAllCards() {
+            const cardBodies = document.querySelectorAll('.card-body');
+            const toggleIcons = document.querySelectorAll('.toggle-icon');
+            
+            cardBodies.forEach(body => {
+                body.classList.add('expanded');
+            });
+            
+            toggleIcons.forEach(icon => {
+                icon.classList.add('expanded');
+            });
+        }
+        
+        // 折叠所有卡片
+        function collapseAllCards() {
+            const cardBodies = document.querySelectorAll('.card-body');
+            const toggleIcons = document.querySelectorAll('.toggle-icon');
+            
+            cardBodies.forEach(body => {
+                body.classList.remove('expanded');
+            });
+            
+            toggleIcons.forEach(icon => {
+                icon.classList.remove('expanded');
+            });
+        }
+        
+        // 高亮搜索结果
+        function highlightText(text, keyword) {
+            if (!keyword) return text;
+            
+            const regex = new RegExp(`(${keyword})`, 'gi');
+            return text.replace(regex, '<span class="highlight search-match">$1</span>');
+        }
+
+        // 搜索功能
+        function searchExperiences() {
+            const searchInput = document.getElementById('searchInput');
+            const keyword = searchInput.value.trim().toLowerCase();
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const noResults = document.getElementById('noResults');
+            
+            let visibleCount = 0;
+            let hasMatch = false;
+            
+            timelineItems.forEach(item => {
+                // 获取工作经历内容
+                const title = item.querySelector('h3').textContent;
+                const company = item.querySelector('.company').textContent;
+                const description = item.querySelector('.description').textContent;
+                const tags = Array.from(item.querySelectorAll('.tag')).map(tag => tag.textContent).join(' ');
+                const duration = item.querySelector('.job-duration').textContent;
+                const date = item.querySelector('.timeline-date').textContent;
+                
+                const content = `${title} ${company} ${description} ${tags} ${duration} ${date}`.toLowerCase();
+                
+                if (keyword === '' || content.includes(keyword)) {
+                    item.style.display = 'flex';
+                    
+                    // 高亮显示关键词
+                    if (keyword !== '') {
+                        const titleElement = item.querySelector('h3');
+                        const companyElement = item.querySelector('.company');
+                        const descriptionElement = item.querySelector('.description');
+                        const tagsElements = item.querySelectorAll('.tag');
+                        const dateElement = item.querySelector('.timeline-date');
+                        const durationElement = item.querySelector('.job-duration');
+                        
+                        titleElement.innerHTML = highlightText(title, keyword);
+                        companyElement.innerHTML = highlightText(company, keyword);
+                        descriptionElement.innerHTML = highlightText(description, keyword);
+                        dateElement.innerHTML = highlightText(date, keyword);
+                        durationElement.innerHTML = highlightText(duration, keyword);
+                        
+                        tagsElements.forEach(tag => {
+                            const originalText = tag.textContent;
+                            tag.innerHTML = highlightText(originalText, keyword);
+                        });
+                        
+                        // 如果匹配，自动展开卡片并添加高亮样式
+                        const cardBody = item.querySelector('.card-body');
+                        const toggleIcon = item.querySelector('.toggle-icon');
+                        
+                        cardBody.classList.add('expanded');
+                        toggleIcon.classList.add('expanded');
+                        item.classList.add('search-match-card');
+                        
+                        hasMatch = true;
+                    } else {
+                        // 如果没有关键词，恢复原始文本
+                        const titleElement = item.querySelector('h3');
+                        const companyElement = item.querySelector('.company');
+                        const descriptionElement = item.querySelector('.description');
+                        const tagsElements = item.querySelectorAll('.tag');
+                        const dateElement = item.querySelector('.timeline-date');
+                        const durationElement = item.querySelector('.job-duration');
+                        
+                        titleElement.textContent = title;
+                        companyElement.textContent = company;
+                        descriptionElement.textContent = description;
+                        dateElement.textContent = date;
+                        durationElement.textContent = duration;
+                        
+                        tagsElements.forEach(tag => {
+                            const originalText = tag.textContent;
+                            tag.textContent = originalText;
+                        });
+                    }
+                    
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+            
+            // 如果没有搜索关键词，折叠所有卡片
+            if (keyword === '') {
+                collapseAllCards();
+            }
+            
+            // 更新可见项目计数
+            document.getElementById('visibleCount').textContent = visibleCount;
+            
+            // 显示/隐藏无结果消息
+            if (visibleCount === 0 && keyword !== '') {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化折叠功能
+            initToggleCards();
+            
+            // 展开所有按钮
+            document.getElementById('expandAllBtn').addEventListener('click', expandAllCards);
+            
+            // 折叠所有按钮
+            document.getElementById('collapseAllBtn').addEventListener('click', collapseAllCards);
+            
+            // 搜索输入事件监听
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', searchExperiences);
+            
+            // 添加示例搜索提示
+            const examples = ['前端', 'React', '阿里巴巴', '工程师', '开发', 'Java', '管理'];
+            let exampleIndex = 0;
+            
+            setInterval(() => {
+                searchInput.placeholder = `搜索职位、公司、技能或描述... 例如: ${examples[exampleIndex]}`;
+                exampleIndex = (exampleIndex + 1) % examples.length;
+            }, 3000);
+            
+            // 确保所有元素初始可见
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            document.getElementById('totalCount').textContent = timelineItems.length;
+            document.getElementById('visibleCount').textContent = timelineItems.length;
+            
+            // 默认展开第一个卡片
+            const firstCard = document.querySelector('.timeline-item');
+            if (firstCard) {
+                const firstCardBody = firstCard.querySelector('.card-body');
+                const firstToggleIcon = firstCard.querySelector('.toggle-icon');
+                firstCardBody.classList.add('expanded');
+                firstToggleIcon.classList.add('expanded');
+            }
+        });
+    </script>
+</body>
+</html>
