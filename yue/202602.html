@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>202602归档时间轴</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", "Helvetica Neue", sans-serif;
+        }
+        /* 动漫风背景与整体色调 */
+        body {
+            background: linear-gradient(120deg, #1a1a2e, #16213e, #0f3460);
+            color: #f5f5f5;
+            padding: 50px 0;
+            min-height: 100vh;
+            padding-bottom: 80px;
+            position: relative;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* 新增 头部搜索栏样式 */
+        .search-header {
+            width: 100%;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 45px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(126, 126, 255, 0.5);
+            border-radius: 30px;
+            color: #f5f5f5;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-input:focus {
+            border-color: #7effd4;
+            box-shadow: 0 0 15px rgba(126,255,212,0.4);
+        }
+        .search-input::placeholder {
+            color: #b0b0b0;
+        }
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7e7eff;
+            font-size: 1.2rem;
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #ff7eb3, #7e7eff, #7effd4);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(126, 255, 212, 0.3);
+        }
+        /* 响应式时间轴核心样式 */
+        .anime-timeline {
+            position: relative;
+        }
+        .anime-timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff7eb3, #7effd4, #7e7eff);
+            border-radius: 2px;
+            box-shadow: 0 0 15px rgba(255, 126, 179, 0.6);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            width: 50%;
+            /* 搜索筛选控制显示隐藏 */
+            display: block;
+        }
+        .timeline-item.hide {
+            display: none;
+        }
+        .timeline-item:nth-child(odd) {
+            padding-right: 50px;
+            text-align: right;
+            left: 0;
+        }
+        .timeline-item:nth-child(even) {
+            padding-left: 50px;
+            left: 50%;
+        }
+        .timeline-dot {
+            position: absolute;
+            top: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #7e7eff;
+            box-shadow: 0 0 12px rgba(126, 126, 255, 0.8);
+            z-index: 1;
+        }
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -10px;
+        }
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+        }
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(126, 255, 212, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+        .timeline-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 28px rgba(126, 126, 255, 0.2);
+            border-color: #7e7eff;
+        }
+        .timeline-time {
+            font-size: 1.1rem;
+            color: #ff7eb3;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .timeline-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #7effd4;
+        }
+        .timeline-content {
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        /* 响应式适配（手机端单列显示） */
+        @media (max-width: 768px) {
+            .anime-timeline::before {
+                left: 20px;
+            }
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                padding-left: 50px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            .timeline-item .timeline-dot {
+                left: 10px !important;
+            }
+            .title {
+                font-size: 2rem;
+            }
+            .search-input {
+                padding: 12px 18px 12px 40px;
+            }
+        }
+        /* 底部备案信息样式 */
+        .record-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 18, 38, 0.95);
+            border-top: 1px solid rgba(126, 126, 255, 0.5);
+            padding: 15px 0;
+            text-align: center;
+            z-index: 999;
+        }
+        .record-footer p {
+            color: #e0e0e0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .record-footer a {
+            color: #7effd4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .record-footer a:hover {
+            color: #ff7eb3;
+            text-shadow: 0 0 8px rgba(255, 126, 179, 0.6);
+        }
+    </style>
+    <!-- 引入图标库（搜索图标用） -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 新增 头部搜索栏 -->
+        <div class="search-header">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="timelineSearch" placeholder="搜索番剧名称/简介，支持模糊匹配...">
+            </div>
+        </div>
+
+        <h1 class="title">2026年2月归档</h1>
+        <div class="anime-timeline" id="animeTimeline">
+        
+        
+        
+        
+            <!-- 时间轴条目1-->
+           
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">
+                    <div class="timeline-time">2026-02-01</div>
+                   
+                    <div class="timeline-content">2月</div>
+                </div>
+            </div>
+            
+            
+            
+           
+        </div>
+    </div>
+
+    <!-- 底部备案信息 -->
+    <div class="record-footer">
+        
+        <p><a href="../gd.html">返回</a> <span class="年份检测" id="yearSpan"></span> ©  追吻辰星 ICP 未备案</p>
+        <p><a href="https://lcy20.netlify.app/">归档时光卷轴站点提供</a></p>
+    </div>
+    <script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+</script>
+
+    <!-- 搜索功能核心JS（实时模糊匹配） -->
+    <script>
+        // 获取搜索框和所有时间轴条目
+        const searchInput = document.getElementById('timelineSearch');
+        const timelineItems = document.querySelectorAll('.timeline-item');
+
+        // 实时搜索监听
+        searchInput.addEventListener('input', function() {
+            const searchKey = this.value.trim().toLowerCase();
+            // 遍历所有条目，匹配关键词
+            timelineItems.forEach(item => {
+                // 匹配标题+简介+时间，全覆盖搜索
+                const title = item.querySelector('.timeline-title').textContent.toLowerCase();
+                const content = item.querySelector('.timeline-content').textContent.toLowerCase();
+                const time = item.querySelector('.timeline-time').textContent.toLowerCase();
+                const isMatch = title.includes(searchKey) || content.includes(searchKey) || time.includes(searchKey);
+                // 匹配显示，不匹配隐藏
+                item.classList.toggle('hide', !isMatch);
+            });
+        });
+    </script>
+</body>
+</html>
