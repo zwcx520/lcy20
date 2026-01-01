@@ -3,304 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>不见桃花不见秋版Typecho | 自建博客系统包下载</title>
+    <title>不见桃花不见秋版Typecho | 动漫风自建博客系统</title>
     <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入Font Awesome图标 -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <!-- 配置Tailwind自定义主题 -->
+    <!-- 配置Tailwind自定义主题（动漫风配色） -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#d4b483', // 主色调：淡棕褐（贴合文艺主题）
-                        secondary: '#f5f0e6', // 辅助色：米白
-                        dark: '#333647', // 深色文字
-                        light: '#faf8f5', // 浅色背景
+                        primary: '#ff6b8b', // 主色调：樱花粉（动漫常用）
+                        secondary: '#74d2f3', // 辅助色：天空蓝
+                        accent: '#ffd166', // 强调色：鹅黄
+                        dark: '#2d3748', // 深色文字
+                        light: '#fdfbff', // 浅色背景
                     },
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        serif: ['"Noto Serif SC"', 'serif'],
+                        sans: ['"Noto Sans SC"', 'system-ui', 'sans-serif'],
+                        anime: ['"Comic Sans MS"', '"Noto Sans SC"', 'cursive'], // 动漫风字体
                     },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
                 }
             }
         }
     </script>
     <style type="text/tailwindcss">
         @layer utilities {
-            .text-shadow-sm {
-                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            .text-shadow-anime {
+                text-shadow: 0 2px 4px rgba(255,107,139,0.3);
             }
             .bg-blur {
                 backdrop-filter: blur(8px);
             }
-            .transition-custom {
-                transition: all 0.3s ease-in-out;
+            .transition-anime {
+                transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            }
+            .border-anime {
+                border-image: linear-gradient(to right, #ff6b8b, #74d2f3) 1;
+            }
+            .card-anime {
+                position: relative;
+                overflow: hidden;
+            }
+            .card-anime::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+                transform: rotate(30deg);
+                animation: shine 8s linear infinite;
+            }
+            @keyframes shine {
+                0% { transform: rotate(30deg) translateX(-100%); }
+                100% { transform: rotate(30deg) translateX(100%); }
             }
         }
     </style>
     <!-- 引入中文字体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-light text-dark font-serif antialiased">
-    <!-- 导航栏（固定顶部，响应式折叠） -->
-    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-custom bg-white/90 bg-blur shadow-sm">
+<body class="bg-light text-dark font-anime antialiased">
+    <!-- 导航栏（动漫风改造：圆角、阴影、渐变） -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-anime bg-white/95 bg-blur shadow-md rounded-b-2xl">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16 md:h-20">
-                <!-- Logo -->
+                <!-- Logo（动漫风图标+字体） -->
                 <a href="#" class="flex items-center space-x-2">
-                    <i class="fa fa-pagelines text-primary text-2xl"></i>
-                    <span class="text-xl md:text-2xl font-bold text-dark">Typecho博客系统</span>
+                    <i class="fa fa-heart text-primary text-2xl animate-pulse-slow"></i>
+                    <span class="text-xl md:text-2xl font-bold text-dark text-shadow-anime">动漫风Typecho</span>
                 </a>
 
-                <!-- 桌面端菜单 -->
+                <!-- 桌面端菜单（hover效果改造） -->
                 <nav class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-dark hover:text-primary transition-custom font-medium">首页</a>
-                    <a href="#features" class="text-dark hover:text-primary transition-custom font-medium">功能</a>
-                    <a href="#install" class="text-dark hover:text-primary transition-custom font-medium">安装</a>
-                    <a href="#download" class="text-dark hover:text-primary transition-custom font-medium">下载</a>
-                    <a href="#about" class="text-dark hover:text-primary transition-custom font-medium">关于</a>
+                    <a href="#home" class="text-dark hover:text-primary transition-anime font-medium relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">首页</a>
+                    <a href="#features" class="text-dark hover:text-primary transition-anime font-medium relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">功能</a>
+                    <a href="#install" class="text-dark hover:text-primary transition-anime font-medium relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">安装</a>
+                    <a href="#download" class="text-dark hover:text-primary transition-anime font-medium relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">下载</a>
+                    <a href="#about" class="text-dark hover:text-primary transition-anime font-medium relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all hover:after:w-full">关于</a>
                 </nav>
 
-                <!-- 移动端汉堡菜单 -->
-                <button id="menuBtn" class="md:hidden text-dark hover:text-primary transition-custom">
+                <!-- 移动端汉堡菜单（颜色改造） -->
+                <button id="menuBtn" class="md:hidden text-primary hover:text-primary/80 transition-anime">
                     <i class="fa fa-bars text-2xl"></i>
                 </button>
             </div>
         </div>
 
-        <!-- 移动端菜单面板 -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+        <!-- 移动端菜单面板（动漫风圆角+阴影） -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-xl absolute w-full rounded-b-2xl border-t border-primary/20">
             <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
-                <a href="#home" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">首页</a>
-                <a href="#features" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">功能</a>
-                <a href="#install" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">安装</a>
-                <a href="#download" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">下载</a>
-                <a href="#about" class="text-dark hover:text-primary transition-custom py-2">关于</a>
+                <a href="#home" class="text-dark hover:text-primary transition-anime py-2 border-b border-gray-100 pl-2">首页</a>
+                <a href="#features" class="text-dark hover:text-primary transition-anime py-2 border-b border-gray-100 pl-2">功能</a>
+                <a href="#install" class="text-dark hover:text-primary transition-anime py-2 border-b border-gray-100 pl-2">安装</a>
+                <a href="#download" class="text-dark hover:text-primary transition-anime py-2 border-b border-gray-100 pl-2">下载</a>
+                <a href="#about" class="text-dark hover:text-primary transition-anime py-2 pl-2">关于</a>
             </div>
         </div>
     </header>
 
-    <!-- 英雄区 -->
-    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-secondary">
+    <!-- 英雄区（动漫风背景+装饰元素） -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-secondary/10 to-light">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark mb-6 leading-tight text-shadow-sm">
-                「不见桃花不见秋」版Typecho博客系统
-                <span class="block text-primary mt-2">PHP自建工具包</span>
+            <!-- 动漫装饰元素 -->
+            <div class="absolute top-20 left-10 hidden lg:block text-primary/20 text-6xl animate-float">
+                <i class="fa fa-star"></i>
+            </div>
+            <div class="absolute top-40 right-10 hidden lg:block text-secondary/20 text-5xl animate-float" style="animation-delay: 1s">
+                <i class="fa fa-moon-o"></i>
+            </div>
+            <div class="absolute bottom-20 left-1/4 hidden lg:block text-accent/20 text-4xl animate-float" style="animation-delay: 2s">
+                <i class="fa fa-heart-o"></i>
+            </div>
+
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark mb-6 leading-tight text-shadow-anime">
+                「不见桃花不见秋」版<span class="text-primary">动漫风主题</span>Typecho
+                <span class="block text-secondary mt-2">PHP自建博客系统</span>
             </h1>
             <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-                一款简约文艺、响应式适配的博客自建系统，集成主题优化、功能扩展、性能提升等核心能力，让博客搭建更简单。
+                二次元爱好者专属！简约可爱+响应式适配，集成主题优化、功能扩展，让博客搭建像追番一样快乐～
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#download" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-lg transition-custom shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                <a href="#download" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-full transition-anime shadow-lg hover:shadow-xl transform hover:-translate-y-1 hover:scale-105">
                     <i class="fa fa-download mr-2"></i>立即下载
                 </a>
-                <a href="#install" class="bg-white hover:bg-gray-50 text-dark font-medium py-3 px-8 rounded-lg transition-custom shadow-md hover:shadow-lg border border-gray-200 transform hover:-translate-y-1">
+                <a href="#install" class="bg-white hover:bg-gray-50 text-dark font-medium py-3 px-8 rounded-full transition-anime shadow-md hover:shadow-lg border-2 border-secondary/30 transform hover:-translate-y-1 hover:scale-105">
                     <i class="fa fa-book mr-2"></i>安装指南
                 </a>
             </div>
 
-            <!-- 预览图（响应式缩放） -->
-            <div class="mt-16 max-w-4xl mx-auto">
-                <img src="https://picsum.photos/id/1068/1200/600" alt="工具包预览" class="w-full h-auto rounded-xl shadow-xl object-cover" loading="lazy">
+            <!-- 预览图（动漫风圆角+边框） -->
+            <div class="mt-16 max-w-4xl mx-auto relative">
+                <div class="absolute -inset-1 bg-gradient-to-r from-primary to-secondary rounded-2xl blur-md opacity-70"></div>
+                <img src="https://picsum.photos/id/1048/1200/600" alt="动漫风博客预览" class="w-full h-auto rounded-2xl shadow-2xl object-cover relative z-10 border-4 border-white" loading="lazy">
+                <div class="absolute top-4 right-4 bg-accent text-dark text-sm font-bold py-1 px-3 rounded-full shadow-md">
+                    动漫专属版
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 功能特点区 -->
+    <!-- 功能特点区（动漫风卡片改造） -->
     <section id="features" class="py-20 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">核心功能</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">专为新手用户打造，聚焦实用性与易用性，满足个人博客搭建的核心需求</p>
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4 text-shadow-anime">
+                    <i class="fa fa-magic text-primary mr-2"></i>核心功能
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">二次元友好型设计，新手也能轻松上手，满足动漫博主的所有想象～</p>
             </div>
 
-            <!-- 功能卡片网格（响应式适配） -->
+            <!-- 功能卡片网格（动漫风卡片） -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- 功能卡片1 -->
-                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa fa-desktop text-primary text-xl"></i>
+                <div class="card-anime bg-light rounded-2xl p-6 shadow-md hover:shadow-xl transition-anime border-2 border-transparent hover:border-primary/30 transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-desktop text-primary text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">全响应式适配</h3>
-                    <p class="text-gray-600">自动适配手机、平板、PC等设备，博客在任何屏幕下都能完美展示</p>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">全响应式适配</h3>
+                    <p class="text-gray-600">手机、平板、PC全兼容，躺床追番时也能轻松管理博客～</p>
                 </div>
 
                 <!-- 功能卡片2 -->
-                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa fa-paint-brush text-primary text-xl"></i>
+                <div class="card-anime bg-light rounded-2xl p-6 shadow-md hover:shadow-xl transition-anime border-2 border-transparent hover:border-secondary/30 transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-paint-brush text-secondary text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">主题优化工具</h3>
-                    <p class="text-gray-600">集成配色调整、布局自定义、字体切换等功能，无需复杂代码即可美化博客</p>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">动漫主题定制</h3>
+                    <p class="text-gray-600">预设动漫配色、萌系图标，无需代码也能打造专属二次元风格～</p>
                 </div>
 
                 <!-- 功能卡片3 -->
-                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa fa-bolt text-primary text-xl"></i>
+                <div class="card-anime bg-light rounded-2xl p-6 shadow-md hover:shadow-xl transition-anime border-2 border-transparent hover:border-accent/30 transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-accent/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-bolt text-accent text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">性能提升</h3>
-                    <p class="text-gray-600">包含静态资源压缩、缓存优化、数据库清理工具，大幅提升博客加载速度</p>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">性能拉满</h3>
+                    <p class="text-gray-600">静态资源压缩+缓存优化，加载速度快到像跳过OP直接看正片～</p>
                 </div>
 
                 <!-- 功能卡片4 -->
-                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa fa-plug text-primary text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-2">插件扩展支持</h3>
-                    <p class="text-gray-600">预设常用插件适配方案，一键安装评论系统、阅读统计、分享功能等</p>
-                </div>
 
                 <!-- 功能卡片5 -->
-                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa fa-shield text-primary text-xl"></i>
+                <div class="card-anime bg-light rounded-2xl p-6 shadow-md hover:shadow-xl transition-anime border-2 border-transparent hover:border-secondary/30 transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-shield text-secondary text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">安全防护</h3>
-                    <p class="text-gray-600">包含SQL注入防护、XSS过滤、后台登录验证等功能，保障博客安全</p>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">安全防护</h3>
+                    <p class="text-gray-600">SQL注入防护+XSS过滤，守护你的二次元小天地不被打扰～</p>
                 </div>
 
                 <!-- 功能卡片6 -->
-                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
-                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                        <i class="fa fa-code text-primary text-xl"></i>
+                <div class="card-anime bg-light rounded-2xl p-6 shadow-md hover:shadow-xl transition-anime border-2 border-transparent hover:border-accent/30 transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-accent/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-code text-accent text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">轻量化设计</h3>
-                    <p class="text-gray-600">代码精简无冗余，占用服务器资源少，运行稳定高效，适合各类虚拟主机</p>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">轻量化设计</h3>
+                    <p class="text-gray-600">代码精简无冗余，占用资源少，低配服务器也能流畅运行～</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 安装说明区 -->
-    <section id="install" class="py-20 bg-secondary">
+    <!-- 安装说明区（动漫风卡片+步骤改造） -->
+    <section id="install" class="py-20 bg-gradient-to-b from-light to-secondary/10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">安装指南</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">简单4步，快速部署工具包，无需专业技术背景</p>
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4 text-shadow-anime">
+                    <i class="fa fa-gamepad text-primary mr-2"></i>安装指南
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">4步轻松部署，像玩游戏一样简单，新手也能快速上手～</p>
             </div>
 
-            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 md:p-10">
-                <!-- 安装步骤 -->
+            <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 md:p-10 border-2 border-primary/10">
+                <!-- 安装步骤（动漫风步骤编号） -->
                 <div class="space-y-8">
                     <!-- 步骤1 -->
                     <div class="flex gap-6">
-                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                        <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-lg animate-pulse-slow">1</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-2">下载并解压</h3>
-                            <p class="text-gray-600">从下载区获取工具包压缩包，解压后得到<code class="bg-gray-100 px-2 py-1 rounded text-sm">系统源码</code>文件夹</p>
+                            <h3 class="text-xl font-semibold mb-2 text-dark">下载并解压</h3>
+                            <p class="text-gray-600">从下载区获取博客系统安装包，解压后得到<code class="bg-primary/10 px-2 py-1 rounded text-sm text-primary">系统源码</code>文件夹～</p>
                         </div>
                     </div>
 
                     <!-- 步骤2 -->
                     <div class="flex gap-6">
-                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                        <div class="w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-lg animate-pulse-slow" style="animation-delay: 0.5s">2</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-2">上传至服务器</h3>
-                            <p class="text-gray-600">通过FTP或服务器面板，将解压后的文件夹上传至服务器根目录</p>
+                            <h3 class="text-xl font-semibold mb-2 text-dark">上传至服务器</h3>
+                            <p class="text-gray-600">通过FTP或服务器面板，将解压后的文件夹上传至服务器根目录～</p>
                         </div>
                     </div>
 
                     <!-- 步骤3 -->
                     <div class="flex gap-6">
-                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                        <div class="w-12 h-12 bg-accent text-dark rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-lg animate-pulse-slow" style="animation-delay: 1s">3</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-2">运行安装脚本</h3>
-                            <p class="text-gray-600">访问服务器绑定的ip地址和博客文件夹目录地址<code class="bg-gray-100 px-2 py-1 rounded text-sm">源码文件夹根目录下install.php</code>，按照提示完成配置</p>
+                            <h3 class="text-xl font-semibold mb-2 text-dark">运行安装脚本</h3>
+                            <p class="text-gray-600">配置网站访问地址<code class="bg-secondary/10 px-2 py-1 rounded text-sm text-secondary">install.php</code>，按照提示完成配置，超简单～</p>
                         </div>
                     </div>
 
                     <!-- 步骤4 -->
                     <div class="flex gap-6">
-                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
+                        <div class="w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0 shadow-lg animate-pulse-slow" style="animation-delay: 1.5s">4</div>
                         <div>
-                            <h3 class="text-xl font-semibold mb-2">启用并使用</h3>
-                            <p class="text-gray-600">安装完成后，进入博客后台即可开始使用所有功能</p>
+                            <h3 class="text-xl font-semibold mb-2 text-dark">启用并使用</h3>
+                            <p class="text-gray-600">安装完成后，进入后台即可开启你的二次元博客之旅～</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- 注意事项 -->
-                <div class="mt-10 p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
-                    <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
-                        <i class="fa fa-exclamation-triangle mr-2"></i>注意事项
+                <!-- 注意事项（动漫风警示框） -->
+                <div class="mt-10 p-4 bg-accent/10 border-2 border-accent/30 rounded-xl">
+                    <h4 class="font-semibold text-dark mb-2 flex items-center">
+                        <i class="fa fa-exclamation-circle text-accent mr-2"></i>注意事项
                     </h4>
-                    <ul class="text-yellow-700 space-y-2 text-sm">
-                        <li>• 确保服务器已安装PHP 7.0+、MySQL 5.6+环境</li>
-                        <li>• 上传前请备份Typecho博客数据，避免意外丢失</li>
-                       
+                    <ul class="text-gray-700 space-y-2 text-sm">
+                        <li>• 确保服务器已安装PHP 7.0+、MySQL 5.6+环境哦～</li>
+                        <li>• 上传前请备份数据，避免珍贵的动漫资源丢失～</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 下载区域 -->
+    <!-- 下载区域（动漫风按钮+卡片） -->
     <section id="download" class="py-20 bg-white">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">下载中心</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">选择适合你的版本下载，建议使用最新稳定版以获得最佳体验</p>
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4 text-shadow-anime">
+                    <i class="fa fa-download text-primary mr-2"></i>下载中心
+                </h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">选择适合你的版本，建议下载最新版，体验更多动漫专属功能～</p>
             </div>
 
             <div class="max-w-3xl mx-auto">
-                <!-- 最新版本卡片 -->
-                <div class="bg-primary/5 rounded-xl shadow-lg p-8 mb-8 border border-primary/20">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                <!-- 最新版本卡片（动漫风渐变+装饰） -->
+                <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl shadow-xl p-8 mb-8 border-2 border-primary/20 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full -mr-20 -mt-20"></div>
+                    <div class="absolute bottom-0 left-0 w-60 h-60 bg-secondary/5 rounded-full -ml-30 -mb-30"></div>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 relative z-10">
                         <div>
-                            <h3 class="text-2xl font-bold text-dark">最新稳定版 </h3>
-                            <p class="text-gray-600 mt-1">更新时间：2025-12-01 | 兼容Typecho 1.2+</p>
+                            <h3 class="text-2xl font-bold text-dark">最新稳定版 v2.0.0</h3>
+                            <p class="text-gray-600 mt-1">更新时间：2025-12-01 | 兼容Typecho 1.2+ | 动漫专属优化</p>
                         </div>
-                        <span class="bg-primary text-white text-sm font-medium py-1 px-3 rounded-full mt-3 md:mt-0">推荐下载</span>
+                        <span class="bg-primary text-white text-sm font-medium py-1 px-3 rounded-full mt-3 md:mt-0 shadow-md transform rotate-3">推荐下载</span>
                     </div>
 
-                    <div class="mb-6">
-                        <h4 class="font-semibold mb-2">更新内容：</h4>
+                    <div class="mb-6 relative z-10">
+                        <h4 class="font-semibold mb-2 text-dark">系统更新内容：</h4>
                         <ul class="text-gray-600 space-y-1 list-disc pl-5">
-                            <li>新增深色模式切换功能</li>
-                            <li>优化移动端适配体验</li>
-                            <li>修复部分插件兼容性问题</li>
-                            <li>提升数据库清理工具效率</li>
+                            <li>新增<span class="text-primary font-medium">深色模式+动漫皮肤</span>切换</li>
+                            <li>优化移动端适配，萌系图标更可爱</li>
+                            
+                            <li>提升加载速度，追剧时也能流畅编辑</li>
                         </ul>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="Typecho(不见桃花不见秋版博客系统php自建).zip" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-custom shadow-md hover:shadow-lg flex items-center justify-center">
+                    <div class="flex flex-col sm:flex-row gap-4 relative z-10">
+                        <a href="Typecho(动漫风不见桃花不见秋版).zip" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-full transition-anime shadow-lg hover:shadow-xl flex items-center justify-center transform hover:scale-105">
                             <i class="fa fa-download mr-2"></i>下载完整版（5.4MB）
                         </a>
-                        <a href="#" class="bg-gray-100 hover:bg-gray-200 text-dark font-medium py-3 px-6 rounded-lg transition-custom flex items-center justify-center">
-                            <i class="fa fa-history mr-2"></i>查看更新日志
+                        <a href="#" class="bg-white hover:bg-gray-50 text-dark font-medium py-3 px-6 rounded-full transition-anime shadow-md hover:shadow-lg border-2 border-secondary/30 flex items-center justify-center transform hover:scale-105">
+                            <i class="fa fa-history mr-2 text-secondary"></i>查看更新日志
                         </a>
                     </div>
                 </div>
 
-                <!-- 历史版本 -->
-                <div class="bg-light rounded-xl shadow-md p-6">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                <!-- 历史版本（动漫风卡片） -->
+                <div class="bg-light rounded-2xl shadow-md p-6 border-2 border-gray-100">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center text-dark">
                         <i class="fa fa-archive text-primary mr-2"></i>历史版本
                     </h3>
                     <div class="space-y-4">
                         <!-- 版本1.1.0 -->
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border-b border-gray-100">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border-b border-gray-100 hover:bg-primary/5 rounded-xl transition-anime">
                             <div>
-                                <h4 class="font-medium text-dark">v1.1.0</h4>
+                                <h4 class="font-medium text-dark">v1.1.0（动漫测试版）</h4>
                                 <p class="text-gray-500 text-sm">更新时间：2025-12-01 | 大小：1.1MB</p>
                             </div>
-                            <a href="#" class="text-primary hover:text-primary/80 transition-custom text-sm font-medium mt-2 md:mt-0">
+                            <a href="#" class="text-primary hover:text-primary/80 transition-anime text-sm font-medium mt-2 md:mt-0 flex items-center">
                                 下载 <i class="fa fa-angle-right ml-1"></i>
                             </a>
                         </div>
 
                         <!-- 版本1.0.0 -->
-                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 hover:bg-secondary/5 rounded-xl transition-anime">
                             <div>
-                                <h4 class="font-medium text-dark">v1.0.0</h4>
+                                <h4 class="font-medium text-dark">v1.0.0（初始版本）</h4>
                                 <p class="text-gray-500 text-sm">更新时间：2024-06-01 | 大小：1.0MB</p>
                             </div>
-                            <a href="#" class="text-primary hover:text-primary/80 transition-custom text-sm font-medium mt-2 md:mt-0">
+                            <a href="#" class="text-primary hover:text-primary/80 transition-anime text-sm font-medium mt-2 md:mt-0 flex items-center">
                                 下载 <i class="fa fa-angle-right ml-1"></i>
                             </a>
                         </div>
@@ -310,38 +359,51 @@
         </div>
     </section>
 
-    <!-- 关于区域 -->
-    <section id="about" class="py-20 bg-secondary">
+    <!-- 关于区域（动漫风背景+社交图标） -->
+    <section id="about" class="py-20 bg-gradient-to-b from-secondary/10 to-light">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-6">关于工具包</h2>
-                <p class="text-gray-600 mb-8 leading-relaxed">
-                    「不见桃花不见秋版Typecho」是一款基于Typecho博客系统二次开发的自建系统安装包，诞生于对简约文艺博客的追求。我们希望通过轻量化的设计、实用的功能，让每个博主都能轻松搭建属于自己的理想博客。
+            <div class="max-w-3xl mx-auto text-center relative">
+                <!-- 动漫装饰元素 -->
+                <div class="absolute top-0 left-0 text-primary/10 text-5xl animate-float">
+                    <i class="fa fa-heart"></i>
+                </div>
+                <div class="absolute bottom-0 right-0 text-secondary/10 text-4xl animate-float" style="animation-delay: 1s">
+                    <i class="fa fa-star"></i>
+                </div>
+
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-6 text-shadow-anime">
+                    <i class="fa fa-user text-primary mr-2"></i>关于工具包
+                </h2>
+                <p class="text-gray-600 mb-8 leading-relaxed relative z-10">
+                    「动漫风不见桃花不见秋版Typecho」是专为二次元爱好者打造的博客系统！基于Typecho二次开发，融合了萌系设计、实用功能，让每个动漫迷都能拥有属于自己的线上小窝，记录追番日常、分享同人作品～
                 </p>
-                <div class="flex justify-center space-x-6 mb-10">
-                    <a href="#" class="text-gray-600 hover:text-primary transition-custom text-xl">
+                <div class="flex justify-center space-x-8 mb-10 relative z-10">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-anime text-2xl transform hover:scale-125">
                         <i class="fa fa-github"></i>
                     </a>
-                    <a href="#" class="text-gray-600 hover:text-primary transition-custom text-xl">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-anime text-2xl transform hover:scale-125">
                         <i class="fa fa-weibo"></i>
                     </a>
-                    <a href="#" class="text-gray-600 hover:text-primary transition-custom text-xl">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-anime text-2xl transform hover:scale-125">
+                        <i class="fa fa-bilibili"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-anime text-2xl transform hover:scale-125">
                         <i class="fa fa-envelope"></i>
                     </a>
                 </div>
-                <p class="text-gray-500 text-sm">
-                  <span class="年份检测" id="yearSpan"></span> ©  不见桃花不见秋版 | 基于 MIT 开源协议 
+                <p class="text-gray-500 text-sm relative z-10">
+                  <span class="年份检测" id="yearSpan"></span> © 不见桃花不见秋 | 基于 MIT 开源协议 
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- 回到顶部按钮 -->
-    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-custom opacity-0 invisible">
-        <i class="fa fa-arrow-up"></i>
+    <!-- 回到顶部按钮（动漫风改造） -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-anime opacity-0 invisible hover:scale-110 hover:shadow-xl">
+        <i class="fa fa-arrow-up text-xl"></i>
     </button>
 
-    <!-- JavaScript -->
+    <!-- JavaScript（保持原功能不变） -->
     <script>
 // 获取当前年份并插入标签
 document.getElementById("yearSpan").innerText = new Date().getFullYear();
@@ -358,12 +420,12 @@ document.getElementById("yearSpan").innerText = new Date().getFullYear();
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.classList.add('shadow-md');
-                navbar.classList.remove('bg-white/90');
+                navbar.classList.add('shadow-lg');
+                navbar.classList.remove('bg-white/95');
                 navbar.classList.add('bg-white');
             } else {
-                navbar.classList.remove('shadow-md');
-                navbar.classList.add('bg-white/90');
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.add('bg-white/95');
                 navbar.classList.remove('bg-white');
             }
         });
