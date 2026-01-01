@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>不见桃花不见秋版Typecho | 自建博客系统包下载</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome图标 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 配置Tailwind自定义主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#d4b483', // 主色调：淡棕褐（贴合文艺主题）
+                        secondary: '#f5f0e6', // 辅助色：米白
+                        dark: '#333647', // 深色文字
+                        light: '#faf8f5', // 浅色背景
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['"Noto Serif SC"', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-sm {
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            }
+            .bg-blur {
+                backdrop-filter: blur(8px);
+            }
+            .transition-custom {
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    </style>
+    <!-- 引入中文字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-light text-dark font-serif antialiased">
+    <!-- 导航栏（固定顶部，响应式折叠） -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-custom bg-white/90 bg-blur shadow-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center space-x-2">
+                    <i class="fa fa-pagelines text-primary text-2xl"></i>
+                    <span class="text-xl md:text-2xl font-bold text-dark">Typecho博客系统</span>
+                </a>
+
+                <!-- 桌面端菜单 -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-dark hover:text-primary transition-custom font-medium">首页</a>
+                    <a href="#features" class="text-dark hover:text-primary transition-custom font-medium">功能</a>
+                    <a href="#install" class="text-dark hover:text-primary transition-custom font-medium">安装</a>
+                    <a href="#download" class="text-dark hover:text-primary transition-custom font-medium">下载</a>
+                    <a href="#about" class="text-dark hover:text-primary transition-custom font-medium">关于</a>
+                </nav>
+
+                <!-- 移动端汉堡菜单 -->
+                <button id="menuBtn" class="md:hidden text-dark hover:text-primary transition-custom">
+                    <i class="fa fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 移动端菜单面板 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#home" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">首页</a>
+                <a href="#features" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">功能</a>
+                <a href="#install" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">安装</a>
+                <a href="#download" class="text-dark hover:text-primary transition-custom py-2 border-b border-gray-100">下载</a>
+                <a href="#about" class="text-dark hover:text-primary transition-custom py-2">关于</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区 -->
+    <section id="home" class="pt-32 pb-20 md:pt-40 md:pb-28 bg-secondary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark mb-6 leading-tight text-shadow-sm">
+                「不见桃花不见秋」版Typecho博客系统
+                <span class="block text-primary mt-2">PHP自建工具包</span>
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                一款简约文艺、响应式适配的博客自建系统，集成主题优化、功能扩展、性能提升等核心能力，让博客搭建更简单。
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#download" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-lg transition-custom shadow-md hover:shadow-lg transform hover:-translate-y-1">
+                    <i class="fa fa-download mr-2"></i>立即下载
+                </a>
+                <a href="#install" class="bg-white hover:bg-gray-50 text-dark font-medium py-3 px-8 rounded-lg transition-custom shadow-md hover:shadow-lg border border-gray-200 transform hover:-translate-y-1">
+                    <i class="fa fa-book mr-2"></i>安装指南
+                </a>
+            </div>
+
+            <!-- 预览图（响应式缩放） -->
+            <div class="mt-16 max-w-4xl mx-auto">
+                <img src="https://picsum.photos/id/1068/1200/600" alt="工具包预览" class="w-full h-auto rounded-xl shadow-xl object-cover" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特点区 -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">核心功能</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">专为新手用户打造，聚焦实用性与易用性，满足个人博客搭建的核心需求</p>
+            </div>
+
+            <!-- 功能卡片网格（响应式适配） -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 功能卡片1 -->
+                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-desktop text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">全响应式适配</h3>
+                    <p class="text-gray-600">自动适配手机、平板、PC等设备，博客在任何屏幕下都能完美展示</p>
+                </div>
+
+                <!-- 功能卡片2 -->
+                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-paint-brush text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">主题优化工具</h3>
+                    <p class="text-gray-600">集成配色调整、布局自定义、字体切换等功能，无需复杂代码即可美化博客</p>
+                </div>
+
+                <!-- 功能卡片3 -->
+                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-bolt text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">性能提升</h3>
+                    <p class="text-gray-600">包含静态资源压缩、缓存优化、数据库清理工具，大幅提升博客加载速度</p>
+                </div>
+
+                <!-- 功能卡片4 -->
+                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-plug text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">插件扩展支持</h3>
+                    <p class="text-gray-600">预设常用插件适配方案，一键安装评论系统、阅读统计、分享功能等</p>
+                </div>
+
+                <!-- 功能卡片5 -->
+                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-shield text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">安全防护</h3>
+                    <p class="text-gray-600">包含SQL注入防护、XSS过滤、后台登录验证等功能，保障博客安全</p>
+                </div>
+
+                <!-- 功能卡片6 -->
+                <div class="bg-light rounded-xl p-6 shadow-md hover:shadow-lg transition-custom border border-gray-100">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
+                        <i class="fa fa-code text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">轻量化设计</h3>
+                    <p class="text-gray-600">代码精简无冗余，占用服务器资源少，运行稳定高效，适合各类虚拟主机</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 安装说明区 -->
+    <section id="install" class="py-20 bg-secondary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">安装指南</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">简单4步，快速部署工具包，无需专业技术背景</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8 md:p-10">
+                <!-- 安装步骤 -->
+                <div class="space-y-8">
+                    <!-- 步骤1 -->
+                    <div class="flex gap-6">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">下载并解压</h3>
+                            <p class="text-gray-600">从下载区获取工具包压缩包，解压后得到<code class="bg-gray-100 px-2 py-1 rounded text-sm">系统源码</code>文件夹</p>
+                        </div>
+                    </div>
+
+                    <!-- 步骤2 -->
+                    <div class="flex gap-6">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">上传至服务器</h3>
+                            <p class="text-gray-600">通过FTP或服务器面板，将解压后的文件夹上传至服务器根目录</p>
+                        </div>
+                    </div>
+
+                    <!-- 步骤3 -->
+                    <div class="flex gap-6">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">运行安装脚本</h3>
+                            <p class="text-gray-600">访问服务器绑定的ip地址和博客文件夹目录地址<code class="bg-gray-100 px-2 py-1 rounded text-sm">源码文件夹根目录下install.php</code>，按照提示完成配置</p>
+                        </div>
+                    </div>
+
+                    <!-- 步骤4 -->
+                    <div class="flex gap-6">
+                        <div class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-bold flex-shrink-0">4</div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">启用并使用</h3>
+                            <p class="text-gray-600">安装完成后，进入博客后台即可开始使用所有功能</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 注意事项 -->
+                <div class="mt-10 p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
+                    <h4 class="font-semibold text-yellow-800 mb-2 flex items-center">
+                        <i class="fa fa-exclamation-triangle mr-2"></i>注意事项
+                    </h4>
+                    <ul class="text-yellow-700 space-y-2 text-sm">
+                        <li>• 确保服务器已安装PHP 7.0+、MySQL 5.6+环境</li>
+                        <li>• 上传前请备份Typecho博客数据，避免意外丢失</li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="download" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-4">下载中心</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">选择适合你的版本下载，建议使用最新稳定版以获得最佳体验</p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <!-- 最新版本卡片 -->
+                <div class="bg-primary/5 rounded-xl shadow-lg p-8 mb-8 border border-primary/20">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-dark">最新稳定版 </h3>
+                            <p class="text-gray-600 mt-1">更新时间：2025-12-01 | 兼容Typecho 1.2+</p>
+                        </div>
+                        <span class="bg-primary text-white text-sm font-medium py-1 px-3 rounded-full mt-3 md:mt-0">推荐下载</span>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="font-semibold mb-2">更新内容：</h4>
+                        <ul class="text-gray-600 space-y-1 list-disc pl-5">
+                            <li>新增深色模式切换功能</li>
+                            <li>优化移动端适配体验</li>
+                            <li>修复部分插件兼容性问题</li>
+                            <li>提升数据库清理工具效率</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="Typecho(不见桃花不见秋版博客系统php自建).zip" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-custom shadow-md hover:shadow-lg flex items-center justify-center">
+                            <i class="fa fa-download mr-2"></i>下载完整版（5.4MB）
+                        </a>
+                        <a href="#" class="bg-gray-100 hover:bg-gray-200 text-dark font-medium py-3 px-6 rounded-lg transition-custom flex items-center justify-center">
+                            <i class="fa fa-history mr-2"></i>查看更新日志
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 历史版本 -->
+                <div class="bg-light rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fa fa-archive text-primary mr-2"></i>历史版本
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- 版本1.1.0 -->
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 border-b border-gray-100">
+                            <div>
+                                <h4 class="font-medium text-dark">v1.1.0</h4>
+                                <p class="text-gray-500 text-sm">更新时间：2025-12-01 | 大小：1.1MB</p>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary/80 transition-custom text-sm font-medium mt-2 md:mt-0">
+                                下载 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+
+                        <!-- 版本1.0.0 -->
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4">
+                            <div>
+                                <h4 class="font-medium text-dark">v1.0.0</h4>
+                                <p class="text-gray-500 text-sm">更新时间：2024-06-01 | 大小：1.0MB</p>
+                            </div>
+                            <a href="#" class="text-primary hover:text-primary/80 transition-custom text-sm font-medium mt-2 md:mt-0">
+                                下载 <i class="fa fa-angle-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区域 -->
+    <section id="about" class="py-20 bg-secondary">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold text-dark mb-6">关于工具包</h2>
+                <p class="text-gray-600 mb-8 leading-relaxed">
+                    「不见桃花不见秋版Typecho」是一款基于Typecho博客系统二次开发的自建系统安装包，诞生于对简约文艺博客的追求。我们希望通过轻量化的设计、实用的功能，让每个博主都能轻松搭建属于自己的理想博客。
+                </p>
+                <div class="flex justify-center space-x-6 mb-10">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-custom text-xl">
+                        <i class="fa fa-github"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-custom text-xl">
+                        <i class="fa fa-weibo"></i>
+                    </a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-custom text-xl">
+                        <i class="fa fa-envelope"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500 text-sm">
+                  <span class="年份检测" id="yearSpan"></span> ©  不见桃花不见秋版 | 基于 MIT 开源协议 
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-custom opacity-0 invisible">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+</script>
+    <script>
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.remove('bg-white/90');
+                navbar.classList.add('bg-white');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.add('bg-white/90');
+                navbar.classList.remove('bg-white');
+            }
+        });
+
+        // 回到顶部按钮
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'invisible');
+                backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'invisible');
+                backToTopBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // 关闭移动端菜单
+                    mobileMenu.classList.add('hidden');
+                    // 滚动到目标位置
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
