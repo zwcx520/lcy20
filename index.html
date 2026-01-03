@@ -3,822 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>归档-时光卷轴 官方APP下载页面</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     
-    
-<style>
-/* 闪烁光标样式 */
-#daziji::after{
-  content: "🥰";
-  animation: blink 1s infinite;
-}
-@keyframes blink{
-  50%{opacity: 0;}
-}
-</style>
-
-
-
-   <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        }
-        
-        :root {
-            --primary: #3498db;
-            --primary-dark: #2980b9;
-            --secondary: #9b59b6;
-            --light: #f8f9fe;
-            --dark: #2c3e50;
-            --gray: #7f8c8d;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-        
-        body {
-
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 头部样式 */
-        header {
-            background-color: white;
-            box-shadow: var(--shadow);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            font-size: 2rem;
-        }
-        
-        .version-badge {
-            background-color: var(--secondary);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 8px;
-            vertical-align: super;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .mobile-menu-btn {
-            display: none;
-            font-size: 1.5rem;
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-        }
-        
-        /* 英雄区域样式 */
-        .hero {
-            padding: 150px 0 80px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            background-image: url(index.png); background-size: cover; /* 修改为cover，使图片铺满满屏 */ background-attachment: fixed; /* 可选，使背景图片固定不随页面滚动 */ margin: 0; /* 去除默认边距 */ padding: 0; /* 去除默认内边距 */
-    
-
-        }
-        
-        .hero-content h1 {
-            font-size: 3rem;
-            line-height: 1.2;
-            margin-bottom: 10px;
-            color: var(--dark);
-            
-        }
-        
-        .app-version {
-            color: var(--secondary);
-            font-weight: 600;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-        
-        .hero-content p {
-            font-size: 1.1rem;
-            color: var(--gray);
-            margin-bottom: 30px;
-        }
-        
-        .app-badges {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .badge {
-            display: flex;
-            align-items: center;
-            background-color: var(--dark);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .badge:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .badge i {
-            font-size: 1.8rem;
-            margin-right: 10px;
-        }
-        
-        .badge.android {
-            background-color: #3ddc84;
-            color: #333;
-        }
-        
-        .badge.ios {
-            background-color: #000;
-            color: white;
-        }
-        
-        .hero-image {
-            text-align: center;
-            position: relative;
-            Width:50%;
-        }
-        
-        .phone-mockup {
-            max-width: 100%;
-            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.15));
-        }
-        
-        /* 功能区域样式 */
-        .features {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .feature-card {
-            background-color: var(--light);
-            padding: 40px 30px;
-            border-radius: 12px;
-            text-align: center;
-            transition: var(--transition);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-        }
-        
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background-color: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 2rem;
-        }
-        
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        
-        /* 下载区域样式 */
-        .download {
-            padding: 100px 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            text-align: center;
-        }
-        
-        .download h2 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .download-version {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-        
-        .download p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
-        }
-        
-        .qr-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 50px;
-            margin-top: 40px;
-        }
-        
-        .qr-code {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-        
-        .qr-code img {
-            width: 180px;
-            height: 180px;
-        }
-        
-        .qr-info h3 {
-            margin-bottom: 15px;
-        }
-        
-        /* 更新日志样式 */
-        .changelog {
-            padding: 100px 0;
-            background-color: #f9f9f9;
-        }
-        
-        .changelog-content {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
-        
-        .changelog h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-        
-        .version-item {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .version-item:last-child {
-            border-bottom: none;
-        }
-        
-        .version-item h4 {
-            color: var(--secondary);
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-        }
-        
-        .version-item ul {
-            padding-left: 20px;
-        }
-        
-        .version-item li {
-            margin-bottom: 8px;
-        }
-        
-        /* 评价区域样式 */
-        .testimonials {
-            padding: 100px 0;
-            background-color: white;
-        }
-        
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .testimonial-card {
-            background-color: #f9f9f9;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
-        
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-right: 15px;
-            background-color: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--primary);
-        }
-        
-        .user-info h4 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-        
-        .stars {
-            color: #ffc107;
-        }
-        
-        /* 页脚样式 */
-        footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .footer-links h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links ul {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #b0b7c3;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .footer-links a:hover {
-            color: white;
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #424242;
-            color: #b0b7c3;
-            font-size: 0.9rem;
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 40px;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            
-            .app-badges {
-                justify-content: center;
+    <title>归档-时光卷轴 官方APP下载网站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cutePink: '#ff9eb1',
+                        cuteBlue: '#a8d8ff',
+                        cutePurple: '#d8b4fe',
+                        cuteYellow: '#fef08a',
+                        cuteWhite: '#fff9f9',
+                        cuteGray: '#f3f4f6',
+                    },
+                    fontFamily: {
+                        cute: ['"Ma Shan Zheng"', 'cursive', 'sans-serif'],
+                        normal: ['"Noto Sans SC"', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'cute': '16px',
+                        'super-cute': '24px',
+                    }
+                }
             }
         }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-cute-pattern {
+                background-image: url('https://picsum.photos/id/1062/1920/1080');
+                background-size: cover;
+                background-position: center;
+                background-blend-mode: overlay;
             }
-            
-            .mobile-menu-btn {
-                display: block;
+            .text-shadow-cute {
+                text-shadow: 2px 2px 0px #ff9eb180, 0 0 8px #d8b4fe60;
             }
-            
-            .hero {
-                padding: 120px 0 60px;
+            .cute-shadow {
+                box-shadow: 0 8px 16px rgba(255,158,177,0.25);
             }
-            
-            .hero-content h1 {
-                font-size: 2.2rem;
+            .animate-fade-up {
+                animation: fadeUp 1.2s ease-out forwards;
             }
-            
-            .section-title h2 {
-                font-size: 2rem;
+            .animate-bounce-cute {
+                animation: bounceCute 2s ease-in-out infinite;
             }
-            
-            .download h2 {
-                font-size: 2rem;
+            .animate-scale-cute {
+                animation: scaleCute 1.5s ease-in-out infinite;
             }
-            
-            .features, .testimonials, .download, .changelog {
-                padding: 70px 0;
+            .animate-slide {
+                animation: slide 0.5s ease-out forwards;
             }
-            
-            .changelog-content {
-                padding: 20px;
+            @keyframes fadeUp {
+                0% { transform: translateY(40px); opacity: 0; }
+                100% { transform: translateY(0); opacity: 1; }
             }
-        }
-        
-        @media (max-width: 576px) {
-            .app-badges {
-                flex-direction: column;
-                align-items: center;
+            @keyframes bounceCute {
+                0%,100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
             }
-            
-            .badge {
-                width: 100%;
-                max-width: 250px;
-                justify-content: center;
+            @keyframes scaleCute {
+                0%,100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
             }
-            
-            .qr-section {
-                flex-direction: column;
-                gap: 30px;
+            @keyframes slide {
+                0% { transform: translateX(30px); opacity: 0; }
+                100% { transform: translateX(0); opacity: 1; }
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <!-- 头部导航 -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <i class="fas fa-scroll"></i>
-                    归档APP
-                    <span class="version-badge">v1.7.4</span>
-                </a>
-                
-                <ul class="nav-links">
-                    <li><a href="#home">首页</a></li>
-                   
-                    <li><a href="#changelog">更新日志</a></li>
-                    <li><a href="#download">下载</a></li>
-                    <li><a href="login">登陆</a></li>
-                </ul>
-                
-                <button class="mobile-menu-btn">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </nav>
+<body class="bg-cute-white font-normal overflow-x-hidden">
+    <!-- 萌系漂浮装饰（全程显示，灵动不突兀） -->
+    <div class="fixed top-10 left-5 text-cutePink text-2xl animate-bounce-cute opacity-60 hidden md:block">
+        <i class="fa fa-heart"></i>
+    </div>
+    <div class="fixed top-20 right-10 text-cuteBlue text-2xl animate-bounce-cute delay-500 opacity-60 hidden md:block">
+        <i class="fa fa-star-o"></i>
+    </div>
+    <div class="fixed bottom-20 left-1/4 text-cutePurple text-2xl animate-bounce-cute delay-1000 opacity-60 hidden md:block">
+        <i class="fa fa-diamond"></i>
+    </div>
+    <div class="fixed bottom-30 right-1/4 text-cuteYellow text-2xl animate-bounce-cute delay-1500 opacity-60 hidden md:block">
+        <i class="fa fa-moon-o"></i>
+    </div>
+
+    <!-- 顶部萌系导航 -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-cuteWhite/95 backdrop-blur-sm py-3 px-4 md:px-8 cute-shadow">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <img src="https://lcy20.netlify.app/app.jpg" alt="萌系图标" class="w-10 h-10 rounded-full object-cover animate-scale-cute">
+                <h1 class="font-cute text-2xl md:text-3xl text-cutePink text-shadow-cute">归档-时光卷轴APP</h1>
+            </div>
+            <div class="hidden md:flex gap-6 items-center">
+                <a href="#home" class="text-gray-700 hover:text-cutePink transition-colors duration-300 font-medium">首页</a>
+                <a href="#feature" class="text-gray-700 hover:text-cutePink transition-colors duration-300 font-medium">功能</a>
+                <a href="#download" class="text-gray-700 hover:text-cutePink transition-colors duration-300 font-medium">下载</a>
+                <a href="#about" class="text-gray-700 hover:text-cutePink transition-colors duration-300 font-medium">关于</a>
+            </div>
+            <button class="md:hidden text-cutePink text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
         </div>
-    </header>
+    </nav>
 
-    <!-- 主内容区域 -->
-    <main>
-        <!-- 英雄区域 -->
-        <section class="hero" id="home">
-            <div class="container">
-                <div class="hero-content">
-                
-                    <br><br><br><br>
-                    <center>
-                    <div class="hero-image">
-                        
-                    <img src="appIcon.png" alt="手机展示" class="phone-mockup">
-                        
-                </div>
-                    </center>
-                    <br>
-                    <span class="app-version">APP版本: 1.7.4</span><hr>
-                    <span class="app-version">开发者: 追吻辰星</span><hr>
-                    <span class="app-version">APP备案: 未备案</span><hr>
-                    <span class="app-version">发布时间: 2024年6月24日</span>
-                    
-
-<p style="color:#ffffff;" id="daziji"></p>
-
-
-
-<script>
-const text = "开发者是天下是全宇宙最帅的男人，他的才华如星河般璀璨，他的容颜让日月无光，温柔大气，活泼可爱！";
-const dom = document.getElementById("daziji");
-let index = 0;
-const speed = 500;
-const endPause = 2000; // 打完停顿2秒
-
-function typeWriter() {
-  if (index < text.length) {
-    dom.textContent += text.charAt(index);
-    index++;
-    setTimeout(typeWriter, speed);
-  } else {
-    // 打完隐藏光标
-    setTimeout(()=>dom.style.animation = "none", endPause);
-  }
-}
-window.onload = typeWriter;
-</script>
-                    
-                    <div class="app-badges">
-                        
-                    </div>
-                
-                    
-                
-                    <div class="app-badges">
-                        
-                    </div>
-                    
-                    <p><small>适用于 Windows 10+ 和 Android 8.0+ 系统</small></p>
-                    
-                </div>
-                
-                
-            </div>
-        </section>
-        
-        
-        <!-- 更新日志区域 -->
-        <section class="changelog" id="changelog">
-            <div class="container">
-                <div class="section-title">
-                    <h2>版本更新日志</h2>
-                    <p>了解归档-时光卷轴的最新功能和改进</p>
-                </div>
-                
-                <div class="changelog-content">
-                    <h3>版本 1.7.4 更新内容</h3>
-                    <div class="version-item">
-                        <h4>新功能</h4>
-                        <ul>
-                            <li>新增智能标签系统，AI自动为照片添加描述性标签</li>
-                            <li>新增记忆提醒功能，在特殊日期提醒您重温美好回忆</li>
-                            <li>新增时光轴打印服务，可将精选记忆制作成实体相册</li>
-                        </ul>
-                    </div>
-                    
-                    
-                    
-                    <div class="version-item">
-                        <h4>界面改进</h4>
-                        <ul>
-                            <li>全新设计的时光轴界面，视觉效果更佳</li>
-                            <li>优化暗色模式下的色彩对比度，提升阅读体验</li>
-                            <li>改进归档流程，操作更加直观便捷</li>
-                        </ul>
-                    </div>
+    <!-- 首页核心区域（萌系全屏视觉） -->
+    <section id="home" class="pt-28 pb-16 md:pt-36 md:pb-24 bg-cute-pattern bg-cuteGray/70">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col items-center text-center animate-fade-up opacity-0" style="animation-delay: 0.2s">
+                <!-- 萌系Logo -->
+                <img src="https://lcy20.netlify.app/app.jpg" alt="时光卷轴Logo" class="w-32 h-32 md:w-48 md:h-48 rounded-super-cute border-4 border-cutePink cute-shadow animate-scale-cute mb-6">
+                <h2 class="font-cute text-4xl md:text-6xl text-gray-800 text-shadow-cute mb-4">归档-时光卷轴</h2>
+                <p class="text-gray-700 text-lg md:text-xl max-w-2xl mx-auto mb-6">
+                    萌系专属 动漫风归档APP ✨ 收藏记录心动，把回忆装进口袋
+                </p>
+                <!-- 全局版本信息（萌系样式） -->
+                <div class="bg-cutePink/20 px-6 py-2 rounded-cute mb-8 flex items-center gap-2 text-cutePink font-medium">
+                    <i class="fa fa-tag"></i>
+                    <span>最新版本：v1.7.4 萌系限定版</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 下载区域 -->
-        <section class="download" id="download">
-            <div class="container">
-                <h2>立即下载 归档-时光卷轴</h2>
-                <div class="download-version">版本 1.7.4</div>
-                <p>加入用户的使用行列，开始珍藏您的珍贵回忆。免费下载，即刻开始记录时光！</p>
-                
-                <div class="app-badges">
-                    <a href="gd.apk" class="badge android">
-                        <i class="fab fa-google-play"></i>
-                        <div>
-                            <div>Android</div>
-                            <div>立即下载</div>
-                        </div>
-                    </a>
-                    <a href="https://lcy21.netlify.app/gd.exe" class="badge ios">
-                        <i class="fab fa-app-store"></i>
-                        <div>
-                            <div>Windows</div>
-                            <div>立即下载</div>
-                        </div>
-                    </a>
-                    <a href="gdjb" class="badge android">
-                            <i class="fab fa-google-play"></i>
-                            <div>
-                                <div>APP旧框架版</div>
-                                <div>立即下载</div>
-                            </div>
-                    </a>
-                </div>
-                
-                <div class="qr-section">
-                    <div class="qr-code">
-                        <!-- 这里可以用真实的二维码图片 -->
-                        <img src="ewmxz.jpg" alt="下载二维码">
-                    </div>
-                    <div class="qr-info">
-                        <h3>扫描二维码下载</h3>
-                        
-                        <p><small>当前版本：1.7.4 | 更新日期：2025年12月</small></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 用户评价区域 -->
-        <section class="testimonials" id="testimonials">
-            <div class="container">
-                <div class="section-title">
-                    <h2>用户评价</h2>
-                    <p>看看用户对归档-时光卷轴的评价</p>
-                </div>
-                
-                <div class="testimonial-grid">
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <div class="user-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="user-info">
-                                <h4>不见桃花不见秋</h4>
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p>"归档-时光卷轴彻底改变了我的记忆管理方式。它的归档功能让我的数千张照片变得井井有条，再也不用担心找不到想回忆的瞬间了。"</p>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <div class="user-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="user-info">
-                                <h4>追吻辰星</h4>
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p>"时光轴功能太棒了！我可以按时间顺序回顾我成长的每一个重要时刻。1.7.4版本的性能提升很明显，照片加载速度快了很多。"</p>
-                    </div>
-                    
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <div class="user-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="user-info">
-                                <h4>云上桃花</h4>
-                                <div class="stars">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p>"作为一个编程爱好者，这个程序是我用过的最好的一个！"</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- 页脚 -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-about">
-                    <div class="footer-logo">
-                        <i class="fas fa-scroll"></i>
-                        归档-时光卷轴
-                        <span class="version-badge" style="font-size:0.6rem; padding:1px 6px; margin-left:5px;">v1.7.4</span>
-                    </div>
-                    <p>归档-时光卷轴是一款创新的数字记忆管理应用，致力于帮助用户珍藏生活中的每一个珍贵瞬间。我们的使命是让回忆永不褪色。</p>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>快速链接</h3>
-                    <ul>
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#features">功能</a></li>
-                        <li><a href="#changelog">更新日志</a></li>
-                        <li><a href="#download">下载</a></li>
-                        <li><a href="#testimonials">用户评价</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>支持</h3>
-                    <ul>
-                        <li><a href="#">帮助中心</a></li>
-                        <li><a href="#">常见问题</a></li>
-                        <li><a href="#">联系我们</a></li>
-                        <li><a href="#">隐私政策</a></li>
-                        <li><a href="#">使用条款</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links">
-                    <h3>关注我们</h3>
-                    <ul>
-                        <li><a href="https://weibo.com/u/7388419868"><i class="fab fa-weibo"></i> 微博</a></li>
-                        <li><a href="https://mp.weixin.qq.com/s?__biz=MzkzMDk3NDg0NA==&mid=2247483993&idx=1&sn=f22c361c24b287e84449c7f03921ec4c&clicktag=bar_share&scene=294&clickpos=0&from_safari=0&ascene=0&devicetype=android-36&version=28003d34&nettype=cmnet&lang=zh_CN&countrycode=CN&exportkey=n_ChQIAhIQsPwtCqPCBVkM39RiRK+dmxLiAQIE97dBBAEAAAAAAKWIDByK8UwAAAAOpnltbLcz9gKNyK89dVj0VhaRrnhijq2BtjZ4uAmfG+qFTE+XTMnD8zFk8hHYg+Tn4BjCZgL2GeWYejNhon+fmDePIxprS+3YQUzHSlj5t3Jj0g1rVha6r6LWso3LCvUVDOCrroEdGECY+8SVzN9YvomUAVKkLo9j7LvTAdjVP6R90oyqe49ehI7Krp9I5aSvI+OAgzK7L+dHUAlhuRujzXTLTxBBJbqNyvpGMNmssEmA14kS5VKauSc9aKrW8vW4Wd5FWWbZhxhluz0=&pass_ticket=usnfto+O1koN7ytwb641I7c0APc07KoVq5IDmD+5SAu0QR/vAq5Kiey5nr7glQvE&wx_header=3&poc_token=HG64QmmjiBZdDSjhskiTCi4mEgCCkgmPkNk7p98x"><i class="fab fa-weixin"></i> 微信公众号</a></li>
-                        <li><a href="https://qm.qq.com/q/nfxcNYQocS"><i class="fab fa-qq"></i> 官方QQ</a></li>
-                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
-                    </ul>
-                </div>
-            </div>
+    <!-- 功能区（萌系轮播布局） -->
+    <section id="feature" class="py-16 md:py-24 bg-cuteWhite">
+        <div class="container mx-auto px-4">
+            <h3 class="font-cute text-3xl md:text-4xl text-center text-gray-800 text-shadow-cute mb-12">✨ 萌系核心功能 ✨</h3>
             
-            <div class="copyright">
-                <p><span class="年份检测" id="yearSpan"></span> &copy; 归档-时光卷轴.保留所有权利</p>
+            <!-- 轮播容器 -->
+            <div class="relative max-w-3xl mx-auto">
+                <!-- 轮播轨道 -->
+                <div id="carousel-track" class="overflow-hidden rounded-super-cute">
+                    <div class="flex transition-transform duration-500 ease-in-out">
+                        <!-- 功能卡片1 -->
+                        <div class="min-w-full md:min-w-[33.333%] p-4">
+                            <div class="bg-cuteGray rounded-super-cute p-6 cute-shadow hover:translate-y-[-5px] transition-all duration-300 h-full animate-slide">
+                                <div class="w-16 h-16 bg-cutePink/30 rounded-cute flex items-center justify-center mx-auto mb-4">
+                                    <i class="fa fa-bookmark text-cutePink text-2xl"></i>
+                                </div>
+                                <h4 class="font-cute text-xl text-center text-gray-800 mb-3">回忆追寻</h4>
+                                <p class="text-gray-600 text-center text-sm">分类收纳喜欢的风景，标记岁月进度，萌系界面超好懂</p>
+                            </div>
+                        </div>
+                        <!-- 功能卡片2 -->
+                        <div class="min-w-full md:min-w-[33.333%] p-4">
+                            <div class="bg-cuteGray rounded-super-cute p-6 cute-shadow hover:translate-y-[-5px] transition-all duration-300 h-full animate-slide">
+                                <div class="w-16 h-16 bg-cuteBlue/30 rounded-cute flex items-center justify-center mx-auto mb-4">
+                                    <i class="fa fa-calendar text-cuteBlue text-2xl"></i>
+                                </div>
+                                <h4 class="font-cute text-xl text-center text-gray-800 mb-3">时光记录</h4>
+                                <p class="text-gray-600 text-center text-sm">按时间线存下名场面，一键导出萌系回忆录哦</p>
+                            </div>
+                        </div>
+                        <!-- 功能卡片3 -->
+                        <div class="min-w-full md:min-w-[33.333%] p-4">
+                            <div class="bg-cuteGray rounded-super-cute p-6 cute-shadow hover:translate-y-[-5px] transition-all duration-300 h-full animate-slide">
+                                <div class="w-16 h-16 bg-cutePurple/30 rounded-cute flex items-center justify-center mx-auto mb-4">
+                                    <i class="fa fa-share-alt text-cutePurple text-2xl"></i>
+                                </div>
+                                <h4 class="font-cute text-xl text-center text-gray-800 mb-3">同好分享</h4>
+                                <p class="text-gray-600 text-center text-sm">和自己分享收藏清单，一起快乐岁月不孤单～</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 左右切换按钮 -->
+                <button id="prev-btn" class="absolute top-1/2 left-2 -translate-y-1/2 w-10 h-10 bg-cutePink/80 text-white rounded-full flex items-center justify-center cute-shadow hover:bg-cutePink transition-colors z-10">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <button id="next-btn" class="absolute top-1/2 right-2 -translate-y-1/2 w-10 h-10 bg-cutePink/80 text-white rounded-full flex items-center justify-center cute-shadow hover:bg-cutePink transition-colors z-10">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+
+                <!-- 轮播指示器 -->
+                <div class="flex justify-center gap-3 mt-6">
+                    <button class="carousel-indicator w-3 h-3 rounded-full bg-cutePink" data-index="0"></button>
+                    <button class="carousel-indicator w-3 h-3 rounded-full bg-cuteGray hover:bg-cutePink/50 transition-colors" data-index="1"></button>
+                    <button class="carousel-indicator w-3 h-3 rounded-full bg-cuteGray hover:bg-cutePink/50 transition-colors" data-index="2"></button>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 下载区（核心：设备检测+版本大小，萌系按钮） -->
+    <section id="download" class="py-16 md:py-24 bg-cuteBlue/20">
+        <div class="container mx-auto px-4">
+            <h3 class="font-cute text-3xl md:text-4xl text-center text-gray-800 text-shadow-cute mb-12">📥 专属版本下载 📥</h3>
+            <div class="flex flex-col items-center justify-center gap-8 md:gap-10">
+                <!-- 安卓下载按钮 -->
+                <div class="flex flex-col items-center animate-fade-up opacity-0" style="animation-delay: 0.4s">
+                    
+                    <p class="text-gray-700 mt-3 flex items-center gap-2">
+                        <i class="fa fa-hdd-o text-cutePink"></i>
+                        <span>文件大小：12.35MB | 支持Android 8.0+</span>
+                    </p><br>
+                    <a id="android-btn" href="gd.apk" class="hidden bg-gradient-to-r from-cutePink to-cutePurple text-white font-bold py-4 px-12 rounded-super-cute flex items-center gap-3 cute-shadow hover:scale-105 transition-all duration-300 animate-scale-cute">
+                        <i class="fa fa-android text-2xl"></i>
+                        <span class="text-lg">安卓版 立即下载</span>
+                    </a>
+                </div>
+                <!-- Windows下载按钮 -->
+                <div class="flex flex-col items-center animate-fade-up opacity-0" style="animation-delay: 0.7s">
+                    
+                    <p class="text-gray-700 mt-3 flex items-center gap-2">
+                        <i class="fa fa-hdd-o text-cuteBlue"></i>
+                        <span>文件大小：135MB | 支持Windows 10+</span>
+                    </p><br>
+                    <a id="windows-btn" href="https://lcy21.netlify.app/gd.exe" class="hidden bg-gradient-to-r from-cuteBlue to-cutePurple text-white font-bold py-4 px-12 rounded-super-cute flex items-center gap-3 cute-shadow hover:scale-105 transition-all duration-300 animate-scale-cute">
+                        <i class="fa fa-windows text-2xl"></i>
+                        <span class="text-lg">电脑版 立即下载</span>
+                    </a>
+                </div>
+                <!-- 其他设备提示 -->
+                <div class="flex flex-col items-center animate-fade-up opacity-0" style="animation-delay: 1s">
+                    <div id="other-device" class="hidden bg-cuteGray rounded-super-cute py-4 px-12 flex items-center gap-3 cute-shadow text-gray-600">
+                        <i class="fa fa-info-circle text-cuteYellow text-xl"></i>
+                        <span class="text-lg">暂未支持当前设备哦</span>
+                    </div>
+                    <p class="text-gray-700 mt-3 flex items-center gap-2">
+                        <i class="fa fa-exclamation-circle text-cuteYellow"></i>
+                        <span>萌系适配版 敬请期待呀～</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于区（萌系简约风） -->
+    <section id="about" class="py-16 md:py-20 bg-cuteWhite">
+        <div class="container mx-auto px-4">
+            <h3 class="font-cute text-3xl md:text-4xl text-center text-gray-800 text-shadow-cute mb-8">💖 关于我们 💖</h3>
+            <div class="max-w-xl mx-auto bg-cuteGray rounded-super-cute p-6 cute-shadow text-center animate-fade-up opacity-0" style="animation-delay: 0.5s">
+                <p class="text-gray-700 mb-6">一个爱动漫、爱萌系的开发者，只想做一款软软糯糯的归档APP，把岁月的美好都珍藏起来～</p>
+                <div class="flex justify-center gap-8">
+                    <a href="#" class="text-cutePink hover:text-cutePurple text-2xl transition-colors duration-300 hover:scale-110">
+                        <i class="fa fa-weibo"></i>
+                    </a>
+                    <a href="#" class="text-cutePink hover:text-cutePurple text-2xl transition-colors duration-300 hover:scale-110">
+                        <i class="fa fa-wechat"></i>
+                    </a>
+                    <a href="#" class="text-cutePink hover:text-cutePurple text-2xl transition-colors duration-300 hover:scale-110">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部萌系版权 -->
+    <footer class="bg-cutePink/20 py-6 px-4">
+        <div class="container mx-auto text-center">
+            <p class="font-cute text-xl text-gray-700"><span class="年份检测" id="yearSpan"></span> ©  归档-时光卷轴</p>
+            <p class="text-gray-600 text-sm mt-2">不见桃花不见秋:软软糯糯 治愈所有不开心 ✨</p>
         </div>
     </footer>
 <script>
@@ -826,53 +267,97 @@ window.onload = typeWriter;
 document.getElementById("yearSpan").innerText = new Date().getFullYear();
 </script>
     <script>
-        // 移动端菜单切换
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
-        
-        // 响应式调整
-        window.addEventListener('resize', function() {
-            const navLinks = document.querySelector('.nav-links');
-            if (window.innerWidth > 768) {
-                navLinks.style.display = 'flex';
-            } else {
-                navLinks.style.display = 'none';
-            }
-        });
-        
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 移动端点击后关闭菜单
-                    if (window.innerWidth <= 768) {
-                        document.querySelector('.nav-links').style.display = 'none';
+        window.addEventListener('load', function() {
+            // 萌系渐入动画触发
+            setTimeout(() => {
+                document.querySelectorAll('.animate-fade-up, .animate-slide').forEach(el => {
+                    el.style.opacity = 1;
+                })
+            }, 300);
+
+            // 设备检测逻辑（原有功能不变）
+            const userAgent = navigator.userAgent;
+            const androidBtn = document.getElementById('android-btn');
+            const windowsBtn = document.getElementById('windows-btn');
+            const otherDevice = document.getElementById('other-device');
+
+            if (userAgent.includes('Android')) androidBtn.classList.remove('hidden');
+            else if (userAgent.includes('Windows')) windowsBtn.classList.remove('hidden');
+            else otherDevice.classList.remove('hidden');
+
+            // 轮播核心逻辑
+            const carouselTrack = document.getElementById('carousel-track').querySelector('div');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const cardCount = 3;
+            let currentIndex = 0;
+            let isDesktop = window.innerWidth >= 768; // 区分移动端/桌面端
+            let slideWidth = isDesktop ? 100 / cardCount : 100; // 桌面端一次滑1/3，移动端一次滑100%
+
+            // 更新轮播位置
+            function updateCarousel() {
+                carouselTrack.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+                // 更新指示器
+                indicators.forEach((indicator, index) => {
+                    if (index === currentIndex) {
+                        indicator.classList.add('bg-cutePink');
+                        indicator.classList.remove('bg-cuteGray', 'hover:bg-cutePink/50');
+                    } else {
+                        indicator.classList.remove('bg-cutePink');
+                        indicator.classList.add('bg-cuteGray', 'hover:bg-cutePink/50');
                     }
-                }
+                });
+            }
+
+            // 下一张
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % cardCount;
+                updateCarousel();
+            });
+
+            // 上一张
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + cardCount) % cardCount;
+                updateCarousel();
+            });
+
+            // 指示器点击
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarousel();
+                });
+            });
+
+            // 窗口大小变化时重新计算滑动物理
+            window.addEventListener('resize', () => {
+                isDesktop = window.innerWidth >= 768;
+                slideWidth = isDesktop ? 100 / cardCount : 100;
+                currentIndex = 0; // 重置索引避免错位
+                updateCarousel();
+            });
+
+            // 自动轮播（3秒一次）
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % cardCount;
+                updateCarousel();
+            }, 3000);
+
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
         });
-        
-        // 下载按钮点击效果
-        
-        
-        // 页面加载时显示版本号
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('归档-时光卷轴 v1.7.4 下载页面已加载');
-        });
     </script>
-
 </body>
 </html>
