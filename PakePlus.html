@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PakePlus - 萌系网页打包神器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        // Tailwind 配置
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B8B',
+                        secondary: '#7B61FF',
+                        accent: '#FFD166',
+                        dark: '#2A2A48',
+                        light: '#F9F7FF'
+                    },
+                    fontFamily: {
+                        anime: ['"Comic Sans MS"', '"幼圆"', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            }
+            .card-hover {
+                @apply transition-all duration-300 hover:scale-105 hover:shadow-xl hover:-translate-y-1;
+            }
+            .btn-anime {
+                @apply relative overflow-hidden transition-all duration-300 hover:brightness-110 hover:shadow-lg;
+            }
+            .btn-anime::after {
+                content: '';
+                @apply absolute top-0 left-0 w-0 h-full bg-white/20 transform -skew-x-12 transition-all duration-500;
+            }
+            .btn-anime:hover::after {
+                @apply w-full;
+            }
+            .bg-anime {
+                background: linear-gradient(120deg, #FF6B8B, #7B61FF, #FFD166);
+                background-size: 200% 200%;
+                animation: gradient 15s ease infinite;
+            }
+            @keyframes gradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+        }
+    </style>
+</head>
+<body class="font-anime bg-light text-dark overflow-x-hidden">
+    <!-- 导航栏 -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-primary text-2xl"><i class="fa fa-rocket"></i></span>
+                <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">PakePlus</h1>
+            </div>
+            <div class="hidden md:flex gap-6 items-center">
+                <a href="#home" class="font-medium hover:text-primary transition-colors">首页</a>
+                <a href="#features" class="font-medium hover:text-primary transition-colors">功能</a>
+                <a href="#download" class="font-medium hover:text-primary transition-colors">下载</a>
+                <a href="#docs" class="font-medium hover:text-primary transition-colors">文档</a>
+                <a href="https://github.com/Sjj1024/PakePlus" target="_blank" class="btn-anime px-4 py-2 rounded-full bg-primary text-white">
+                    <i class="fa fa-github mr-2"></i>Github
+                </a>
+            </div>
+            <button class="md:hidden text-xl text-dark" id="menuBtn">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="md:hidden hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-4">
+                <a href="#home" class="font-medium py-2 hover:text-primary transition-colors border-b border-gray-100">首页</a>
+                <a href="#features" class="font-medium py-2 hover:text-primary transition-colors border-b border-gray-100">功能</a>
+                <a href="#download" class="font-medium py-2 hover:text-primary transition-colors border-b border-gray-100">下载</a>
+                <a href="#docs" class="font-medium py-2 hover:text-primary transition-colors">文档</a>
+                <a href="https://github.com/Sjj1024/PakePlus" target="_blank" class="btn-anime px-4 py-2 rounded-full bg-primary text-white text-center">
+                    <i class="fa fa-github mr-2"></i>Github
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区 -->
+    <section id="home" class="pt-32 pb-20 bg-anime">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center gap-10">
+            <div class="md:w-1/2 text-center md:text-left text-white">
+                <h2 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-6 text-shadow leading-tight">
+                    把网页<br>打包成<span class="text-accent">萌系</span>桌面应用
+                </h2>
+                <p class="text-lg mb-8 text-white/90 max-w-lg mx-auto md:mx-0">
+                    基于 Tauri2 开发，体积小于 5M，跨平台支持，为动漫风网页打造专属桌面端体验
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#download" class="btn-anime px-8 py-3 rounded-full bg-white text-primary font-bold text-lg">
+                        立即下载 <i class="fa fa-download ml-2"></i>
+                    </a>
+                    <a href="#docs" class="btn-anime px-8 py-3 rounded-full bg-transparent border-2 border-white text-white font-bold text-lg">
+                        快速上手 <i class="fa fa-book ml-2"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 animate-float">
+                <img src="https://picsum.photos/id/237/600/400" alt="PakePlus 打包效果展示" class="rounded-2xl shadow-2xl w-full object-cover">
+            </div>
+        </div>
+        <!-- 波浪装饰 -->
+        <div class="absolute bottom-0 left-0 w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" class="w-full h-auto">
+                <path fill="#F9F7FF" fill-opacity="1" d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- 功能区 -->
+    <section id="features" class="py-20 container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h3 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                超萌功能，一键打包
+            </h3>
+            <p class="text-gray-600 max-w-2xl mx-auto">专为动漫风网页设计，轻量化体积，强大交互体验，跨平台兼容</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 功能卡片1 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md card-hover">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-5">
+                    <span class="text-primary text-2xl"><i class="fa fa-compress"></i></span>
+                </div>
+                <h4 class="text-xl font-bold mb-3">极致轻量化</h4>
+                <p class="text-gray-600">打包后的应用体积小于 5M，启动速度快如闪电，告别臃肿安装包</p>
+            </div>
+            <!-- 功能卡片2 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md card-hover">
+                <div class="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center mb-5">
+                    <span class="text-secondary text-2xl"><i class="fa fa-desktop"></i></span>
+                </div>
+                <h4 class="text-xl font-bold mb-3">跨平台支持</h4>
+                <p class="text-gray-600">支持 Windows、macOS、Linux 三大平台，一次打包，全端运行</p>
+            </div>
+            <!-- 功能卡片3 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md card-hover">
+                <div class="w-14 h-14 bg-accent/10 rounded-full flex items-center justify-center mb-5">
+                    <span class="text-accent text-2xl"><i class="fa fa-magic"></i></span>
+                </div>
+                <h4 class="text-xl font-bold mb-3">动漫风定制</h4>
+                <p class="text-gray-600">支持自定义应用图标、启动动画、主题配色，打造专属萌系桌面应用</p>
+            </div>
+            <!-- 功能卡片4 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md card-hover">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mb-5">
+                    <span class="text-primary text-2xl"><i class="fa fa-code"></i></span>
+                </div>
+                <h4 class="text-xl font-bold mb-3">静态页面兼容</h4>
+                <p class="text-gray-600">完美支持 Vue/React/静态 HTML 项目，无需修改代码，直接打包</p>
+            </div>
+            <!-- 功能卡片5 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md card-hover">
+                <div class="w-14 h-14 bg-secondary/10 rounded-full flex items-center justify-center mb-5">
+                    <span class="text-secondary text-2xl"><i class="fa fa-plug"></i></span>
+                </div>
+                <h4 class="text-xl font-bold mb-3">插件扩展</h4>
+                <p class="text-gray-600">支持自定义插件开发，扩展应用功能，满足个性化需求</p>
+            </div>
+            <!-- 功能卡片6 -->
+            <div class="bg-white rounded-2xl p-6 shadow-md card-hover">
+                <div class="w-14 h-14 bg-accent/10 rounded-full flex items-center justify-center mb-5">
+                    <span class="text-accent text-2xl"><i class="fa fa-github"></i></span>
+                </div>
+                <h4 class="text-xl font-bold mb-3">开源免费</h4>
+                <p class="text-gray-600">完全开源，免费使用，社区活跃，持续更新迭代</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区 -->
+    <section id="download" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h3 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                    下载最新版本
+                </h3>
+                <p class="text-gray-600 max-w-2xl mx-auto">v1.0.0 正式版，修复已知问题，优化动漫风主题适配</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- Windows 下载 -->
+                <div class="bg-white rounded-2xl p-8 shadow-md text-center card-hover border-t-4 border-primary">
+                    <span class="text-primary text-4xl mb-5 inline-block"><i class="fa fa-windows"></i></span>
+                    <h4 class="text-xl font-bold mb-3">Windows</h4>
+                    <p class="text-gray-500 mb-6">支持 Windows 10/11 (x64)</p>
+                    <a href="PakePlus.msi" target="_blank" class="btn-anime inline-block px-6 py-3 rounded-full bg-primary text-white">
+                        下载安装包 <i class="fa fa-download ml-2"></i>
+                    </a>
+                </div>
+               
+               
+            </div>
+            <div class="text-center mt-12 text-gray-500 text-sm">
+                <p>所有安装包均通过 GitHub Actions 自动构建，安全可靠</p>
+                <p class="mt-2">查看 <a href="https://github.com/Sjj1024/PakePlus/releases" target="_blank" class="text-primary hover:underline">历史版本</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 文档区 -->
+    <section id="docs" class="py-20 container mx-auto px-4">
+        <div class="text-center mb-16">
+            <h3 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                快速上手文档
+            </h3>
+            <p class="text-gray-600 max-w-2xl mx-auto">3 分钟学会打包你的动漫风网页</p>
+        </div>
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl p-8 shadow-md">
+            <div class="space-y-6">
+                <div class="p-4 border-l-4 border-primary bg-primary/5 rounded-r-lg">
+                    <h4 class="font-bold text-lg mb-2">1. 下载并安装 PakePlus</h4>
+                    <p class="text-gray-700">从下载区获取对应平台安装包，安装完成后启动应用</p>
+                </div>
+                <div class="p-4 border-l-4 border-secondary bg-secondary/5 rounded-r-lg">
+                    <h4 class="font-bold text-lg mb-2">2. 配置打包参数</h4>
+                    <ul class="list-disc list-inside text-gray-700 space-y-2">
+                        <li>输入网页地址或选择本地静态文件目录</li>
+                        <li>设置应用名称、图标、窗口大小</li>
+                        <li>选择动漫风主题配色（可选）</li>
+                    </ul>
+                </div>
+                <div class="p-4 border-l-4 border-accent bg-accent/5 rounded-r-lg">
+                    <h4 class="font-bold text-lg mb-2">3. 开始打包</h4>
+                    <p class="text-gray-700">点击「开始打包」按钮，等待打包完成，即可获得桌面应用</p>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <a href="https://pakeplus.com/guide/" target="_blank" class="btn-anime inline-block px-8 py-3 rounded-full bg-dark text-white">
+                    查看完整文档 <i class="fa fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center gap-2 mb-6 md:mb-0">
+                    <span class="text-primary text-2xl"><i class="fa fa-rocket"></i></span>
+                    <h2 class="text-xl font-bold">PakePlus</h2>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/Sjj1024/PakePlus" target="_blank" class="text-white/80 hover:text-primary transition-colors">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-primary transition-colors">
+                        <i class="fa fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white/80 hover:text-primary transition-colors">
+                        <i class="fa fa-discord text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-white/20 mt-8 pt-8 text-center text-white/60 text-sm">
+                <p>© 2025 PakePlus 开源项目 | 基于 Tauri2 构建 | 萌系动漫风网页打包神器</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.add('py-3');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // 移动端菜单切换
+        document.getElementById('menuBtn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+                // 关闭移动端菜单
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
