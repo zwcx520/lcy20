@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>✨ GoldenEye 工具指南站 | 全屏幕适配版</title>
+    <style>
+        /* 全局重置 - 消除默认边距 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Comic Sans MS", "微软雅黑", sans-serif;
+        }
+        /* 禁止页面缩放 - 保证适配一致性 */
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        /* 动漫风渐变背景 - 铺满全屏 */
+        body {
+            background: linear-gradient(135deg, #f0e6ff 0%, #e0f7ff 100%);
+            color: #3a266a;
+            line-height: 1.8;
+            background-image: url("https://img.icons8.com/fluency/64/000000/unicorn.png");
+            background-attachment: fixed;
+            background-size: 100px;
+            background-repeat: repeat;
+            padding-bottom: 2rem;
+        }
+        /* 顶部导航栏 - 全屏宽度 + 萌系渐变 */
+        header {
+            width: 100%;
+            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            color: white;
+            padding: 1.5rem 5%;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 154, 158, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "✨";
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        header::after {
+            content: "🌸";
+            position: absolute;
+            bottom: 10px;
+            right: 5%;
+            font-size: 2rem;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        header h1 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        header p {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            opacity: 0.9;
+        }
+        /* 容器 - 自适应宽度 + 居中对齐 */
+        .container {
+            width: 100%;
+            padding: 0 5%;
+            margin: 2rem auto 0;
+            max-width: 1400px;
+        }
+        /* 萌系卡片 - 全屏适配 + hover 特效 */
+        .card {
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: clamp(1.2rem, 3vw, 2rem);
+            margin-bottom: clamp(1rem, 2vw, 2rem);
+            box-shadow: 0 5px 20px rgba(120, 100, 200, 0.1);
+            border: 2px solid #f0e6ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(120, 100, 200, 0.2);
+        }
+        .card        }
+        .card h2 {
+            color: #ff6b9d;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            padding-left: clamp(0.5rem, 1vw, 1rem);
+            border-left: 5px solid #ff6b9d;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+        }
+        .card h3 {
+            color: #6c5ce7;
+            margin: clamp(1rem, 2vw, 1.2rem) 0 clamp(0.6rem, 1vw, 0.8rem);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h3::before {
+            content: "🎀";
+            font-size: clamp(0.8rem, 2vw, 1rem);
+        }
+        /* 指令块 - 自适应内边距 + 高亮边框 */
+        .cmd-item {
+            width: 100%;
+            background: #f8f4ff;
+            border-radius: 8px;
+            padding: clamp(0.8rem, 2vw, 1rem);
+            margin: clamp(0.6rem, 1.5vw, 0.8rem) 0;
+            border-left: 4px solid #6c5ce7;
+            transition: background 0.2s ease;
+        }
+        .cmd-item:hover {
+            background: #f0e6ff;
+        }
+        .cmd-item p {
+            font-weight: bold;
+            margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+            color: #3a266a;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        /* 代码块 - 自适应字体 + 横向滚动 */
+        pre {
+            width: 100%;
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: clamp(0.8rem, 2vw, 1rem);
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+            border: 1px solid #444;
+            white-space: pre;
+        }
+        code {
+            font-family: "Consolas", monospace;
+        }
+        /* 表格 - 100% 宽度 + 自适应单元格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: clamp(1rem, 2vw, 1.2rem) 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: clamp(0.6rem, 1.5vw, 1rem);
+            border: 1px solid #eee;
+            text-align: left;
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+        }
+        th {
+            background: #f8f4ff;
+            color: #6c5ce7;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background: #fefbff;
+        }
+        /* 警告框 - 全屏适配 + 图标 */
+        .warning {
+            width: 100%;
+            background: #fff3cd;
+            color: #856404;
+            padding: clamp(1rem, 2vw, 1.2rem);
+            border-radius: 8px;
+            margin: clamp(1rem, 2vw, 1.2rem) 0;
+            border-left: 4px solid #ffc107;
+            display: flex;
+            align-items: flex-start;
+            gap: clamp(0.5rem, 1vw, 0.8rem);
+        }
+        .warning::before {
+            content: "⚠️";
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+        }
+        .warning div {
+            flex: 1;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        /* 复制按钮 - 自适应大小 + 悬浮变色 */
+        .copy-btn {
+            background: #6c5ce7;
+            color: white;
+            border: none;
+            padding: clamp(0.4rem, 1.2vw, 0.5rem) clamp(0.8rem, 2vw, 1rem);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+            margin-top: clamp(0.4rem, 1vw, 0.5rem);
+            transition: background 0.2s ease;
+        }
+        .copy-btn:hover {
+            background: #5a4bda;
+        }
+        /* 列表 - 自适应内边距 */
+        ul, ol {
+            padding-left: clamp(1.2rem, 3vw, 1.5rem);
+            color: #3a266a;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        li {
+            margin: clamp(0.3rem, 1vw, 0.5rem) 0;
+        }
+        /* 链接样式 */
+        a {
+            color: #6c5ce7;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* 底部 - 全屏宽度 + 渐变背景 */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: clamp(1.5rem, 3vw, 2rem) 5%;
+            background: linear-gradient(90deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            margin-top: clamp(2rem, 4vw, 3rem);
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 -2px 10px rgba(108, 92, 231, 0.3);
+        }
+        footer p {
+            margin-top: clamp(0.3rem, 1vw, 0.5rem);
+            font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+            opacity: 0.9;
+        }
+        footer a {
+            color: #ffeaa7;
+        }
+        /* 适配超小屏幕（手机竖屏） */
+        @media (max-width: 375px) {
+            header::before, header::after {
+                font-size: 1.5rem;
+            }
+            .cmd-item {
+                border-left-width: 3px;
+            }
+        }
+        /* 适配超大屏幕（显示器） */
+        @media (min-width: 1400px) {
+            .container {
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✨ GoldenEye 工具官方指南站</h1>
+        <p>二次元萌系版 | Kali 压力测试工具 · 下载 · 安装 · 使用</p>
+    </header>
+
+    <div class="container">
+        <!-- 工具简介 -->
+        <section class="card">
+            <h2>🔍 工具简介</h2>
+            <p>GoldenEye 是一款基于 Python 开发的 <strong>HTTP 洪水压力测试工具</strong>，专为<strong>授权服务器抗压测试</strong>设计。</p>
+            <p style="margin-top: 0.5rem;">支持高并发请求、代理转发、SSL 加密连接，开源免费，完美兼容 Kali Linux 全版本，是网络安全从业者的必备工具~</p>
+        </section>
+
+        <!-- 下载中心 -->
+        <section class="card">
+            <h2>📥 下载中心</h2>
+            <h3>官方仓库地址</h3>
+            <p>GitHub 仓库：<a href="https://github.com/jseidl/GoldenEye" target="_blank">https://github.com/jseidl/GoldenEye</a></p>
+            
+            <h3>下载方式 1：Git 克隆（推荐）</h3>
+            <div class="cmd-item">
+                <p>命令功能：克隆 GitHub 仓库到本地</p>
+                <pre><code>git clone https://github.com/jseidl/GoldenEye.git</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+
+            <h3>下载方式 2：手动下载 ZIP</h3>
+            <div class="cmd-item">
+                <p>操作步骤</p>
+                <ol>
+                    <li>进入 GitHub 仓库页面</li>
+                    <li>点击绿色「Code」按钮</li>
+                    <li>选择「Download ZIP」</li>
+                    <li>解压 ZIP 包到本地目录</li>
+                </ol>
+            </div>
+
+            <h3>备用镜像下载</h3>
+            <div class="cmd-item">
+                <p>镜像地址（GitHub 访问受限时使用）</p>
+                <ul>
+                    <li>📦 Gitee 镜像：<a href="https://gitee.com/mirrors/GoldenEye" target="_blank">https://gitee.com/mirrors/GoldenEye</a></li>
+                    <li>📦 GitLab 镜像：<a href="https://gitlab.com/mirrors/GoldenEye" target="_blank">https://gitlab.com/mirrors/GoldenEye</a></li>
+                </ul>
+            </div>
+
+            <h3>版本说明</h3>
+            <table>
+                <tr>
+                    <th>版本</th>
+                    <th>更新时间</th>
+                    <th>核心优化</th>
+                    <th>适配系统</th>
+                </tr>
+                <tr>
+                    <td>v3.0（最新）</td>
+                    <td>2024-10</td>
+                    <td>优化并发性能，修复 SSL 连接 bug</td>
+                    <td>Kali Linux 2022+</td>
+                </tr>
+                <tr>
+                    <td>v2.5</td>
+                    <td>2023-05</td>
+                    <td>新增代理池支持，完善错误处理</td>
+                    <td>Kali Linux 2020-2021</td>
+                </tr>
+                <tr>
+                    <td>v2.0</td>
+                    <td>2022-01</td>
+                    <td>基础 HTTP/HTTPS 压力测试功能</td>
+                    <td>Kali Linux 2019+</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 安装教程 -->
+        <section class="card">
+            <h2>🛠️ 安装教程（Kali 专属）</h2>
+            <h3>步骤 1：安装前置依赖</h3>
+            <div class="cmd-item">
+                <p>命令功能：更新系统包</p>
+                <pre><code>sudo apt update && sudo apt upgrade -y</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+            <div class="cmd-item">
+                <p>命令功能：安装 Git + Python3 + Pip3</p>
+                <pre><code>sudo apt install git python3 python3-pip -y</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+            <div class="cmd-item">
+                <p>命令功能：验证环境是否达标（Python ≥3.7，Pip ≥20.0）</p>
+                <pre><code>python3 --version
+pip3 --version</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+
+            <h3>步骤 2：安装工具本体</h3>
+            <div class="cmd-item">
+                <p>命令功能：进入工具目录</p>
+                <pre><code>cd GoldenEye</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+            <div class="cmd-item">
+                <p>命令功能：安装 Python 依赖包</p>
+                <pre><code>pip3 install -r requirements.txt</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+            <div class="cmd-item">
+                <p>命令功能：验证安装是否成功（显示帮助信息）</p>
+                <pre><code>python3 goldeneye.py -h</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+
+            <h3>常见安装问题排查</h3>
+            <table>
+                <tr>
+                    <th>问题现象</th>
+                    <th>解决方案</th>
+                </tr>
+                <tr>
+                    <td>requirements.txt 找不到</td>
+                    <td>确认进入 GoldenEye 目录；缺失则手动创建，粘贴依赖：requests、argparse、socket</td>
+                </tr>
+                <tr>
+                    <td>SSL 模块报错</td>
+                    <td>执行：sudo apt install libssl-dev python3-openssl -y</td>
+                </tr>
+                <tr>
+                    <td>权限不足</td>
+                    <td>命令前加 sudo；或执行：chmod +x goldeneye.py</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 使用指南 -->
+        <section class="card">
+            <h2>📖 详细使用指南</h2>
+            <h3>基础命令格式</h3>
+            <div class="cmd-item">
+                <p>通用格式：主命令 + 目标 URL + 可选参数</p>
+                <pre><code>python3 goldeneye.py [目标URL] [可选参数]</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+            </div>
+
+            <h3>核心参数说明</h3>
+            <table>
+                <tr>
+                    <th>参数</th>
+                    <th>功能描述</th>
+                    <th>使用示例</th>
+                </tr>
+                <tr>
+                    <td>-u / --url</td>
+                    <td>指定测试目标 URL（必填）</td>
+                    <td>-u https://www.example.com</td>
+                </tr>
+                <tr>
+                    <td>-w / --workers</td>
+                    <td>设置并发线程数（默认 50）</td>
+                    <td>-w 200（高并发测试）</td>
+                </tr>
+                <tr>
+                    <td>-s / --sockets</td>
+                    <td>每个线程的 socket 连接数（默认 500）</td>
+                    <td>-s 1000</td>
+                </tr>
+                <tr>
+                    <td>-m / --method</td>
+                    <td>请求方法（GET/POST，默认 GET）</td>
+                    <td>-m POST</td>
+                </tr>
+                <tr>
+                    <td>-p / --proxy</td>
+                    <td>启用代理转发（HTTP/SOCKS5）</td>
+                    <td>-p socks5://127.0.0.1:1080</td>
+                </tr>
+            </table>
+
+            <h3>典型使用场景（指令单独列出）</h3>
+            <div class="cmd-item">
+                <p>场景 1：基础抗压测试（小型 Web 服务）</p>
+                <pre><code>python3 goldeneye.py -u https://www.test-server.com -w 100 -s 800</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">说明：100 线程 + 每线程 800 连接，模拟常规访问压力</p>
+            </div>
+            <div class="cmd-item">
+                <p>场景 2：HTTPS 目标测试（带 SSL 验证）</p>
+                <pre><code>python3 goldeneye.py -u https://secure.test.com -w 150 -t 8 --ssl</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">说明：针对 HTTPS 服务，150 线程，8 秒超时</p>
+            </div>
+            <div class="cmd-item">
+                <p>场景 3：代理转发测试（隐藏本地 IP）</p>
+                <pre><code>python3 goldeneye.py -u http://target.com -w 200 -p socks5://127.0.0.1:1080</code></pre>
+                <button class="copy-btn" onclick="copyCode(this)">复制代码</button>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">说明：通过 SOCKS5 代理转发，隐藏测试源 IP</p>
+            </div>
+
+            <h3>测试结果解读</h3>
+            <ul>
+                <li><strong>Active Workers</strong>：当前活跃线程数</li>
+                <li><strong>Requests/sec</strong>：每秒发送请求数</li>
+                <li><strong>Bytes Sent</strong>：累计发送数据量</li>
+                <li><strong>Response Codes</strong>：响应码分布（200=正常，403=拦截，500=服务器异常）</li>
+            </ul>
+        </section>
+
+        <!-- 合规声明 -->
+        <section class="card">
+            <h2>⚠️ 合规与安全声明</h2>
+            <div class="warning">
+                <div>
+                    <strong>法律红线！！！</strong><br>
+                    仅可用于 <strong>已获得书面授权</strong> 的服务器测试！未经授权的 DDoS 攻击违反《中华人民共和国网络安全法》《刑法》，最高可判处 7 年有期徒刑并处罚金！
+                </div>
+            </div>
+            <h3>测试规范要求</h3>
+            <ol style="margin-top: 1rem;">
+                <li>测试前必须与服务器所有者签订 <strong>书面授权协议</strong>，并留存凭证。</li>
+                <li>限定测试时间（单次建议 ≤30 分钟）和流量规模，避免影响第三方服务。</li>
+                <li>测试环境需为 <strong>独立隔离网络</strong>，禁止在公网随意测试。</li>
+            </ol>
+            <h3>合规替代方案</h3>
+            <p style="margin-top: 0.5rem;">商业场景推荐使用专业压测工具：Apache JMeter、Locust；或租赁阿里云/腾讯云合法压测服务。</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2025 GoldenEye 工具指南站 | 二次元萌系版</p>
+        <p>官方仓库：<a href="https://github.com/jseidl/GoldenEye" target="_blank">https://github.com/jseidl/GoldenEye</a></p>
+        <p>本网站仅提供技术指南，违规使用后果自负</p>
+    </footer>
+
+    <script>
+        // 复制代码功能
+        function copyCode(btn) {
+            const pre = btn.previousElementSibling;
+            const code = pre.textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = btn.textContent;
+                btn.textContent = "复制成功啦~ ✨";
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+        // 禁止双击缩放
+        document.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
