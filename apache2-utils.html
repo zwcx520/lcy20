@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>apache2-utils 萌系教程站 | 安装使用全指南</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #fef7fb 0%, #fcf1f7 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff758f;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf0f5;
+        }
+
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 12px rgba(255, 117, 143, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff758f;
+        }
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu a:hover {
+            color: #ff758f;
+            border-bottom: 2px solid #ff758f;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ff758f;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            margin-top: 70px;
+            padding: 4rem 2rem;
+            background: url("https://picsum.photos/id/1042/1920/500") no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            position: relative;
+        }
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75);
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+        .banner h1 {
+            font-size: 2.5rem;
+            color: #ff758f;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        }
+        .banner p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 系统标签 */
+        .sys-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sys-tag.debian {
+            background: #b3d9ff;
+            color: #0066cc;
+        }
+        .sys-tag.centos {
+            background: #d9b3ff;
+            color: #6600cc;
+        }
+
+        /* 教程卡片容器 */
+        .tutorial-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .tutorial-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(255, 117, 143, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(255, 117, 143, 0.2);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: #ffe6ed;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .card-icon i {
+            font-size: 1.5rem;
+            color: #ff758f;
+        }
+        .tutorial-card h3 {
+            color: #ff758f;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .tutorial-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .tutorial-card a {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #ff758f;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* 教程详情区 */
+        .detail-section {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(255, 117, 143, 0.1);
+            display: none;
+        }
+        .detail-section.active {
+            display: block;
+        }
+        .detail-section h2 {
+            color: #ff758f;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ffe6ed;
+        }
+        .detail-step {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #faf0f5;
+        }
+        .detail-step h4 {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        .detail-step p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+        .detail-step code {
+            background: #fff;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: #ff758f;
+            font-family: "Consolas", monospace;
+            display: inline-block;
+            margin: 0.3rem 0;
+        }
+        .detail-step pre {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 4px;
+            color: #555;
+            font-family: "Consolas", monospace;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+            line-height: 1.5;
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            color: #888;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(255, 117, 143, 0.1);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .banner h1 {
+                font-size: 2rem;
+            }
+            .tutorial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: #ff758f;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(255, 117, 143, 0.3);
+            transition: background 0.2s ease;
+        }
+        .back-to-top:hover {
+            background: #ff5a7a;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://picsum.photos/id/237/32/32" alt="萌系图标">
+                apache2-utils 教程站
+            </div>
+            <div class="nav-menu">
+                <a href="#home">首页</a>
+                <a href="#install">安装教程</a>
+                <a href="#tools">核心工具</a>
+                <a href="#case">实战案例</a>
+                <a href="#notice">注意事项</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 横幅区域 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>apache2-utils 安装使用全教程</h1>
+            <p>二次元萌系风格 | 多系统适配 | 响应式设计 | Web 性能测试工具指南</p>
+        </div>
+    </section>
+
+    <!-- 教程卡片 -->
+    <div class="tutorial-container">
+        <div class="tutorial-card" onclick="showDetail('install')">
+            <div class="card-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h3>一、多系统安装步骤</h3>
+            <p>Debian/Ubuntu & CentOS/RHEL 安装命令，解决依赖问题</p>
+            <span class="sys-tag debian">Debian/Ubuntu</span>
+            <span class="sys-tag centos">CentOS/RHEL</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('tools')">
+            <div class="card-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <h3>二、核心工具用法</h3>
+            <p>ab、htpasswd、apache2ctl 等工具的参数与基础命令</p>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('case')">
+            <div class="card-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <h3>三、实战测试案例</h3>
+            <p>网站并发测试、密码生成、性能压测等真实场景演示</p>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('notice')">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>四、安全与注意事项</h3>
+            <p>合法测试范围、资源控制、常见问题排查</p>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+    </div>
+
+    <!-- 安装教程详情 -->
+    <div class="detail-section" id="install">
+        <h2>apache2-utils 多系统安装教程</h2>
+        <div class="detail-step">
+            <h4>1. 工具介绍</h4>
+            <p><code>apache2-utils</code> 是 Apache 服务器的配套工具集，包含 <code>ab</code>（Apache Bench）、<code>htpasswd</code> 等实用工具，常用于 Web 性能测试、密码生成等场景。</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. <span class="sys-tag debian">Debian/Ubuntu/Kali 安装</span></h4>
+            <p>执行以下命令安装，自动解决依赖：</p>
+            <pre>sudo apt update && sudo apt install apache2-utils -y</pre>
+            <p>验证安装：</p>
+            <code>ab -V</code>
+            <p>出现版本号即安装成功。</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. <span class="sys-tag centos">CentOS/RHEL 安装</span></h4>
+            <p>CentOS 中工具包名为 <code>httpd-tools</code>，执行命令：</p>
+            <pre>sudo yum install httpd-tools -y</pre>
+            <p>验证安装：</p>
+            <code>htpasswd -h</code>
+        </div>
+    </div>
+
+    <!-- 核心工具详情 -->
+    <div class="detail-section" id="tools">
+        <h2>apache2-utils 核心工具使用指南</h2>
+        <div class="detail-step">
+            <h4>1. ab（Apache Bench）- 性能压测工具</h4>
+            <p>核心功能：测试网站的并发处理能力、响应时间等性能指标。</p>
+            <p>基础语法：</p>
+            <pre>ab [参数] [目标URL]</pre>
+            <p>常用参数：</p>
+            <p><code>-n</code>：总请求数；<code>-c</code>：并发数；<code>-t</code>：测试时长（秒）</p>
+            <p>示例：</p>
+            <pre>ab -n 1000 -c 100 https://www.example.com/</pre>
+        </div>
+        <div class="detail-step">
+            <h4>2. htpasswd - 生成密码文件</h4>
+            <p>核心功能：创建和更新用于 HTTP 基本认证的密码文件。</p>
+            <p>基础语法：</p>
+            <pre>htpasswd [参数] [密码文件] [用户名]</pre>
+            <p>常用参数：</p>
+            <p><code>-c</code>：创建新密码文件（首次使用）；<code>-b</code>：直接输入密码（非交互模式）</p>
+            <p>示例：</p>
+            <pre>sudo htpasswd -c /etc/apache2/.htpasswd admin</pre>
+        </div>
+        <div class="detail-step">
+            <h4>3. apache2ctl - Apache 服务管理</h4>
+            <p>核心功能：启动、停止、重启 Apache 服务器，查看配置状态。</p>
+            <p>常用命令：</p>
+            <pre>sudo apache2ctl start  # 启动服务
+sudo apache2ctl stop   # 停止服务
+sudo apache2ctl configtest # 检查配置语法</pre>
+        </div>
+    </div>
+
+    <!-- 实战案例详情 -->
+    <div class="detail-section" id="case">
+        <h2>apache2-utils 实战测试案例</h2>
+        <div class="detail-step">
+            <h4>案例1：使用 ab 测试网站并发性能</h4>
+            <p>需求：测试目标网站在 100 并发下处理 5000 个请求的性能</p>
+            <pre>ab -n 5000 -c 100 https://your-website.com/index.html</pre>
+            <p>结果解读：关注 <code>Requests per second</code>（每秒请求数）、<code>Time per request</code>（平均请求时间）等指标。</p>
+        </div>
+        <div class="detail-step">
+            <h4>案例2：使用 htpasswd 配置网站密码认证</h4>
+            <p>步骤1：创建密码文件</p>
+            <pre>sudo htpasswd -c /var/www/.htpasswd testuser</pre>
+            <p>步骤2：配置 Apache 虚拟主机，添加认证规则</p>
+            <pre>&lt;Directory /var/www/html&gt;
+    AuthType Basic
+    AuthName "Restricted Content"
+    AuthUserFile /var/www/.htpasswd
+    Require valid-user
+&lt;/Directory&gt;</pre>
+            <p>步骤3：重启 Apache 生效</p>
+            <pre>sudo apache2ctl restart</pre>
+        </div>
+    </div>
+
+    <!-- 注意事项详情 -->
+    <div class="detail-section" id="notice">
+        <h2>apache2-utils 安全与注意事项</h2>
+        <div class="detail-step">
+            <h4>1. 合法测试范围</h4>
+            <p>仅可对<strong>自己拥有权限</strong>的网站/服务器进行压力测试，未经授权测试他人网站属于违法行为，可能面临法律责任。</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 资源控制技巧</h4>
+            <p>使用 <code>ab</code> 压测时，避免一次性设置过高并发数（如 <code>-c 1000</code>），防止目标服务器宕机或本地网络阻塞；建议逐步提升并发数。</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 常见问题排查</h4>
+            <p>问题1：<code>ab: invalid URL</code> → 检查目标 URL 是否包含协议（http/https），是否拼写正确</p>
+            <p>问题2：<code>htpasswd: command not found</code> → 未安装工具包，参考安装步骤重新安装</p>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <p>© 2026 apache2-utils 萌系教程站 | 响应式设计 · 多系统适配</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 导航栏切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 教程详情显示
+        function showDetail(id) {
+            const sections = document.querySelectorAll('.detail-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 返回顶部功能
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            nav.style.boxShadow = window.scrollY > 50 
+                ? '0 2px 15px rgba(255, 117, 143, 0.3)' 
+                : '0 2px 12px rgba(255, 117, 143, 0.2)';
+        });
+
+        // 移动端导航链接点击关闭菜单
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
