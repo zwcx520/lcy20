@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locust 萌系教程站 | 双系统压测指南</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #fef7fb 0%, #fcf1f7 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff7eb3;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #faf0f5;
+        }
+
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 15px rgba(255, 126, 179, 0.15);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff7eb3;
+        }
+        .nav-logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 1.8rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 0.4rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu a:hover {
+            color: #ff7eb3;
+            border-bottom: 2px solid #ff7eb3;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #ff7eb3;
+        }
+
+        /* 系统标签 */
+        .sys-tag {
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+        .sys-tag.win {
+            background: #b3d1ff;
+            color: #2b6cb0;
+        }
+        .sys-tag.kali {
+            background: #e3d2ff;
+            color: #6b46c1;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            margin-top: 80px;
+            padding: 5rem 2rem;
+            background: url("https://picsum.photos/id/1042/1920/600") no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            position: relative;
+        }
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75);
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+        .banner h1 {
+            font-size: 2.8rem;
+            color: #ff7eb3;
+            margin-bottom: 1.2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+        }
+        .banner p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 850px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 教程卡片容器 */
+        .tutorial-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        .tutorial-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 6px 20px rgba(255, 126, 179, 0.12);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #fef0f5;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(255, 126, 179, 0.2);
+        }
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: #ffe8f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .card-icon i {
+            font-size: 1.8rem;
+            color: #ff7eb3;
+        }
+        .tutorial-card h3 {
+            color: #ff7eb3;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+        .tutorial-card p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+        .tutorial-card a {
+            display: inline-block;
+            color: #ff7eb3;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .tutorial-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* 教程详情区 */
+        .detail-section {
+            max-width: 1050px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(255, 126, 179, 0.12);
+            display: none;
+        }
+        .detail-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .detail-section h2 {
+            color: #ff7eb3;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ffe8f2;
+            font-size: 1.8rem;
+        }
+        .detail-step {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: #fef7fb;
+        }
+        .detail-step h4 {
+            color: #555;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .detail-step p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .detail-step code {
+            background: #fcf1f7;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            color: #ff7eb3;
+            font-family: "Consolas", monospace;
+            font-size: 0.95rem;
+        }
+        .detail-step pre {
+            background: #fcf1f7;
+            padding: 1rem;
+            border-radius: 8px;
+            color: #555;
+            font-family: "Consolas", monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 2.5rem;
+            background: #fff;
+            color: #888;
+            margin-top: 5rem;
+            box-shadow: 0 -2px 15px rgba(255, 126, 179, 0.1);
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            width: 50px;
+            height: 50px;
+            background: #ff7eb3;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 126, 179, 0.3);
+            transition: background 0.2s ease;
+            z-index: 998;
+        }
+        .back-to-top:hover {
+            background: #ff5a99;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .banner h1 {
+                font-size: 2.2rem;
+            }
+            .banner p {
+                font-size: 1rem;
+            }
+            .tutorial-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .detail-section {
+                padding: 1.5rem;
+                margin: 2rem auto;
+            }
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://picsum.photos/id/237/36/36" alt="萌系图标">
+                Locust 双系统教程站
+            </div>
+            <div class="nav-menu">
+                <a href="#home">首页</a>
+                <a href="#install">安装教程</a>
+                <a href="#basic">基础使用</a>
+                <a href="#advanced">高级实战</a>
+                <a href="#notice">注意事项</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 横幅区域 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>Locust 性能压测工具 全流程教程</h1>
+            <p>二次元萌系风格 | Windows & Kali 双系统适配 | 响应式设计 | Python 脚本化压测实战</p>
+        </div>
+    </section>
+
+    <!-- 教程卡片 -->
+    <div class="tutorial-container">
+        <div class="tutorial-card" onclick="showDetail('install')">
+            <div class="card-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h3>一、双系统安装步骤</h3>
+            <p>Windows pip 安装 & Kali 命令行安装，解决依赖缺失问题</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('basic')">
+            <div class="card-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <h3>二、基础脚本编写</h3>
+            <p>简单压测脚本示例，启动 Locust Web 控制台，配置并发参数</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('advanced')">
+            <div class="card-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h3>三、高级实战技巧</h3>
+            <p>用户行为链、参数化测试、分布式压测、HTML 报告生成</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('notice')">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>四、安全与避坑指南</h3>
+            <p>合法压测范围、资源监控、常见报错解决方案</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+    </div>
+
+    <!-- 安装教程详情 -->
+    <div class="detail-section" id="install">
+        <h2>Locust 双系统安装教程</h2>
+        <div class="detail-step">
+            <h4>1. 前置条件（双系统通用）</h4>
+            <p>安装 Python 3.8+ 版本，验证命令：<code>python --version</code> 或 <code>python3 --version</code></p>
+            <p>确保 pip 工具可用：<code>pip --version</code> 或 <code>pip3 --version</code></p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. <span class="sys-tag win">Windows 系统安装步骤</span></h4>
+            <p>① 打开 cmd 命令提示符，执行安装命令：</p>
+            <pre>pip install locust</pre>
+            <p>② 验证安装成功：</p>
+            <pre>locust -V</pre>
+            <p>③ 若出现依赖报错，升级 pip 后重试：</p>
+            <pre>python -m pip install --upgrade pip</pre>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. <span class="sys-tag kali">Kali Linux 系统安装步骤</span></h4>
+            <p>① 更新系统包索引：</p>
+            <pre>sudo apt update</pre>
+            <p>② 安装 Python 和 pip（若未安装）：</p>
+            <pre>sudo apt install python3 python3-pip -y</pre>
+            <p>③ 安装 Locust：</p>
+            <pre>pip3 install locust</pre>
+            <p>④ 验证安装：</p>
+            <pre>locust -V</pre>
+        </div>
+    </div>
+
+    <!-- 基础使用详情 -->
+    <div class="detail-section" id="basic">
+        <h2>Locust 基础使用全流程</h2>
+        <div class="detail-step">
+            <h4>1. 编写压测脚本（test_locust.py）</h4>
+            <p>创建 Python 脚本，定义用户行为：</p>
+            <pre>
+from locust import HttpUser, task, between
+
+class WebsiteUser(HttpUser):
+    wait_time = between(1, 3)  # 任务间隔 1-3 秒
+
+    @task
+    def index_page(self):
+        self.client.get("/")  # 访问首页
+
+    @task(3)  # 权重为3，执行频率更高
+    def about_page(self):
+        self.client.get("/about")  # 访问关于页</pre>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. 启动 Locust 控制台（双系统通用）</h4>
+            <p>① 进入脚本所在目录，执行启动命令：</p>
+            <pre>locust -f test_locust.py --host=https://目标网站.com</pre>
+            <p>② 打开浏览器访问：<code>http://localhost:8089</code></p>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. 配置压测参数并运行</h4>
+            <p>✓ Number of users：总并发用户数</p>
+            <p>✓ Spawn rate：每秒启动的用户数</p>
+            <p>✓ Host：目标网站地址（若启动时已指定可忽略）</p>
+            <p>点击 <code>Start swarming</code> 开始压测</p>
+        </div>
+    </div>
+
+    <!-- 高级实战详情 -->
+    <div class="detail-section" id="advanced">
+        <h2>Locust 高级实战技巧</h2>
+        <div class="detail-step">
+            <h4>1. 参数化测试（读取 CSV 数据）</h4>
+            <pre>
+import csv
+from locust import HttpUser, task, between
+
+def get_test_data():
+    data = []
+    with open("test_data.csv", newline="") as f:
+        reader = csv.reader(f)
+        next(reader)  # 跳过表头
+        for row in reader:
+            data.append({"username": row[0], "password": row[1]})
+    return data
+
+test_data = get_test_data()
+
+class UserBehavior(HttpUser):
+    wait_time = between(1, 2)
+
+    @task
+    def login(self):
+        for data in test_data:
+            self.client.post("/login", data=data)</pre>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. 分布式压测（多机器协作）</h4>
+            <p><span class="sys-tag win">Windows/Kali 主控机</span>：</p>
+            <pre>locust -f test_locust.py --host=https://目标网站.com --master</pre>
+            <p><span class="sys-tag win">Windows/Kali 从机</span>：</p>
+            <pre>locust -f test_locust.py --slave --master-host=主控机IP</pre>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. 生成 HTML 测试报告</h4>
+            <pre>locust -f test_locust.py --host=https://目标网站.com --headless -u 100 -r 10 -t 5m --html=report.html</pre>
+            <p>参数说明：<code>--headless</code>无界面模式，<code>-u</code>用户数，<code>-r</code>每秒启动数，<code>-t</code>压测时长</p>
+        </div>
+    </div>
+
+    <!-- 注意事项详情 -->
+    <div class="detail-section" id="notice">
+        <h2>Locust 安全与避坑指南</h2>
+        <div class="detail-step">
+            <h4>1. 合法压测范围</h4>
+            <p>仅能对<strong>自己拥有权限</strong>的网站/服务器进行压测，未经授权测试他人网站属于违法行为，需承担法律责任</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. 双系统资源监控</h4>
+            <p><span class="sys-tag win">Windows</span>：打开任务管理器，监控 CPU、内存、网络占用率</p>
+            <p><span class="sys-tag kali">Kali</span>：使用 <code>top</code> 或 <code>htop</code> 命令实时监控系统资源</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. 常见报错解决方案</h4>
+            <p>① 报错 <code>Address already in use</code>：端口 8089 被占用，指定新端口启动：<code>locust -f test.py --port=8090</code></p>
+            <p>② 报错 <code>No module named locust</code>：环境变量未配置，使用 <code>python -m locust</code> 启动</p>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <p>© 2026 Locust 萌系双系统教程站 | 性能压测从入门到精通</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 导航栏切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 教程详情显示
+        function showDetail(id) {
+            const sections = document.querySelectorAll('.detail-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 返回顶部功能
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 20px rgba(255, 126, 179, 0.25)';
+            } else {
+                nav.style.boxShadow = '0 2px 15px rgba(255, 126, 179, 0.15)';
+            }
+        });
+
+        // 移动端点击导航链接关闭菜单
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
