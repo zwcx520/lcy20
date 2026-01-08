@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMeter 萌系教程站 | Win&Kali 双系统版</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background: linear-gradient(120deg, #fdf2f8 0%, #ebedee 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff9a9e;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 10px rgba(255, 154, 158, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu a:hover {
+            color: #ff6b6b;
+            border-bottom: 2px solid #ff6b6b;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ff6b6b;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            margin-top: 70px;
+            padding: 4rem 2rem;
+            background: url("https://picsum.photos/id/1048/1920/500") no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            position: relative;
+        }
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+        .banner h1 {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .banner p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 系统标签 */
+        .sys-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sys-tag.win {
+            background: #b3d9ff;
+            color: #0066cc;
+        }
+        .sys-tag.kali {
+            background: #d9b3ff;
+            color: #6600cc;
+        }
+
+        /* 教程卡片容器 */
+        .tutorial-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .tutorial-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(255, 154, 158, 0.2);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: #ffe0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .card-icon i {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+        }
+        .tutorial-card h3 {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .tutorial-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .tutorial-card a {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* 教程详情区 */
+        .detail-section {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.1);
+            display: none;
+        }
+        .detail-section.active {
+            display: block;
+        }
+        .detail-section h2 {
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ffe0e0;
+        }
+        .detail-step {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .detail-step h4 {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        .detail-step p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+        .detail-step code {
+            background: #f8f8f8;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: #ff6b6b;
+            font-family: "Consolas", monospace;
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            color: #888;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(255, 154, 158, 0.1);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .banner h1 {
+                font-size: 2rem;
+            }
+            .tutorial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: #ff6b6b;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+            transition: background 0.2s ease;
+        }
+        .back-to-top:hover {
+            background: #ff4d4d;
+        }
+    </style>
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://picsum.photos/id/237/32/32" alt="萌系图标">
+                JMeter 双系统教程站
+            </div>
+            <div class="nav-menu">
+                <a href="#home">首页</a>
+                <a href="#install">安装教程</a>
+                <a href="#basic">基础使用</a>
+                <a href="#advanced">高级配置</a>
+                <a href="#notice">注意事项</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 横幅区域 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>Apache JMeter 双系统使用教程</h1>
+            <p>二次元萌系风格 | Windows&Kali 双系统 | 响应式适配 | 压力测试实战指南</p>
+        </div>
+    </section>
+
+    <!-- 教程卡片 -->
+    <div class="tutorial-container">
+        <div class="tutorial-card" onclick="showDetail('install')">
+            <div class="card-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h3>一、双系统安装步骤</h3>
+            <p>Windows 解压配置 & Kali 命令行安装，一键解决环境问题</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('basic')">
+            <div class="card-icon">
+                <i class="fas fa-play-circle"></i>
+            </div>
+            <h3>二、基础使用流程</h3>
+            <p>测试计划创建、线程组配置、HTTP 请求添加，双系统通用步骤</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('advanced')">
+            <div class="card-icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+            <h3>三、高级功能配置</h3>
+            <p>参数化、断言、分布式压测，双系统命令差异说明</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('notice')">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>四、安全与注意事项</h3>
+            <p>合法压测范围、双系统资源控制技巧、常见问题排查</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+    </div>
+
+    <!-- 安装教程详情 -->
+    <div class="detail-section" id="install">
+        <h2>JMeter 双系统安装教程</h2>
+        <div class="detail-step">
+            <h4>1. 前置条件（双系统通用）</h4>
+            <p>安装 Java 8 及以上版本，配置 <code>JAVA_HOME</code> 环境变量，验证命令：<code>java -version</code></p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. <span class="sys-tag win">Windows 系统安装步骤</span></h4>
+            <p>① 官网下载二进制压缩包：<a href="https://jmeter.apache.org/download_jmeter.cgi" target="_blank">https://jmeter.apache.org/download_jmeter.cgi</a></p>
+            <p>② 解压到任意目录（建议无中文路径），例如 <code>D:\apache-jmeter-5.6</code></p>
+            <p>③ 配置 JMeter 环境变量：新增 <code>JMETER_HOME</code> 变量，值为解压路径；在 <code>Path</code> 中添加 <code>%JMETER_HOME%\bin</code></p>
+            <p>④ 启动：双击 <code>bin\jmeter.bat</code> 或 cmd 执行 <code>jmeter</code> 命令</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. <span class="sys-tag kali">Kali Linux 系统安装步骤</span></h4>
+            <p>① 命令行安装：<code>sudo apt update && sudo apt install jmeter -y</code></p>
+            <p>② 验证安装：<code>jmeter -v</code> 查看版本号</p>
+            <p>③ 启动方式1（图形界面）：直接执行 <code>jmeter</code> 命令</p>
+            <p>④ 启动方式2（命令行模式）：<code>jmeter -n</code>（无 GUI 模式，适合压测）</p>
+        </div>
+    </div>
+
+    <!-- 基础使用详情 -->
+    <div class="detail-section" id="basic">
+        <h2>JMeter 双系统基础使用全流程</h2>
+        <div class="detail-step">
+            <h4>1. 创建测试计划（双系统通用）</h4>
+            <p>启动 JMeter 后，默认生成一个测试计划，可右键重命名</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 添加线程组</h4>
+            <p>右键测试计划 → 添加 → 线程（用户）→ 线程组，设置核心参数：</p>
+            <p>✓ 线程数：并发用户数；✓ Ramp-Up 时间：启动所有线程的耗时；✓ 循环次数：测试循环次数</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 添加 HTTP 请求</h4>
+            <p>右键线程组 → 添加 → 取样器 → HTTP 请求，填写：协议（http/https）、服务器名称/IP、端口号、请求路径</p>
+        </div>
+        <div class="detail-step">
+            <h4>4. 添加监听器</h4>
+            <p>右键线程组 → 添加 → 监听器 → 查看结果树/聚合报告，用于实时查看测试数据</p>
+        </div>
+        <div class="detail-step">
+            <h4>5. 运行测试（双系统差异）</h4>
+            <p><span class="sys-tag win">Windows</span>：点击顶部绿色运行按钮 或 按快捷键 <code>Ctrl+R</code></p>
+            <p><span class="sys-tag kali">Kali</span>：图形界面同 Windows；命令行模式执行 <code>jmeter -n -t 测试计划.jmx -l 结果.jtl</code></p>
+        </div>
+    </div>
+
+    <!-- 高级配置详情 -->
+    <div class="detail-section" id="advanced">
+        <h2>JMeter 双系统高级功能配置</h2>
+        <div class="detail-step">
+            <h4>1. 参数化测试（双系统通用）</h4>
+            <p>使用「CSV 数据文件设置」组件，读取本地 CSV 文件中的多组参数，实现批量测试</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 断言设置（双系统通用）</h4>
+            <p>添加「响应断言」，验证返回结果是否包含指定关键词，确保接口功能正确性</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 分布式压测（双系统差异）</h4>
+            <p><span class="sys-tag win">Windows 主控机</span>：修改 <code>bin\jmeter.properties</code>，添加 slave 机器 IP</p>
+            <p><span class="sys-tag kali">Kali 主控机</span>：修改 <code>/usr/share/jmeter/bin/jmeter.properties</code>，配置 slave 节点</p>
+            <p>Slave 机器启动命令：<code>jmeter-server</code>（Windows/Kali 通用）</p>
+        </div>
+        <div class="detail-step">
+            <h4>4. 生成可视化报告（双系统命令）</h4>
+            <p><span class="sys-tag win">Windows</span>：<code>jmeter -n -t test.jmx -l result.jtl -e -o report</code></p>
+            <p><span class="sys-tag kali">Kali</span>：同上命令，报告生成在当前目录 <code>report</code> 文件夹</p>
+        </div>
+    </div>
+
+    <!-- 注意事项详情 -->
+    <div class="detail-section" id="notice">
+        <h2>JMeter 双系统安全与注意事项</h2>
+        <div class="detail-step">
+            <h4>1. 合法压测范围</h4>
+            <p>仅能对<strong>自己拥有权限</strong>的网站/服务器进行压力测试，未经授权测试他人网站属于违法行为</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 双系统资源控制技巧</h4>
+            <p><span class="sys-tag win">Windows</span>：压测时关闭杀毒软件和后台程序，避免资源占用</p>
+            <p><span class="sys-tag kali">Kali</span>：使用 <code>top</code> 命令监控 CPU/内存，通过 <code>ulimit -n</code> 调整最大文件描述符数</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 常见问题排查</h4>
+            <p><span class="sys-tag win">Windows 闪退</span>：检查 JAVA_HOME 配置是否正确，路径是否含中文</p>
+            <p><span class="sys-tag kali">启动无响应</span>：安装图形界面依赖 <code>sudo apt install openjdk-11-jdk -y</code></p>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <p>© 2026 JMeter 双系统萌系教程站 | Windows&Kali 专属指南</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 导航栏切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 教程详情显示
+        function showDetail(id) {
+            const sections = document.querySelectorAll('.detail-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            // 平滑滚动到详情区
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 返回顶部功能
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 15px rgba(255, 154, 158, 0.3)';
+            } else {
+                nav.style.boxShadow = '0 2px 10px rgba(255, 154, 158, 0.2)';
+            }
+        });
+
+        // 点击导航链接关闭菜单（移动端）
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>

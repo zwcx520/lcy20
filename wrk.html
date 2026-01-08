@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wrk 萌系教程站 | 高性能压测工具指南</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #fef7fb 0%, #fcf1f7 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff7eb3;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 12px rgba(255, 126, 179, 0.2);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff7eb3;
+        }
+        .nav-logo img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.2s ease, border-bottom 0.2s ease;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu a:hover {
+            color: #ff7eb3;
+            border-bottom: 2px solid #ff7eb3;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ff7eb3;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            margin-top: 70px;
+            padding: 4rem 2rem;
+            background: url("https://picsum.photos/id/1035/1920/500") no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            position: relative;
+        }
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.75);
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+        .banner h1 {
+            font-size: 2.5rem;
+            color: #ff7eb3;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .banner p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 系统标签 */
+        .sys-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .sys-tag.win {
+            background: #b3d9ff;
+            color: #0066cc;
+        }
+        .sys-tag.kali {
+            background: #d9b3ff;
+            color: #6600cc;
+        }
+
+        /* 教程卡片容器 */
+        .tutorial-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .tutorial-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(255, 126, 179, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(255, 126, 179, 0.2);
+        }
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: #ffecf4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .card-icon i {
+            font-size: 1.5rem;
+            color: #ff7eb3;
+        }
+        .tutorial-card h3 {
+            color: #ff7eb3;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        .tutorial-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .tutorial-card a {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #ff7eb3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* 教程详情区 */
+        .detail-section {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(255, 126, 179, 0.1);
+            display: none;
+        }
+        .detail-section.active {
+            display: block;
+        }
+        .detail-section h2 {
+            color: #ff7eb3;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #ffecf4;
+        }
+        .detail-step {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .detail-step h4 {
+            color: #555;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+        }
+        .detail-step p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+        }
+        .detail-step code {
+            background: #f8f8f8;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: #ff7eb3;
+            font-family: "Consolas", monospace;
+        }
+        .detail-step pre {
+            background: #f8f8f8;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 0.8rem 0;
+            color: #555;
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            color: #888;
+            margin-top: 3rem;
+            box-shadow: 0 -2px 10px rgba(255, 126, 179, 0.1);
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background: #ff7eb3;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(255, 126, 179, 0.3);
+            transition: background 0.2s ease;
+        }
+        .back-to-top:hover {
+            background: #ff5a99;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .banner h1 {
+                font-size: 2rem;
+            }
+            .tutorial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://picsum.photos/id/237/32/32" alt="萌系图标">
+                wrk 压测教程站
+            </div>
+            <div class="nav-menu">
+                <a href="#home">首页</a>
+                <a href="#install">安装教程</a>
+                <a href="#basic">基础命令</a>
+                <a href="#advanced">高级脚本</a>
+                <a href="#notice">注意事项</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 横幅区域 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>wrk 高性能压力测试工具教程</h1>
+            <p>二次元萌系风格 | Windows&Kali 双系统 | 响应式适配 | 命令+脚本实战</p>
+        </div>
+    </section>
+
+    <!-- 教程卡片 -->
+    <div class="tutorial-container">
+        <div class="tutorial-card" onclick="showDetail('install')">
+            <div class="card-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h3>一、双系统安装步骤</h3>
+            <p>Windows 编译安装 & Kali 一键命令安装，解决依赖问题</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('basic')">
+            <div class="card-icon">
+                <i class="fas fa-terminal"></i>
+            </div>
+            <h3>二、核心命令详解</h3>
+            <p>线程数、连接数、测试时长等参数配置，结果分析</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('advanced')">
+            <div class="card-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <h3>三、Lua 脚本进阶</h3>
+            <p>自定义请求头、POST 请求、参数化测试脚本编写</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('notice')">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>四、安全与性能优化</h3>
+            <p>合法压测范围、系统资源调优、常见问题排查</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+    </div>
+
+    <!-- 安装教程详情 -->
+    <div class="detail-section" id="install">
+        <h2>wrk 双系统安装教程</h2>
+        <div class="detail-step">
+            <h4>1. 工具介绍</h4>
+            <p>wrk 是一款现代 HTTP 基准测试工具，基于多线程设计，支持 Lua 脚本扩展，压测性能远高于 Apache Bench</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. <span class="sys-tag win">Windows 系统安装（编译方式）</span></h4>
+            <p>① 安装编译环境：下载 <a href="https://github.com/git-for-windows/git/releases" target="_blank">Git for Windows</a>（自带 MinGW 编译器）</p>
+            <p>② 克隆源码：打开 Git Bash 执行 <code>git clone https://github.com/wg/wrk.git</code></p>
+            <p>③ 进入目录编译：<code>cd wrk & make</code></p>
+            <p>④ 配置环境变量：将 wrk 目录添加到系统 Path，验证命令 <code>wrk -v</code></p>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. <span class="sys-tag kali">Kali Linux 系统安装（一键命令）</span></h4>
+            <p>① 更新软件源：<code>sudo apt update</code></p>
+            <p>② 安装 wrk：<code>sudo apt install wrk -y</code></p>
+            <p>③ 验证安装：<code>wrk -v</code> 查看版本号</p>
+        </div>
+    </div>
+
+    <!-- 基础命令详情 -->
+    <div class="detail-section" id="basic">
+        <h2>wrk 核心命令与参数详解</h2>
+        <div class="detail-step">
+            <h4>1. 基础命令格式</h4>
+            <pre>wrk -t<线程数> -c<连接数> -d<测试时长> <测试URL></pre>
+        </div>
+        <div class="detail-step">
+            <h4>2. 核心参数说明</h4>
+            <p>✓ <code>-t</code>：线程数，建议设置为 CPU 核心数的 2 倍</p>
+            <p>✓ <code>-c</code>：总连接数，会平均分配到各个线程</p>
+            <p>✓ <code>-d</code>：测试时长，支持 s(秒)、m(分)、h(小时) 单位</p>
+            <p>✓ <code>-s</code>：指定 Lua 脚本文件</p>
+            <p>✓ <code>--latency</code>：打印延迟统计信息</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 实战示例（双系统通用）</h4>
+            <p>测试百度首页，4线程、100连接、持续30秒并输出延迟：</p>
+            <pre>wrk -t4 -c100 -d30s --latency https://www.baidu.com</pre>
+        </div>
+        <div class="detail-step">
+            <h4>4. 测试结果分析</h4>
+            <p>✓ <code>Requests/sec</code>：每秒请求数（QPS），核心性能指标</p>
+            <p>✓ <code>Latency</code>：请求延迟，包括平均值、最大值、标准差</p>
+            <p>✓ <code>Transfer/sec</code>：每秒数据传输量</p>
+        </div>
+    </div>
+
+    <!-- 高级脚本详情 -->
+    <div class="detail-section" id="advanced">
+        <h2>wrk Lua 脚本进阶实战</h2>
+        <div class="detail-step">
+            <h4>1. 自定义请求头脚本</h4>
+            <p>创建 <code>header.lua</code> 文件，添加自定义 User-Agent：</p>
+            <pre>wrk.headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+wrk.headers["Token"] = "your-test-token"</pre>
+            <p>执行命令：<code>wrk -t4 -c100 -d30s -s header.lua https://target.com</code></p>
+        </div>
+        <div class="detail-step">
+            <h4>2. POST 请求脚本</h4>
+            <p>创建 <code>post.lua</code>，模拟表单提交：</p>
+            <pre>wrk.method = "POST"
+wrk.body   = "username=test&password=123456"
+wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"</pre>
+            <p>执行命令：<code>wrk -t4 -c100 -d30s -s post.lua https://target.com/login</code></p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 动态参数化脚本</h4>
+            <p>创建 <code>param.lua</code>，随机生成请求参数：</p>
+            <pre>function request()
+    local uid = math.random(1000, 9999)
+    return wrk.format("GET", "/user/"..uid)
+end</pre>
+            <p>执行命令：<code>wrk -t4 -c100 -d30s -s param.lua https://target.com</code></p>
+        </div>
+    </div>
+
+    <!-- 注意事项详情 -->
+    <div class="detail-section" id="notice">
+        <h2>wrk 压测安全与性能优化</h2>
+        <div class="detail-step">
+            <h4>1. 合法压测范围</h4>
+            <p>仅能对<strong>自己拥有权限</strong>的服务器/网站进行压测，未经授权测试他人网站属于违法行为，需承担法律责任</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 系统资源调优</h4>
+            <p><span class="sys-tag win">Windows</span>：关闭防火墙和后台程序，在任务管理器中设置 wrk 优先级为高</p>
+            <p><span class="sys-tag kali">Kali</span>：执行 <code>ulimit -n 65535</code> 提升最大文件描述符数，使用 <code>htop</code> 监控 CPU/内存</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 常见问题排查</h4>
+            <p>✓ Windows 编译报错：安装 <code>make</code> 工具，确保 Git Bash 路径无中文</p>
+            <p>✓ Kali 安装失败：更换软件源后重新执行 <code>sudo apt install wrk</code></p>
+            <p>✓ 压测结果波动大：多次测试取平均值，避免测试时占用带宽</p>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <p>© 2026 wrk 萌系教程站 | Windows&Kali 双系统专属指南</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 导航栏切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 教程详情显示
+        function showDetail(id) {
+            const sections = document.querySelectorAll('.detail-section');
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 返回顶部功能
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            nav.style.boxShadow = window.scrollY > 50 
+                ? '0 2px 15px rgba(255, 126, 179, 0.3)' 
+                : '0 2px 12px rgba(255, 126, 179, 0.2)';
+        });
+
+        // 移动端导航链接点击关闭菜单
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>

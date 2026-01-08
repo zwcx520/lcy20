@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siege 萌系教程站 | Win&Kali 双系统版</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #fcf0f5 0%, #f0f8fb 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff85a2;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fef0f3;
+        }
+
+        /* 导航栏 */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 12px rgba(255, 133, 162, 0.15);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff5e87;
+        }
+        .nav-logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 1.8rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            padding: 0.4rem 0;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-menu a:hover {
+            color: #ff5e87;
+            border-bottom: 2px solid #ff5e87;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #ff5e87;
+        }
+
+        /* 横幅区域 */
+        .banner {
+            margin-top: 80px;
+            padding: 5rem 2rem;
+            background: url("https://picsum.photos/id/1062/1920/600") no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            position: relative;
+        }
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.82);
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1;
+        }
+        .banner h1 {
+            font-size: 2.8rem;
+            color: #ff5e87;
+            margin-bottom: 1.2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.12);
+        }
+        .banner p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 850px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 系统标签 */
+        .sys-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .sys-tag.win {
+            background: #d4eaff;
+            color: #0099cc;
+        }
+        .sys-tag.kali {
+            background: #f0e6ff;
+            color: #7a43b6;
+        }
+
+        /* 教程卡片容器 */
+        .tutorial-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        .tutorial-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 6px 20px rgba(255, 133, 162, 0.1);
+            transition: all 0.35s ease;
+            cursor: pointer;
+            border: 1px solid #ffe8ee;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(255, 133, 162, 0.2);
+        }
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: #ffe8ee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .card-icon i {
+            font-size: 1.8rem;
+            color: #ff5e87;
+        }
+        .tutorial-card h3 {
+            color: #ff5e87;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+        }
+        .tutorial-card p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .tutorial-card a {
+            display: inline-block;
+            color: #ff5e87;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .tutorial-card a:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        /* 教程详情区 */
+        .detail-section {
+            max-width: 1050px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(255, 133, 162, 0.1);
+            display: none;
+            border: 1px solid #ffe8ee;
+        }
+        .detail-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .detail-section h2 {
+            color: #ff5e87;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ffe8ee;
+            font-size: 1.8rem;
+        }
+        .detail-step {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: #fef9fb;
+        }
+        .detail-step h4 {
+            color: #444;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .detail-step p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .detail-step code {
+            background: #f8f8f8;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            color: #ff5e87;
+            font-family: "Consolas", monospace;
+            font-size: 1rem;
+        }
+        .detail-step .code-block {
+            background: #f8f8f8;
+            padding: 1.2rem;
+            border-radius: 8px;
+            color: #333;
+            font-family: "Consolas", monospace;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: #fff;
+            color: #888;
+            margin-top: 5rem;
+            box-shadow: 0 -2px 12px rgba(255, 133, 162, 0.1);
+        }
+        .footer p {
+            font-size: 1rem;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 35px;
+            right: 35px;
+            width: 50px;
+            height: 50px;
+            background: #ff5e87;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 94, 135, 0.3);
+            transition: all 0.2s ease;
+            z-index: 998;
+        }
+        .back-to-top:hover {
+            background: #ff4070;
+            transform: scale(1.1);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                transition: left 0.3s ease;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .banner h1 {
+                font-size: 2.2rem;
+            }
+            .banner p {
+                font-size: 1rem;
+            }
+            .tutorial-container {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+            }
+            .detail-section {
+                padding: 1.8rem;
+                margin: 2rem auto;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://picsum.photos/id/240/36/36" alt="萌系图标">
+                Siege 双系统教程站
+            </div>
+            <div class="nav-menu">
+                <a href="#home">首页</a>
+                <a href="#install">安装教程</a>
+                <a href="#basic">基础命令</a>
+                <a href="#advanced">高级用法</a>
+                <a href="#notice">注意事项</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 横幅区域 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>Siege 压力测试工具 全流程教程</h1>
+            <p>二次元萌系风格 | Windows & Kali 双系统适配 | 轻量级命令行压测神器 | 响应式设计</p>
+        </div>
+    </section>
+
+    <!-- 教程卡片 -->
+    <div class="tutorial-container">
+        <div class="tutorial-card" onclick="showDetail('install')">
+            <div class="card-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h3>一、双系统安装步骤</h3>
+            <p>Windows 编译安装 & Kali 一键命令安装，解决环境依赖问题</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('basic')">
+            <div class="card-icon">
+                <i class="fas fa-terminal"></i>
+            </div>
+            <h3>二、基础命令速查</h3>
+            <p>并发数、测试时长、循环次数等核心参数详解，新手快速上手</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('advanced')">
+            <div class="card-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <h3>三、高级功能用法</h3>
+            <p>POST 请求模拟、自定义请求头、批量 URL 测试等进阶操作</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('notice')">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>四、安全与注意事项</h3>
+            <p>合法压测边界、资源监控技巧、常见错误排查方案</p>
+            <span class="sys-tag win">Windows</span>
+            <span class="sys-tag kali">Kali</span>
+            <a href="javascript:void(0)">查看详情 →</a>
+        </div>
+    </div>
+
+    <!-- 安装教程详情 -->
+    <div class="detail-section" id="install">
+        <h2>Siege 双系统安装教程</h2>
+        <div class="detail-step">
+            <h4>1. 工具介绍</h4>
+            <p>Siege 是一款轻量级的命令行压力测试工具，支持 HTTP/HTTPS 协议，可模拟多用户并发访问目标网站，适合快速验证网站抗压能力。</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. <span class="sys-tag kali">Kali Linux 系统安装（推荐）</span></h4>
+            <p>步骤 1：更新软件源</p>
+            <div class="code-block">sudo apt update</div>
+            <p>步骤 2：一键安装 Siege</p>
+            <div class="code-block">sudo apt install siege -y</div>
+            <p>步骤 3：验证安装成功</p>
+            <div class="code-block">siege --version</div>
+            <p>出现版本号即表示安装完成。</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. <span class="sys-tag win">Windows 系统安装（WSL 或编译）</span></h4>
+            <p>方式 1：使用 WSL（推荐，无需编译）</p>
+            <p>① 安装 Windows 子系统 Linux（如 Ubuntu/Kali）</p>
+            <p>② 在 WSL 终端中执行 Kali 的安装命令即可</p>
+            <p>方式 2：手动编译安装</p>
+            <p>① 下载源码包：<a href="https://github.com/JoeDog/siege" target="_blank" style="color:#ff5e87">https://github.com/JoeDog/siege</a></p>
+            <p>② 安装编译依赖（需 MinGW 环境）</p>
+            <p>③ 执行编译命令：</p>
+            <div class="code-block">./configure && make && make install</div>
+        </div>
+    </div>
+
+    <!-- 基础命令详情 -->
+    <div class="detail-section" id="basic">
+        <h2>Siege 基础命令与参数详解</h2>
+        <div class="detail-step">
+            <h4>1. 核心参数说明</h4>
+            <p><code>-c [num]</code>：指定并发用户数，例如 <code>-c 100</code> 表示 100 个并发</p>
+            <p><code>-t [time]</code>：指定测试时长，例如 <code>-t 60s</code> 测试 60 秒，支持 m（分钟）、h（小时）</p>
+            <p><code>-r [num]</code>：指定循环次数，与 <code>-t</code> 二选一</p>
+            <p><code>-v</code>：详细模式，输出每个请求的响应信息</p>
+            <p><code>-H</code>：自定义请求头，例如 <code>-H "Content-Type: application/json"</code></p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. 常用命令示例（双系统通用）</h4>
+            <p>示例 1：100 并发测试目标网站 60 秒</p>
+            <div class="code-block">siege -c 100 -t 60s https://www.example.com</div>
+            <p>示例 2：50 并发循环测试 10 次，开启详细模式</p>
+            <div class="code-block">siege -c 50 -r 10 -v https://www.example.com</div>
+            <p>示例 3：测试 HTTPS 网站，忽略证书验证</p>
+            <div class="code-block">siege -c 30 -t 30s --no-parser https://www.example.com</div>
+        </div>
+    </div>
+
+    <!-- 高级用法详情 -->
+    <div class="detail-section" id="advanced">
+        <h2>Siege 高级功能用法</h2>
+        <div class="detail-step">
+            <h4>1. 模拟 POST 请求</h4>
+            <p>语法：添加 <code>-d</code> 延迟参数 + <code>-H</code> 请求头 + <code>POST</code> 数据</p>
+            <div class="code-block">siege -c 20 -t 30s -H "Content-Type: application/x-www-form-urlencoded" "https://www.example.com/login POST username=test&password=123456"</div>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. 批量测试多个 URL</h4>
+            <p>步骤 1：创建 URL 列表文件 <code>urls.txt</code>，每行一个 URL</p>
+            <div class="code-block">
+https://www.example.com/page1<br>
+https://www.example.com/page2<br>
+https://www.example.com/page3
+            </div>
+            <p>步骤 2：执行批量测试命令</p>
+            <div class="code-block">siege -c 50 -t 60s -f urls.txt</div>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. 自定义请求延迟</h4>
+            <p>使用 <code>-d [num]</code> 设置每个请求的延迟时间（单位：秒），模拟真实用户操作间隔</p>
+            <div class="code-block">siege -c 30 -t 60s -d 2 https://www.example.com</div>
+        </div>
+    </div>
+
+    <!-- 注意事项详情 -->
+    <div class="detail-section" id="notice">
+        <h2>Siege 安全使用与注意事项</h2>
+        <div class="detail-step">
+            <h4>1. 合法性第一</h4>
+            <p>仅可对 <strong>自己拥有权限</strong> 的网站/服务器进行压力测试，未经授权测试他人网站属于违法行为，可能面临法律责任。</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>2. 资源监控技巧</h4>
+            <p><span class="sys-tag kali">Kali 系统</span>：使用 <code>top</code> 或 <code>htop</code> 命令监控 CPU/内存占用，避免压测导致本地宕机</p>
+            <p><span class="sys-tag win">Windows 系统</span>：在任务管理器中监控 WSL 进程资源占用，合理设置并发数</p>
+        </div>
+
+        <div class="detail-step">
+            <h4>3. 常见错误排查</h4>
+            <p>错误 1：<code>Unable to resolve hostname</code> → 检查目标 URL 是否正确，网络是否通畅</p>
+            <p>错误 2：<code>Connection refused</code> → 目标服务器防火墙拦截，或端口未开放</p>
+            <p>错误 3：<code>Too many open files</code> → Kali 系统执行 <code>ulimit -n 65535</code> 提升文件描述符限制</p>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <p>© 2026 Siege 萌系教程站 | Windows & Kali 双系统专属指南 | 轻量级压力测试神器</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 导航栏切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 教程详情显示
+        function showDetail(id) {
+            const sections = document.querySelectorAll('.detail-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(id).classList.add('active');
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 返回顶部功能
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.boxShadow = '0 2px 15px rgba(255, 133, 162, 0.25)';
+            } else {
+                nav.style.boxShadow = '0 2px 12px rgba(255, 133, 162, 0.15)';
+            }
+        });
+
+        // 点击导航链接关闭菜单（移动端）
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
