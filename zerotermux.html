@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroTermux 安装 Kali | 二次元萌系教程站</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", "PingFang SC", "幼圆", sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
+            color: #333;
+            overflow-x: hidden;
+            position: relative;
+        }
+        /* 唯美粒子背景 */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff9eb1;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff6b8b;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f4f8;
+            border-radius: 5px;
+        }
+
+        /* 导航栏 - 悬浮渐变+阴影动效 */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 15px rgba(255, 158, 177, 0.2);
+            z-index: 999;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .nav:hover {
+            box-shadow: 0 5px 20px rgba(255, 158, 177, 0.3);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff6b8b;
+            text-shadow: 1px 1px 3px rgba(255, 107, 139, 0.2);
+        }
+        .nav-logo img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #ffd1dc;
+            transition: transform 0.3s ease;
+        }
+        .nav-logo img:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+        .nav-menu {
+            display: flex;
+            gap: 1.8rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .nav-menu a::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b8b;
+            transition: width 0.3s ease;
+        }
+        .nav-menu a:hover {
+            color: #ff6b8b;
+        }
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        .nav-toggle {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #ff6b8b;
+        }
+
+        /* 横幅区域 - 渐变背景+文字上浮动效 */
+        .banner {
+            margin-top: 80px;
+            padding: 5rem 2rem;
+            background: url("https://picsum.photos/id/1042/1920/600") no-repeat center center;
+            background-size: cover;
+            text-align: center;
+            position: relative;
+            border-radius: 0 0 30px 30px;
+            overflow: hidden;
+        }
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 225, 233, 0.7), rgba(225, 240, 255, 0.7));
+        }
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            transform: translateY(0);
+            transition: transform 0.6s ease;
+        }
+        .banner:hover .banner-content {
+            transform: translateY(-10px);
+        }
+        .banner h1 {
+            font-size: 2.8rem;
+            color: #ff6b8b;
+            margin-bottom: 1.2rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        .banner p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* 教程卡片容器 - 网格布局+响应式适配 */
+        .tutorial-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        /* 卡片 - 悬浮上浮+阴影扩散+旋转微效 */
+        .tutorial-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(255, 158, 177, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .tutorial-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 225, 233, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-12px) rotate(1deg);
+            box-shadow: 0 15px 30px rgba(255, 158, 177, 0.2);
+        }
+        .tutorial-card:hover::before {
+            left: 100%;
+        }
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #ffd1dc, #ff9eb1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 10px rgba(255, 158, 177, 0.3);
+        }
+        .card-icon i {
+            font-size: 1.8rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        .tutorial-card h3 {
+            color: #ff6b8b;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        .tutorial-card p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .card-btn {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: #ff6b8b;
+            color: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(255, 107, 139, 0.2);
+        }
+        .card-btn:hover {
+            background: #ff4d70;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(255, 107, 139, 0.3);
+        }
+
+        /* 教程详情区 - 淡入动效+圆角卡片 */
+        .detail-section {
+            max-width: 1000px;
+            margin: 4rem auto;
+            padding: 2.5rem;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(255, 158, 177, 0.1);
+            display: none;
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+        .detail-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .detail-section h2 {
+            color: #ff6b8b;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ffd1dc;
+            font-size: 1.8rem;
+        }
+        .detail-step {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: #fef7fa;
+            border-radius: 15px;
+            border-left: 4px solid #ff6b8b;
+        }
+        .detail-step h4 {
+            color: #ff6b8b;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .detail-step p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .detail-step code {
+            background: #fff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            color: #ff6b8b;
+            font-family: "Consolas", monospace;
+            display: inline-block;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 5px rgba(255, 158, 177, 0.1);
+        }
+        .detail-step pre {
+            background: #fff;
+            padding: 1.2rem;
+            border-radius: 10px;
+            color: #555;
+            font-family: "Consolas", monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+            box-shadow: 0 3px 8px rgba(255, 158, 177, 0.1);
+            line-height: 1.6;
+        }
+        .step-img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border: 3px solid #ffd1dc;
+            transition: transform 0.3s ease;
+        }
+        .step-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* 底部 - 柔和渐变 */
+        .footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(180deg, #fef7fa, #f0f4f8);
+            color: #888;
+            margin-top: 4rem;
+            border-radius: 30px 30px 0 0;
+            position: relative;
+            z-index: 1;
+        }
+        .footer p {
+            line-height: 1.8;
+        }
+
+        /* 返回顶部按钮 - 弹跳动效 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #ff6b8b;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 107, 139, 0.3);
+            transition: all 0.3s ease;
+            z-index: 998;
+        }
+        .back-to-top:hover {
+            background: #ff4d70;
+            transform: translateY(-5px);
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(8px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                transition: left 0.4s ease;
+                box-shadow: 0 5px 15px rgba(255, 158, 177, 0.2);
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .nav-toggle {
+                display: block;
+            }
+            .banner h1 {
+                font-size: 2.2rem;
+            }
+            .banner p {
+                font-size: 1rem;
+            }
+            .tutorial-container {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+            }
+            .detail-section {
+                padding: 1.5rem;
+                margin: 2rem auto;
+            }
+        }
+    </style>
+    <!-- 图标库 -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 粒子背景JS -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- 唯美粒子背景 -->
+    <div id="particles-js"></div>
+
+    <!-- 导航栏 -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="https://picsum.photos/id/237/36/36" alt="萌系图标">
+                ZeroTermux × Kali 教程
+            </div>
+            <div class="nav-menu">
+                <a href="#home">首页</a>
+                <a href="#download">工具下载</a>
+                <a href="#install">ZeroTermux安装</a>
+                <a href="#kali">部署Kali系统</a>
+                <a href="#notice">注意事项</a>
+            </div>
+            <div class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 横幅区域 -->
+    <section class="banner" id="home">
+        <div class="banner-content">
+            <h1>ZeroTermux 安装 Kali 详细教程</h1>
+            <p>手机端运行 Kali Linux | 二次元萌系风格 | 唯美交互特效 | 零基础入门指南</p>
+        </div>
+    </section>
+
+    <!-- 教程卡片 -->
+    <div class="tutorial-container">
+        <div class="tutorial-card" onclick="showDetail('download')">
+            <div class="card-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <h3>一、ZeroTermux 下载</h3>
+            <p>官方下载地址 & 备用链接，解决下载失败问题，支持安卓 7.0+ 全机型</p>
+            <a href="javascript:void(0)" class="card-btn">查看详情</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('install')">
+            <div class="card-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3>二、ZeroTermux 安装配置</h3>
+            <p>安卓端安装步骤、权限授予、初始化配置，一键解决环境问题</p>
+            <a href="javascript:void(0)" class="card-btn">查看详情</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('kali')">
+            <div class="card-icon">
+                <i class="fas fa-linux"></i>
+            </div>
+            <h3>三、部署 Kali Linux 系统</h3>
+            <p>镜像下载、系统安装、账号配置，手机端完美运行 Kali 命令行</p>
+            <a href="javascript:void(0)" class="card-btn">查看详情</a>
+        </div>
+
+        <div class="tutorial-card" onclick="showDetail('notice')">
+            <div class="card-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>四、常见问题与注意事项</h3>
+            <p>安装失败、卡顿闪退、权限不足等问题的解决方案</p>
+            <a href="javascript:void(0)" class="card-btn">查看详情</a>
+        </div>
+    </div>
+
+    <!-- 下载教程详情 -->
+    <div class="detail-section" id="download">
+        <h2>ZeroTermux 下载教程</h2>
+        <div class="detail-step">
+            <h4>1. 工具介绍</h4>
+            <p>ZeroTermux 是 Termux 的优化版本，修复了部分机型兼容性问题，支持更稳定的 Linux 环境部署，适合手机端安装 Kali 系统。</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 下载地址</h4>
+            <p>官方 GitHub 下载（推荐）：</p>
+            <code>https://github.com/zeroone2333/ZeroTermux/releases</code>
+            <p>备用下载链接：</p>
+            <code>https://f-droid.org/packages/com.termux/</code>
+            <p>下载后缀为 <code>.apk</code> 的安装包，根据手机架构选择对应版本（一般选择 <code>arm64-v8a</code>）。</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 下载注意事项</h4>
+            <p>① 若 GitHub 下载缓慢，可使用加速器或备用链接</p>
+            <p>② 确保手机剩余存储空间 ≥ 2GB（安装包 + 系统镜像）</p>
+        </div>
+    </div>
+
+    <!-- ZeroTermux 安装配置详情 -->
+    <div class="detail-section" id="install">
+        <h2>ZeroTermux 安装与初始化配置</h2>
+        <div class="detail-step">
+            <h4>1. 安装步骤</h4>
+            <p>① 下载完成后，点击 <code>.apk</code> 文件开始安装</p>
+            <p>② 若弹出「安装未知应用」提示，前往手机设置 → 安全 → 开启「允许安装未知来源应用」</p>
+            <p>③ 等待安装完成，点击「打开」启动 ZeroTermux</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. 权限授予</h4>
+            <p>首次启动会请求存储权限，点击「允许」，否则无法下载 Kali 镜像。</p>
+            <p>手动授予权限（若未弹出请求）：</p>
+            <p>手机设置 → 应用 → ZeroTermux → 权限 → 存储 → 允许</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 初始化配置</h4>
+            <p>启动后等待自动初始化，出现命令行提示符 <code>$</code> 即完成初始化。</p>
+            <p>执行命令更新软件源：</p>
+            <pre>pkg update && pkg upgrade -y</pre>
+        </div>
+    </div>
+
+    <!-- Kali 系统部署详情 -->
+    <div class="detail-section" id="kali">
+        <h2>ZeroTermux 部署 Kali Linux 系统</h2>
+        <div class="detail-step">
+            <h4>1. 安装必要依赖</h4>
+            <p>在 ZeroTermux 中执行以下命令安装依赖工具：</p>
+            <pre>pkg install wget proot tar -y</pre>
+        </div>
+        <div class="detail-step">
+            <h4>2. 下载 Kali 镜像脚本</h4>
+            <p>执行命令下载一键安装脚本：</p>
+            <pre>wget https://raw.githubusercontent.com/EXALAB/AnLinux-Resources/master/Scripts/Installer/Kali/kali.sh</pre>
+        </div>
+        <div class="detail-step">
+            <h4>3. 运行安装脚本</h4>
+            <p>给脚本添加执行权限并运行：</p>
+            <pre>chmod +x kali.sh
+./kali.sh</pre>
+            <p>等待镜像下载和安装，过程可能需要 10-30 分钟（取决于网络速度）。</p>
+        </div>
+        <div class="detail-step">
+            <h4>4. 启动 Kali 系统</h4>
+            <p>安装完成后，执行命令启动 Kali：</p>
+            <pre>./start-kali.sh</pre>
+            <p>出现 <code>root@localhost:~#</code> 提示符即表示 Kali 启动成功！</p>
+        </div>
+        <div class="detail-step">
+            <h4>5. 初始化 Kali 配置</h4>
+            <p>首次启动 Kali 后，更新软件源：</p>
+            <pre>apt update && apt upgrade -y</pre>
+            <p>安装常用工具（可选）：</p>
+            <pre>apt install nmap sqlmap -y</pre>
+        </div>
+    </div>
+
+    <!-- 注意事项详情 -->
+    <div class="detail-section" id="notice">
+        <h2>常见问题与注意事项</h2>
+        <div class="detail-step">
+            <h4>1. 安装脚本运行失败</h4>
+            <p>解决方案：检查网络连接，切换加速器；重新下载脚本，执行 <code>chmod +x kali.sh</code> 赋予权限。</p>
+        </div>
+        <div class="detail-step">
+            <h4>2. Kali 启动卡顿/闪退</h4>
+            <p>解决方案：关闭手机后台多余应用；确保手机内存 ≥ 4GB；重新执行 <code>./start-kali.sh</code>。</p>
+        </div>
+        <div class="detail-step">
+            <h4>3. 无法访问存储</h4>
+            <p>解决方案：重新授予存储权限；在 ZeroTermux 中执行 <code>termux-setup-storage</code> 挂载存储。</p>
+        </div>
+        <div class="detail-step">
+            <h4>4. 安全注意事项</h4>
+            <p>① 仅用于合法的学习和测试，请勿用于未经授权的渗透测试</p>
+            <p>② Kali 镜像较大，建议在 Wi-Fi 环境下下载</p>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <footer class="footer">
+        <p>© 2026 ZeroTermux × Kali 萌系教程站 | 二次元风格 · 唯美交互 · 响应式设计</p>
+        <p>本教程仅供学习交流使用，请勿用于非法用途</p>
+    </footer>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // 粒子背景配置 - 唯美效果
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ff9eb1" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffd1dc", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1, direction: "none", random: true, straight: false, out_mode: "out", bounce: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+
+        // 导航栏切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.innerHTML = navMenu.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // 教程详情显示 - 平滑过渡
+        function showDetail(id) {
+            const sections = document.querySelectorAll('.detail-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            const targetSection = document.getElementById(id);
+            targetSection.classList.add('active');
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 返回顶部功能 - 滚动显示
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backToTop.style.display = window.scrollY > 300 ? 'flex' : 'none';
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 导航栏滚动效果 - 背景加深
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.9)';
+            }
+        });
+
+        // 移动端导航链接点击关闭菜单
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                navToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+    </script>
+</body>
+</html>
