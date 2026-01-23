@@ -91,22 +91,65 @@
         <i class="fa fa-moon-o"></i>
     </div>
 
+    <!-- 动漫萌系风格按钮弹窗公告 -->
+    <div id="announcement-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-cuteWhite rounded-super-cute p-6 md:p-8 max-w-md w-full mx-4 cute-shadow animate-fade-up">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="font-cute text-2xl text-cutePink text-shadow-cute flex items-center gap-2">
+                    <i class="fa fa-bell-o text-cutePurple"></i>
+                    萌系公告
+                </h3>
+                <button id="close-modal" class="text-gray-500 hover:text-cutePink transition-colors duration-300 text-xl">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+            <div class="bg-cuteGray/50 rounded-cute p-4 mb-6">
+                <p class="text-gray-700 font-normal">亲爱的用户：</p>
+                <p class="text-gray-700 font-normal mt-2">✨ 时光卷轴APP萌系限定版已更新至v1.7.4版本！</p>
+                <p class="text-gray-700 font-normal mt-2">✨ 新增功能：
+                    <br>• 萌系标签分类系统
+                    <br>• 动漫风格主题切换
+                    <br>• 同好分享功能优化
+                </p>
+                <p class="text-gray-700 font-normal mt-2">✨ 下载最新版本，开启你的萌系时光之旅吧！</p>
+            </div>
+            <div class="flex gap-3">
+                <button id="download-now" class="flex-1 bg-gradient-to-r from-cutePink to-cutePurple text-white font-bold py-3 px-6 rounded-cute cute-shadow hover:scale-105 transition-all duration-300">
+                    立即下载
+                </button>
+                <button id="remind-later" class="flex-1 bg-cuteGray text-gray-700 font-bold py-3 px-6 rounded-cute cute-shadow hover:bg-cuteGray/80 transition-all duration-300">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 萌系公告按钮 -->
+    <button id="announcement-btn" class="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-cutePink to-cutePurple text-white font-bold py-3 px-6 rounded-full cute-shadow hover:scale-110 transition-all duration-300 animate-bounce-cute delay-2000">
+        <i class="fa fa-bell-o mr-2"></i>
+        萌系公告
+    </button>
+
     <!-- 顶部萌系导航 -->
     <nav class="fixed top-0 left-0 right-0 z-40 bg-cuteWhite/95 backdrop-blur-sm py-3 px-4 md:px-8 cute-shadow">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <img src="app.jpg" alt="萌系图标" class="w-10 h-10 rounded-full object-cover animate-scale-cute">
+                <img src="tx.png" alt="萌系图标" class="w-10 h-10 rounded-full object-cover animate-scale-cute">
                 <h1 class="font-cute text-2xl md:text-3xl text-cutePink text-shadow-cute">归档-时光卷轴APP</h1>
             </div>
             <div class="hidden md:flex gap-6 items-center">
-               
+                
                 <a href="login.html" class="text-gray-700 hover:text-cutePink transition-colors duration-300 font-medium">登陆</a>
             </div>
-            <a href="login.html">
-            <button class="md:hidden text-cutePink text-2xl">
+            <button id="mobile-menu-btn" class="md:hidden text-cutePink text-2xl">
                 <i class="fa fa-bars"></i>
             </button>
-            </a>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cuteWhite/95 backdrop-blur-sm py-4 px-4 cute-shadow animate-fade-up">
+            <div class="container mx-auto flex flex-col gap-4">
+                <a href="login.html" class="text-gray-700 hover:text-cutePink transition-colors duration-300 font-medium py-2">登陆</a>
+            </div>
         </div>
     </nav>
 
@@ -282,6 +325,81 @@ document.getElementById("yearSpan").innerText = new Date().getFullYear();
                     el.style.opacity = 1;
                 })
             }, 300);
+
+            // 弹窗公告逻辑
+            const announcementModal = document.getElementById('announcement-modal');
+            const announcementBtn = document.getElementById('announcement-btn');
+            const closeModal = document.getElementById('close-modal');
+            const downloadNow = document.getElementById('download-now');
+            const remindLater = document.getElementById('remind-later');
+
+            function openModal() {
+                announcementModal.classList.remove('hidden');
+                announcementModal.classList.add('flex');
+            }
+
+            function closeModalFunc() {
+                announcementModal.classList.remove('flex');
+                announcementModal.classList.add('hidden');
+            }
+
+            announcementBtn.addEventListener('click', openModal);
+            closeModal.addEventListener('click', closeModalFunc);
+            remindLater.addEventListener('click', closeModalFunc);
+
+            // 立即下载按钮点击事件
+            downloadNow.addEventListener('click', function() {
+                // 根据设备类型跳转到相应的下载链接
+                const userAgent = navigator.userAgent;
+                if (userAgent.includes('Android')) {
+                    window.location.href = 'gd.apk';
+                } else if (userAgent.includes('Windows')) {
+                    window.location.href = 'https://lcy21.netlify.app/gd.exe';
+                }
+                closeModalFunc();
+            });
+
+            // 点击模态框外部关闭
+            announcementModal.addEventListener('click', function(e) {
+                if (e.target === announcementModal) {
+                    closeModalFunc();
+                }
+            });
+
+            // 移动端菜单折叠功能
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            let menuOpen = false;
+
+            // 优化点击事件，添加事件冒泡阻止
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation(); // 阻止事件冒泡
+                menuOpen = !menuOpen;
+                if (menuOpen) {
+                    mobileMenu.classList.remove('hidden');
+                    mobileMenu.classList.add('flex');
+                    mobileMenuBtn.innerHTML = '<i class="fa fa-times"></i>';
+                } else {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                    mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+            });
+
+            // 点击菜单外部关闭菜单
+            document.addEventListener('click', function(e) {
+                if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target) && menuOpen) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                    mobileMenuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+                    menuOpen = false;
+                }
+            });
+
+            // 为菜单内部添加点击事件阻止，防止点击菜单时关闭
+            mobileMenu.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
 
             // 设备检测逻辑（原有功能不变）
             const userAgent = navigator.userAgent;
