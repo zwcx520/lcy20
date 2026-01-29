@@ -1,1 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刑法文典 - 中国刑法查询系统</title>
+    <!-- 引入动漫风格UI组件库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入Tailwind CSS作为高级CSS布局组件库 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 配置Tailwind主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B6B',
+                        secondary: '#4ECDC4',
+                        accent: '#FFD166',
+                        dark: '#292F36',
+                        light: '#F7FFF7'
+                    },
+                    fontFamily: {
+                        anime: ['"Segoe UI"', 'Tahoma', 'Geneva', 'Verdana', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .anime-shadow {
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 107, 107, 0.1);
+            }
+            .anime-border {
+                border: 2px solid #FF6B6B;
+                border-radius: 12px;
+            }
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                background-image: linear-gradient(to right, #FF6B6B, #4ECDC4);
+            }
+        }
+    </style>
+    <style>
+        /* 动漫风格滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(#FF6B6B, #4ECDC4);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(#FF8E8E, #7EDDD6);
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 动画效果 */
+        .anime-card {
+            transition: all 0.3s ease;
+        }
+        .anime-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-light font-anime text-dark">
+    <!-- 顶部导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-95 backdrop-blur-sm border-b border-primary/20">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-balance-scale text-primary text-2xl"></i>
+                <h1 class="text-xl font-bold text-gradient">刑法文典</h1>
+            </div>
+            
+            <!-- 桌面端导航 -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="font-medium hover:text-primary transition-colors">首页</a>
+                <a href="#general" class="font-medium hover:text-primary transition-colors">总则</a>
+                <a href="#specific" class="font-medium hover:text-primary transition-colors">分则</a>
+                <a href="#supplementary" class="font-medium hover:text-primary transition-colors">附则</a>
+                <a href="#about" class="font-medium hover:text-primary transition-colors">关于</a>
+            </nav>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-primary/20">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="index.html" class="font-medium hover:text-primary transition-colors py-2">首页</a>
+                <a href="#general" class="font-medium hover:text-primary transition-colors py-2">总则</a>
+                <a href="#specific" class="font-medium hover:text-primary transition-colors py-2">分则</a>
+                <a href="#supplementary" class="font-medium hover:text-primary transition-colors py-2">附则</a>
+                <a href="#about" class="font-medium hover:text-primary transition-colors py-2">关于</a>
+            </div>
+        </div>
+    </header>
 
+    <!-- 英雄区域 -->
+    <section class="pt-24 pb-16 bg-gradient-to-br from-light to-secondary/10">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gradient">中国刑法文典</h1>
+                <p class="text-lg md:text-xl text-gray-600 mb-8">权威、易懂的刑法查询系统</p>
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <a href="#general" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-full transition-all transform hover:scale-105 anime-shadow">
+                        开始查询
+                    </a>
+                    <a href="#about" class="bg-white hover:bg-gray-50 text-dark font-medium py-3 px-6 rounded-full border border-primary transition-all transform hover:scale-105 anime-shadow">
+                        了解更多
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 主要内容区域 -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- 总则部分 -->
+        <section id="general" class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                    1
+                </div>
+                <h2 class="text-3xl font-bold">第一编 总则</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 第一章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gavel text-primary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第一章 刑法的任务、基本原则和适用范围</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">共12条，规定了刑法的立法目的、基本原则和适用范围等内容。</p>
+                    <a href="pages/general-chapter1.html" class="inline-flex items-center text-primary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第二章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user-shield text-primary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第二章 犯罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">共4节，规定了犯罪的概念、构成要件、形态等内容。</p>
+                    <a href="pages/general-chapter2.html" class="inline-flex items-center text-primary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第三章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-scale-balanced text-primary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第三章 刑罚</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了刑罚的种类、适用原则等内容。</p>
+                    <a href="pages/general-chapter3.html" class="inline-flex items-center text-primary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第四章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-cogs text-primary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第四章 刑罚的具体运用</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了量刑、累犯、自首、立功等刑罚运用的具体制度。</p>
+                    <a href="pages/general-chapter4.html" class="inline-flex items-center text-primary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第五章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-eraser text-primary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第五章 其他规定</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了刑法中的一些术语解释和其他技术性规定。</p>
+                    <a href="pages/general-chapter5.html" class="inline-flex items-center text-primary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 分则部分 -->
+        <section id="specific" class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                    2
+                </div>
+                <h2 class="text-3xl font-bold">第二编 分则</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 第一章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-bomb text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第一章 危害国家安全罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了危害国家安全的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter1.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第二章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-heartbeat text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第二章 危害公共安全罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了危害公共安全的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter2.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第三章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-money-bill-wave text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第三章 破坏社会主义市场经济秩序罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了破坏社会主义市场经济秩序的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter3.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第四章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第四章 侵犯公民人身权利、民主权利罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了侵犯公民人身权利、民主权利的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter4.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第五章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-home text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第五章 侵犯财产罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了侵犯财产的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter5.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第六章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gavel text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第六章 妨害社会管理秩序罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了妨害社会管理秩序的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter6.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第七章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-landmark text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第七章 危害国防利益罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了危害国防利益的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter7.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第八章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-user-tie text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第八章 贪污贿赂罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了贪污贿赂的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter8.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第九章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-briefcase text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第九章 渎职罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了渎职的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter9.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <!-- 第十章 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-university text-secondary text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">第十章 军人违反职责罪</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了军人违反职责的各种犯罪及其刑罚。</p>
+                    <a href="pages/specific-chapter10.html" class="inline-flex items-center text-secondary font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 附则部分 -->
+        <section id="supplementary" class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                    3
+                </div>
+                <h2 class="text-3xl font-bold">附则</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 附则 -->
+                <div class="anime-card bg-white p-6 rounded-xl anime-shadow">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-file-contract text-accent text-xl mr-3"></i>
+                        <h3 class="text-xl font-bold">附则</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">规定了刑法的生效日期和其他技术性规定。</p>
+                    <a href="pages/supplementary.html" class="inline-flex items-center text-accent font-medium hover:underline">
+                        查看详情 <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 关于部分 -->
+        <section id="about" class="mb-16">
+            <div class="flex items-center mb-8">
+                <div class="w-12 h-12 bg-dark rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+                    <i class="fas fa-info"></i>
+                </div>
+                <h2 class="text-3xl font-bold">关于文典</h2>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl anime-shadow">
+                <h3 class="text-2xl font-bold mb-4">刑法文典 - 中国刑法查询系统</h3>
+                <p class="text-gray-600 mb-4">
+                    本网文典旨在为广大社会工作者、学生和普通公民提供一个权威、易懂的刑法查询。文典采用响应式设计，适配各种设备屏幕，使用互联网动漫风格UI组件库和高级CSS布局组件库，为用户提供良好的浏览体验。
+                </p>
+                <p class="text-gray-600 mb-4">
+                    文典内容基于《中华人民共和国刑法》，包含总则、分则和附则三部分，共15章。每个章节都有独立的页面，方便用户快速定位和查询相关内容。
+                </p>
+                <p class="text-gray-600">
+                    网文典仅供基础参考，不构成法律建议。如有法律问题，请咨询专业律师。
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-balance-scale text-primary text-2xl"></i>
+                        <h3 class="text-xl font-bold text-white">刑法文典</h3>
+                    </div>
+                    <p class="text-gray-400">
+                        权威、易懂的刑法查询系统
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary transition-colors">首页</a></li>
+                        <li><a href="#general" class="text-gray-400 hover:text-primary transition-colors">总则</a></li>
+                        <li><a href="#specific" class="text-gray-400 hover:text-primary transition-colors">分则</a></li>
+                        <li><a href="#supplementary" class="text-gray-400 hover:text-primary transition-colors">附则</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-primary transition-colors">关于</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">联系开发者</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span class="text-gray-400">1837061513@qq.ocm</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span class="text-gray-400">17828295500</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                            <span class="text-gray-400">中国四川</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2026 刑法文典. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 回到顶部按钮
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.pageYOffset > 100) {
+                header.classList.add('py-2', 'shadow-md');
+                header.classList.remove('py-3');
+            } else {
+                header.classList.add('py-3');
+                header.classList.remove('py-2', 'shadow-md');
+            }
+        });
+    </script>
+</body>
+</html>
