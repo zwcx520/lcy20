@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>刑法文典 - 第四章 刑罚的具体运用</title>
     <!-- 引入动漫风格UI组件库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,23 +46,59 @@
                 color: transparent;
                 background-image: linear-gradient(to right, #FF6B6B, #4ECDC4);
             }
+            .app-card {
+                border-radius: 16px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                transition: all 0.3s ease;
+            }
+            .app-card:active {
+                transform: scale(0.98);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            }
+            .bottom-nav {
+                border-top-left-radius: 20px;
+                border-top-right-radius: 20px;
+                box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            }
+            .nav-item-active {
+                color: #FF6B6B;
+                position: relative;
+            }
+            .nav-item-active::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 20px;
+                height: 3px;
+                background-color: #FF6B6B;
+                border-radius: 2px;
+            }
+            .article-item {
+                transition: all 0.2s ease;
+                border-radius: 12px;
+            }
+            .article-item:active {
+                transform: scale(0.98);
+                background-color: rgba(255, 107, 107, 0.05);
+            }
         }
     </style>
     <style>
         /* 动漫风格滚动条 */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(#FF6B6B, #4ECDC4);
-            border-radius: 10px;
+            background: rgba(255, 107, 107, 0.5);
+            border-radius: 3px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(#FF8E8E, #7EDDD6);
+            background: rgba(255, 107, 107, 0.7);
         }
         
         /* 平滑滚动 */
@@ -71,27 +107,48 @@
         }
         
         /* 动画效果 */
-        .anime-card {
-            transition: all 0.3s ease;
-        }
-        .anime-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.2);
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
         
-        /* 条款样式 */
-        .article-item {
-            transition: all 0.2s ease;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .article-item:hover {
-            background-color: rgba(255, 107, 107, 0.05);
-            transform: translateX(5px);
+        
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+        
+        /* APP风格的触摸反馈 */
+        .touch-feedback {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 防止文本选择 */
+        .no-select {
+            user-select: none;
         }
     </style>
 </head>
-<body class="bg-light font-anime text-dark">
+<body class="bg-light font-anime text-dark touch-feedback no-select">
     <!-- 顶部导航栏 -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-95 backdrop-blur-sm border-b border-primary/20">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i class="fas fa-balance-scale text-primary text-2xl"></i>
@@ -114,7 +171,7 @@
         </div>
         
         <!-- 移动端导航菜单 -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-primary/20">
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100 slide-up">
             <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
                 <a href="../index.html" class="font-medium hover:text-primary transition-colors py-2">首页</a>
                 <a href="../index.html#general" class="font-medium hover:text-primary transition-colors py-2">总则</a>
@@ -126,9 +183,9 @@
     </header>
 
     <!-- 主要内容区域 -->
-    <main class="container mx-auto px-4 pt-24 pb-12">
+    <main class="container mx-auto px-4 pt-20 pb-8">
         <!-- 面包屑导航 -->
-        <nav class="mb-8 text-sm">
+        <nav class="mb-6 text-sm fade-in">
             <ol class="flex items-center space-x-2">
                 <li><a href="../index.html" class="text-gray-600 hover:text-primary transition-colors">首页</a></li>
                 <li><i class="fas fa-chevron-right text-gray-400 text-xs"></i></li>
@@ -139,126 +196,87 @@
         </nav>
         
         <!-- 章节标题 -->
-        <div class="flex items-center mb-8">
-            <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
+        <div class="flex items-center mb-6 fade-in">
+            <div class="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-lg mr-3">
                 4
             </div>
-            <h2 class="text-3xl font-bold">第四章 刑罚的具体运用</h2>
+            <h2 class="text-2xl font-bold">第四章 刑罚的具体运用</h2>
         </div>
         
         <!-- 章节内容 -->
-        <div class="bg-white p-6 rounded-xl anime-shadow mb-8">
-            <p class="text-gray-600 mb-6">本章规定了量刑、累犯、自首、立功等刑罚运用的具体制度。</p>
+        <div class="app-card bg-white p-5 rounded-xl shadow-sm mb-6 fade-in">
+            <p class="text-gray-600 mb-4">本章规定了量刑、累犯、自首、立功等刑罚运用的具体制度。</p>
             
-            <!-- 第一节 -->
-            <div class="mb-8">
-                <h3 class="text-2xl font-bold mb-4 flex items-center">
-                    <span class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">1</span>
-                    第一节 量刑
-                </h3>
-                <div class="space-y-4 pl-11">
-                    <!-- 第六十一条 -->
-                    <div class="article-item p-4 border-l-4 border-primary rounded-r-lg">
-                        <h4 class="text-xl font-bold mb-2">第六十一条</h4>
-                        <p class="text-gray-700">对于犯罪分子决定刑罚的时候，应当根据犯罪的事实、犯罪的性质、情节和对于社会的危害程度，依照本法的有关规定判处。</p>
-                    </div>
-                    
-                    <!-- 第六十二条 -->
-                    <div class="article-item p-4 border-l-4 border-primary rounded-r-lg">
-                        <h4 class="text-xl font-bold mb-2">第六十二条</h4>
-                        <p class="text-gray-700">犯罪分子具有本法规定的从重处罚、从轻处罚情节的，应当在法定刑的限度以内判处刑罚。</p>
-                    </div>
-                    
-                    <!-- 第六十三条 -->
-                    <div class="article-item p-4 border-l-4 border-primary rounded-r-lg">
-                        <h4 class="text-xl font-bold mb-2">第六十三条</h4>
-                        <p class="text-gray-700">犯罪分子具有本法规定的减轻处罚情节的，应当在法定刑以下判处刑罚；本法规定有数个量刑幅度的，应当在法定量刑幅度的下一个量刑幅度内判处刑罚。</p>
-                        <p class="text-gray-700 mt-2">犯罪分子虽然不具有本法规定的减轻处罚情节，但是根据案件的特殊情况，经最高人民法院核准，也可以在法定刑以下判处刑罚。</p>
-                    </div>
+            <!-- 条款列表 -->
+            <div class="space-y-3">
+                <!-- 第二十八条 -->
+                <div class="article-item p-4 border-l-4 border-primary bg-white shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">第二十八条</h3>
+                    <p class="text-gray-700">对于犯罪分子决定刑罚的时候，应当根据犯罪的事实、犯罪的性质、情节和对于社会的危害程度，依照本法的有关规定判处。</p>
                 </div>
-            </div>
-            
-            <!-- 其他节内容省略，实际应用中需要补充完整 -->
-            <div class="p-4 bg-gray-100 rounded-lg">
-                <p class="text-gray-600">本节还包括其他条款，详细内容请参考完整刑法文本。</p>
+                
+                <!-- 第二十九条 -->
+                <div class="article-item p-4 border-l-4 border-primary bg-white shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">第二十九条</h3>
+                    <p class="text-gray-700">犯罪分子具有本法规定的从重处罚、从轻处罚情节的，应当在法定刑的限度以内判处刑罚。</p>
+                </div>
+                
+                <!-- 第三十条 -->
+                <div class="article-item p-4 border-l-4 border-primary bg-white shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">第三十条</h3>
+                    <p class="text-gray-700">犯罪分子具有本法规定的减轻处罚情节的，应当在法定刑以下判处刑罚；本法规定有数个量刑幅度的，应当在法定量刑幅度的下一个量刑幅度内判处刑罚。</p>
+                    <p class="text-gray-700 mt-2">犯罪分子虽然不具有本法规定的减轻处罚情节，但是根据案件的特殊情况，经最高人民法院核准，也可以在法定刑以下判处刑罚。</p>
+                </div>
+                
+                <!-- 第三十一条 -->
+                <div class="article-item p-4 border-l-4 border-primary bg-white shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">第三十一条</h3>
+                    <p class="text-gray-700">对于犯罪分子违法所得的一切财物，应当予以追缴或者责令退赔；对被害人的合法财产，应当及时返还；违禁品和供犯罪所用的本人财物，应当予以没收。没收的财物和罚金，一律上缴国库，不得挪用和自行处理。</p>
+                </div>
+                
+                <!-- 第三十二条 -->
+                <div class="article-item p-4 border-l-4 border-primary bg-white shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">第三十二条</h3>
+                    <p class="text-gray-700">被判处管制、拘役、有期徒刑、无期徒刑的犯罪分子，在执行期间，如果认真遵守监规，接受教育改造，确有悔改表现的，或者有立功表现的，可以减刑；有下列重大立功表现之一的，应当减刑：</p>
+                    <p class="text-gray-700 mt-2">(一) 阻止他人重大犯罪活动的；</p>
+                    <p class="text-gray-700 mt-1">(二) 检举监狱内外重大犯罪活动，经查证属实的；</p>
+                    <p class="text-gray-700 mt-1">(三) 有发明创造或者重大技术革新的；</p>
+                    <p class="text-gray-700 mt-1">(四) 在日常生产、生活中舍己救人的；</p>
+                    <p class="text-gray-700 mt-1">(五) 在抗御自然灾害或者排除重大事故中，有突出表现的；</p>
+                    <p class="text-gray-700 mt-1">(六) 对国家和社会有其他重大贡献的。</p>
+                    <p class="text-gray-700 mt-2">减刑以后实际执行的刑期不能少于下列期限：</p>
+                    <p class="text-gray-700 mt-2">(一) 判处管制、拘役、有期徒刑的，不能少于原判刑期的二分之一；</p>
+                    <p class="text-gray-700 mt-1">(二) 判处无期徒刑的，不能少于十三年；</p>
+                    <p class="text-gray-700 mt-1">(三) 人民法院依照本法第五十条第二款规定限制减刑的死刑缓期执行的犯罪分子，缓期执行期满后依法减为无期徒刑的，不能少于二十五年，缓期执行期满后依法减为二十五年有期徒刑的，不能少于二十年。</p>
+                </div>
             </div>
         </div>
         
         <!-- 相关章节 -->
-        <div class="mb-8">
-            <h3 class="text-xl font-bold mb-4">相关章节</h3>
+        <div class="mb-6 fade-in">
+            <h3 class="text-lg font-bold mb-4">相关章节</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="general-chapter3.html" class="anime-card bg-white p-4 rounded-xl anime-shadow flex items-center justify-between">
+                <a href="general-chapter3.html" class="app-card bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
                     <div>
                         <h4 class="font-bold">第三章 刑罚</h4>
                         <p class="text-sm text-gray-600">规定了刑罚的种类、适用原则等内容。</p>
                     </div>
-                    <i class="fas fa-arrow-right text-primary"></i>
+                    <i class="fas fa-chevron-right text-primary"></i>
                 </a>
-                <a href="general-chapter5.html" class="anime-card bg-white p-4 rounded-xl anime-shadow flex items-center justify-between">
+                <a href="general-chapter5.html" class="app-card bg-white p-4 rounded-xl shadow-sm flex items-center justify-between">
                     <div>
                         <h4 class="font-bold">第五章 其他规定</h4>
                         <p class="text-sm text-gray-600">规定了刑法中的一些术语解释和其他技术性规定。</p>
                     </div>
-                    <i class="fas fa-arrow-right text-primary"></i>
+                    <i class="fas fa-chevron-right text-primary"></i>
                 </a>
             </div>
         </div>
     </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-balance-scale text-primary text-2xl"></i>
-                        <h3 class="text-xl font-bold text-white">刑法文典</h3>
-                    </div>
-                    <p class="text-gray-400">
-                        权威、易懂的刑法查询系统
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">快速链接</h3>
-                    <ul class="space-y-2">
-                        <li><a href="../index.html" class="text-gray-400 hover:text-primary transition-colors">首页</a></li>
-                        <li><a href="../index.html#general" class="text-gray-400 hover:text-primary transition-colors">总则</a></li>
-                        <li><a href="../index.html#specific" class="text-gray-400 hover:text-primary transition-colors">分则</a></li>
-                        <li><a href="../index.html#supplementary" class="text-gray-400 hover:text-primary transition-colors">附则</a></li>
-                        <li><a href="../index.html#about" class="text-gray-400 hover:text-primary transition-colors">关于</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">联系开发者</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-envelope text-secondary"></i>
-                            <span class="text-gray-400">1837061513@qq.ocm</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-phone text-primary"></i>
-                            <span class="text-gray-400">17828295500</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-map-marker-alt text-secondary"></i>
-                            <span class="text-gray-400">中国四川</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 刑法文典. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-
     <!-- 回到顶部按钮 -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
-        <i class="fas fa-arrow-up"></i>
+    <button id="back-to-top" class="fixed bottom-16 right-4 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up text-sm"></i>
     </button>
 
     <!-- JavaScript -->
@@ -289,13 +307,29 @@
         // 导航栏滚动效果
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
-            if (window.pageYOffset > 100) {
-                header.classList.add('py-2', 'shadow-md');
-                header.classList.remove('py-3');
+            if (window.pageYOffset > 50) {
+                header.classList.add('shadow-md');
             } else {
-                header.classList.add('py-3');
-                header.classList.remove('py-2', 'shadow-md');
+                header.classList.remove('shadow-md');
             }
+        });
+        
+        // 滚动时的动画效果
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        fadeElements.forEach(element => {
+            observer.observe(element);
         });
     </script>
 </body>

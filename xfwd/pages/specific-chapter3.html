@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>刑法文典 - 第三章 破坏社会主义市场经济秩序罪</title>
     <!-- 引入动漫风格UI组件库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -49,6 +49,35 @@
         }
     </style>
     <style>
+        /* APP UI 样式 */
+        .app-card {
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        .app-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+        .bottom-nav {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+        .nav-item {
+            transition: all 0.2s ease;
+        }
+        .nav-item:active {
+            transform: scale(0.95);
+        }
+        .article-item {
+            transition: all 0.2s ease;
+        }
+        .article-item:active {
+            background-color: rgba(62, 205, 196, 0.05);
+            transform: translateX(5px);
+        }
+        
         /* 动漫风格滚动条 */
         ::-webkit-scrollbar {
             width: 10px;
@@ -71,83 +100,59 @@
         }
         
         /* 动画效果 */
-        .anime-card {
-            transition: all 0.3s ease;
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
         }
-        .anime-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(62, 205, 196, 0.2);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        /* 条款样式 */
-        .article-item {
-            transition: all 0.2s ease;
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
         }
-        .article-item:hover {
-            background-color: rgba(62, 205, 196, 0.05);
-            transform: translateX(5px);
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
-<body class="bg-light font-anime text-dark">
+<body class="bg-light font-anime text-dark min-h-screen">
     <!-- 顶部导航栏 -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-95 backdrop-blur-sm border-b border-secondary/20">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fas fa-balance-scale text-secondary text-2xl"></i>
-                <h1 class="text-xl font-bold text-gradient">刑法文典</h1>
-            </div>
-            
-            <!-- 桌面端导航 -->
-            <nav class="hidden md:flex space-x-6">
-                <a href="../index.html" class="font-medium hover:text-secondary transition-colors">首页</a>
-                <a href="../index.html#general" class="font-medium hover:text-secondary transition-colors">总则</a>
-                <a href="../index.html#specific" class="font-medium hover:text-secondary transition-colors">分则</a>
-                <a href="../index.html#supplementary" class="font-medium hover:text-secondary transition-colors">附则</a>
-                <a href="../index.html#about" class="font-medium hover:text-secondary transition-colors">关于</a>
-            </nav>
-            
-            <!-- 移动端菜单按钮 -->
-            <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
-                <i class="fas fa-bars text-xl"></i>
-            </button>
-        </div>
-        
-        <!-- 移动端导航菜单 -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-secondary/20">
-            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
-                <a href="../index.html" class="font-medium hover:text-secondary transition-colors py-2">首页</a>
-                <a href="../index.html#general" class="font-medium hover:text-secondary transition-colors py-2">总则</a>
-                <a href="../index.html#specific" class="font-medium hover:text-secondary transition-colors py-2">分则</a>
-                <a href="../index.html#supplementary" class="font-medium hover:text-secondary transition-colors py-2">附则</a>
-                <a href="../index.html#about" class="font-medium hover:text-secondary transition-colors py-2">关于</a>
-            </div>
+        <div class="container mx-auto px-4 py-3 flex items-center">
+            <a href="../index.html" class="flex items-center space-x-2 mr-4">
+                <i class="fas fa-arrow-left text-dark"></i>
+            </a>
+            <h1 class="text-xl font-bold text-center flex-1">刑法文典</h1>
+            <div class="w-8"></div>
         </div>
     </header>
 
     <!-- 主要内容区域 -->
-    <main class="container mx-auto px-4 pt-24 pb-12">
-        <!-- 面包屑导航 -->
-        <nav class="mb-8 text-sm">
-            <ol class="flex items-center space-x-2">
-                <li><a href="../index.html" class="text-gray-600 hover:text-secondary transition-colors">首页</a></li>
-                <li><i class="fas fa-chevron-right text-gray-400 text-xs"></i></li>
-                <li><a href="../index.html#specific" class="text-gray-600 hover:text-secondary transition-colors">分则</a></li>
-                <li><i class="fas fa-chevron-right text-gray-400 text-xs"></i></li>
-                <li class="text-secondary font-medium">第三章 破坏社会主义市场经济秩序罪</li>
-            </ol>
-        </nav>
-        
+    <main class="container mx-auto px-4 pt-20 pb-8">
         <!-- 章节标题 -->
-        <div class="flex items-center mb-8">
+        <div class="flex items-center mb-8 pt-4 fade-in">
             <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-xl mr-4">
                 3
             </div>
-            <h2 class="text-3xl font-bold">第三章 破坏社会主义市场经济秩序罪</h2>
+            <h2 class="text-2xl font-bold">第三章 破坏社会主义市场经济秩序罪</h2>
         </div>
         
         <!-- 章节内容 -->
-        <div class="bg-white p-6 rounded-xl anime-shadow mb-8">
+        <div class="app-card bg-white p-6 mb-8 fade-in">
             <p class="text-gray-600 mb-6">本章规定了破坏社会主义市场经济秩序的各种犯罪及其刑罚。</p>
             
             <!-- 第一节 -->
@@ -158,13 +163,13 @@
                 </h3>
                 <div class="space-y-4 pl-11">
                     <!-- 第一百四十条 -->
-                    <div class="article-item p-4 border-l-4 border-secondary rounded-r-lg">
+                    <div class="article-item p-4 border-l-4 border-secondary rounded-r-lg slide-in">
                         <h4 class="text-xl font-bold mb-2">第一百四十条</h4>
                         <p class="text-gray-700">生产者、销售者在产品中掺杂、掺假，以假充真，以次充好或者以不合格产品冒充合格产品，销售金额五万元以上不满二十万元的，处二年以下有期徒刑或者拘役，并处或者单处销售金额百分之五十以上二倍以下罚金；销售金额二十万元以上不满五十万元的，处二年以上七年以下有期徒刑，并处销售金额百分之五十以上二倍以下罚金；销售金额五十万元以上不满二百万元的，处七年以上有期徒刑，并处销售金额百分之五十以上二倍以下罚金；销售金额二百万元以上的，处十五年有期徒刑或者无期徒刑，并处销售金额百分之五十以上二倍以下罚金或者没收财产。</p>
                     </div>
                     
                     <!-- 第一百四十一条 -->
-                    <div class="article-item p-4 border-l-4 border-secondary rounded-r-lg">
+                    <div class="article-item p-4 border-l-4 border-secondary rounded-r-lg slide-in" style="animation-delay: 0.1s;">
                         <h4 class="text-xl font-bold mb-2">第一百四十一条</h4>
                         <p class="text-gray-700">生产、销售假药的，处三年以下有期徒刑或者拘役，并处罚金；对人体健康造成严重危害或者有其他严重情节的，处三年以上十年以下有期徒刑，并处罚金；致人死亡或者有其他特别严重情节的，处十年以上有期徒刑、无期徒刑或者死刑，并处罚金或者没收财产。</p>
                         <p class="text-gray-700 mt-2">本条所称假药，是指依照《中华人民共和国药品管理法》的规定属于假药和按假药处理的药品、非药品。</p>
@@ -179,20 +184,27 @@
         </div>
         
         <!-- 相关章节 -->
-        <div class="mb-8">
+        <div class="mb-8 fade-in" style="animation-delay: 0.5s;">
             <h3 class="text-xl font-bold mb-4">相关章节</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a href="specific-chapter2.html" class="anime-card bg-white p-4 rounded-xl anime-shadow flex items-center justify-between">
+            <div class="space-y-4">
+                <a href="specific-chapter2.html" class="app-card bg-white p-4 flex items-center justify-between">
                     <div>
                         <h4 class="font-bold">第二章 危害公共安全罪</h4>
                         <p class="text-sm text-gray-600">规定了危害公共安全的各种犯罪及其刑罚。</p>
                     </div>
                     <i class="fas fa-arrow-right text-secondary"></i>
                 </a>
-                <a href="specific-chapter4.html" class="anime-card bg-white p-4 rounded-xl anime-shadow flex items-center justify-between">
+                <a href="specific-chapter4.html" class="app-card bg-white p-4 flex items-center justify-between">
                     <div>
                         <h4 class="font-bold">第四章 侵犯公民人身权利、民主权利罪</h4>
                         <p class="text-sm text-gray-600">规定了侵犯公民人身权利、民主权利的各种犯罪及其刑罚。</p>
+                    </div>
+                    <i class="fas fa-arrow-right text-secondary"></i>
+                </a>
+                <a href="../index.html" class="app-card bg-white p-4 flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold">返回首页</h4>
+                        <p class="text-sm text-gray-600">查看完整目录</p>
                     </div>
                     <i class="fas fa-arrow-right text-secondary"></i>
                 </a>
@@ -200,69 +212,13 @@
         </div>
     </main>
 
-    <!-- 页脚 -->
-    <footer class="bg-dark text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-balance-scale text-secondary text-2xl"></i>
-                        <h3 class="text-xl font-bold text-white">刑法文典</h3>
-                    </div>
-                    <p class="text-gray-400">
-                        权威、易懂的刑法查询系统
-                    </p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">快速链接</h3>
-                    <ul class="space-y-2">
-                        <li><a href="../index.html" class="text-gray-400 hover:text-secondary transition-colors">首页</a></li>
-                        <li><a href="../index.html#general" class="text-gray-400 hover:text-secondary transition-colors">总则</a></li>
-                        <li><a href="../index.html#specific" class="text-gray-400 hover:text-secondary transition-colors">分则</a></li>
-                        <li><a href="../index.html#supplementary" class="text-gray-400 hover:text-secondary transition-colors">附则</a></li>
-                        <li><a href="../index.html#about" class="text-gray-400 hover:text-secondary transition-colors">关于</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">联系开发者</h3>
-                    <ul class="space-y-2">
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-envelope text-secondary"></i>
-                            <span class="text-gray-400">1837061513@qq.ocm</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-phone text-secondary"></i>
-                            <span class="text-gray-400">17828295500</span>
-                        </li>
-                        <li class="flex items-center space-x-2">
-                            <i class="fas fa-map-marker-alt text-secondary"></i>
-                            <span class="text-gray-400">中国四川</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2026 刑法文典. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-
     <!-- 回到顶部按钮 -->
-    <button id="back-to-top" class="fixed bottom-8 right-8 bg-secondary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
+    <button id="back-to-top" class="fixed bottom-16 right-4 bg-secondary text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300">
         <i class="fas fa-arrow-up"></i>
     </button>
 
     <!-- JavaScript -->
     <script>
-        // 移动端菜单切换
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-        
         // 回到顶部按钮
         const backToTopButton = document.getElementById('back-to-top');
         
@@ -290,6 +246,17 @@
                 header.classList.add('py-3');
                 header.classList.remove('py-2', 'shadow-md');
             }
+        });
+        
+        // 为所有可点击元素添加触摸反馈
+        document.querySelectorAll('.app-card, .nav-item, .article-item').forEach(element => {
+            element.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('touchend', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>
