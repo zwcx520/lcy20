@@ -4,15 +4,20 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: 'Microsoft YaHei', Arial, sans-serif;
     background-image: url('headerbg.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     color: #333;
-    overflow: hidden;
-    height: 100vh;
     position: relative;
 }
 
@@ -97,6 +102,19 @@ button:active {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    body {
+        background-attachment: scroll;
+        background-size: cover;
+        background-position: center;
+        min-height: 100%;
+    }
+    
     .popup {
         max-width: 200px;
         padding: 12px;
