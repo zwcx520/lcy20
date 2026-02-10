@@ -1,1 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动漫图片格式转换工具</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Otomanopee+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decorations">
+        <div class="bg-star"></div>
+        <div class="bg-star"></div>
+        <div class="bg-star"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-moon"></div>
+    </div>
 
+    <div class="container">
+        <!-- 头部 -->
+        <header class="anime-header">
+            <div class="header-content">
+                <div class="anime-logo">
+                    <span class="logo-icon">🖼️</span>
+                    <h1>动漫图片转换工具</h1>
+                </div>
+                <p class="header-subtitle">将你的图片转换为任何格式，带有可爱的动漫风格！</p>
+                <div class="anime-character">
+                    <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=anime%20girl%20with%20magic%20wand%20converting%20images%20cute%20colorful%20anime%20style&image_size=square_hd" alt="动漫角色" class="character-img">
+                </div>
+            </div>
+        </header>
+
+        <!-- 主内容区 -->
+        <main>
+            <!-- 上传区域 -->
+            <section class="upload-section anime-card">
+                <h2 class="section-title">
+                    <span class="title-icon">📁</span>
+                    上传图片
+                </h2>
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">🖱️</div>
+                        <h3>点击或拖拽文件到此处</h3>
+                        <p>支持所有图片格式，最大文件大小 50MB</p>
+                        <input type="file" id="fileInput" accept="image/*" multiple>
+                    </div>
+                </div>
+                <div class="file-list" id="fileList"></div>
+            </section>
+
+            <!-- 转换设置 -->
+            <section class="convert-section anime-card">
+                <h2 class="section-title">
+                    <span class="title-icon">🎨</span>
+                    转换设置
+                </h2>
+                <div class="format-selector">
+                    <label for="outputFormat" class="format-label">选择输出格式：</label>
+                    <select id="outputFormat" class="format-select">
+                        <option value="jpeg">JPEG</option>
+                        <option value="png">PNG</option>
+                        <option value="webp">WebP</option>
+                        <option value="gif">GIF</option>
+                        <option value="bmp">BMP</option>
+                        <option value="svg">SVG</option>
+                        <option value="tiff">TIFF</option>
+                        <option value="heic">HEIC</option>
+                        <option value="ico">ICO</option>
+                    </select>
+                </div>
+                <button id="convertBtn" class="convert-btn anime-btn">
+                    <span class="btn-icon">✨</span>
+                    开始转换
+                </button>
+            </section>
+
+            <!-- 结果区域 -->
+            <section class="result-section anime-card" id="resultSection">
+                <h2 class="section-title">
+                    <span class="title-icon">🎉</span>
+                    转换结果
+                </h2>
+                <div class="result-list" id="resultList"></div>
+            </section>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="anime-footer">
+            <div class="footer-content">
+                <p class="footer-text">© 2026 动漫图片转换工具 | 用爱与魔法制作 ✨</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">使用指南</a>
+                    <a href="#" class="footer-link">关于我们</a>
+                    <a href="#" class="footer-link">联系我们</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="anime-loading"></div>
+            <p>正在使用魔法转换图片...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

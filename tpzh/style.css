@@ -1,0 +1,853 @@
+/* 全局变量 */
+:root {
+    --primary: #ff6b6b;
+    --primary-light: #ff8787;
+    --primary-dark: #fa5252;
+    --secondary: #4ecdc4;
+    --secondary-light: #7ed9d4;
+    --secondary-dark: #38b0a9;
+    --accent: #ffe66d;
+    --accent-light: #fff09e;
+    --accent-dark: #ffd93d;
+    --background: #f7f9fc;
+    --card-bg: #ffffff;
+    --text-primary: #2d3436;
+    --text-secondary: #636e72;
+    --border-radius: 20px;
+    --shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15);
+    --transition: all 0.3s ease;
+}
+
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', 'Otomanopee One', sans-serif;
+    background-color: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 背景装饰 */
+.bg-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.bg-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+.bg-star:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.bg-star:nth-child(2) {
+    top: 60%;
+    right: 15%;
+    animation-delay: 1s;
+}
+
+.bg-star:nth-child(3) {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: 2s;
+}
+
+.bg-heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary);
+    transform: rotate(45deg);
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.bg-heart::before,
+.bg-heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary);
+    border-radius: 50%;
+}
+
+.bg-heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.bg-heart::after {
+    top: 0;
+    left: -10px;
+}
+
+.bg-heart:nth-child(4) {
+    top: 30%;
+    right: 25%;
+    animation-delay: 0.5s;
+}
+
+.bg-heart:nth-child(5) {
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 1.5s;
+}
+
+.bg-moon {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    width: 80px;
+    height: 80px;
+    background-color: var(--accent-light);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--accent);
+    animation: float 6s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.7; }
+    50% { transform: rotate(45deg) scale(1.1); opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+/* 容器 */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* 头部 */
+.anime-header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: var(--border-radius);
+    padding: 60px 40px;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.anime-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    animation: float 20s infinite linear;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.anime-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.logo-icon {
+    font-size: 3em;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.anime-logo h1 {
+    font-family: 'Otomanopee One', cursive;
+    font-size: 3.5em;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: glow 2s infinite ease-in-out;
+}
+
+.header-subtitle {
+    font-size: 1.3em;
+    color: white;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.anime-character {
+    margin-top: 30px;
+}
+
+.character-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: bounce 3s infinite ease-in-out;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes glow {
+    0%, 100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+    50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+}
+
+/* 卡片样式 */
+.anime-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.anime-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+}
+
+.anime-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* 标题样式 */
+.section-title {
+    font-family: 'Otomanopee One', cursive;
+    font-size: 2em;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: slideInLeft 1s ease-out;
+}
+
+.title-icon {
+    font-size: 1.5em;
+    animation: rotate 3s infinite linear;
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 上传区域 */
+.upload-area {
+    border: 3px dashed var(--secondary);
+    border-radius: var(--border-radius);
+    padding: 60px 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: rgba(78, 205, 196, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(78, 205, 196, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: var(--secondary-dark);
+    background-color: rgba(78, 205, 196, 0.1);
+    transform: scale(1.02);
+}
+
+.upload-area:hover::before {
+    opacity: 1;
+}
+
+.upload-content {
+    position: relative;
+    z-index: 2;
+}
+
+.upload-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.upload-area h3 {
+    font-size: 1.5em;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.upload-area p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+#fileInput {
+    display: none;
+}
+
+/* 文件列表 */
+.file-list {
+    margin-top: 30px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 15px;
+    background-color: rgba(78, 205, 196, 0.05);
+    padding: 20px;
+}
+
+.file-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.file-list::-webkit-scrollbar-track {
+    background: rgba(78, 205, 196, 0.1);
+    border-radius: 4px;
+}
+
+.file-list::-webkit-scrollbar-thumb {
+    background: var(--secondary);
+    border-radius: 4px;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: white;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    animation: slideInUp 0.5s ease-out;
+}
+
+.file-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.file-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.file-preview {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--secondary-light);
+}
+
+.file-details {
+    flex: 1;
+}
+
+.file-name {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+.file-size {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+}
+
+.remove-file {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+}
+
+.remove-file:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(255, 107, 107, 0.4);
+}
+
+/* 转换设置 */
+.format-selector {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.format-label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 150px;
+}
+
+.format-select {
+    flex: 1;
+    padding: 15px 20px;
+    border: 2px solid var(--secondary-light);
+    border-radius: 12px;
+    font-size: 1.1em;
+    background-color: white;
+    transition: var(--transition);
+    min-width: 200px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234ecdc4%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+}
+
+.format-select:focus {
+    outline: none;
+    border-color: var(--secondary-dark);
+    box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.2);
+    transform: scale(1.02);
+}
+
+/* 按钮样式 */
+.anime-btn {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 6px 12px rgba(255, 107, 107, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 auto;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.anime-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 107, 107, 0.6);
+    animation: none;
+}
+
+.anime-btn:disabled {
+    background: linear-gradient(135deg, #b2bec3, #636e72);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    animation: none;
+}
+
+.btn-icon {
+    font-size: 1.2em;
+    animation: spin 2s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 结果区域 */
+.result-section {
+    display: none;
+}
+
+.result-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    animation: slideInUp 0.5s ease-out;
+}
+
+.result-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.result-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.result-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--secondary);
+    animation: bounce 2s infinite ease-in-out;
+}
+
+.result-details {
+    flex: 1;
+}
+
+.result-details h4 {
+    font-size: 1.2em;
+    color: var(--text-primary);
+    margin-bottom: 5px;
+}
+
+.result-details p {
+    color: var(--text-secondary);
+    font-size: 1em;
+}
+
+.download-btn {
+    background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    box-shadow: 0 4px 8px rgba(78, 205, 196, 0.3);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(78, 205, 196, 0.4);
+}
+
+/* 加载覆盖层 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.anime-loading {
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgba(78, 205, 196, 0.3);
+    border-radius: 50%;
+    border-top: 8px solid var(--secondary);
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.loading-content p {
+    font-size: 1.2em;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* 消息样式 */
+.error-message {
+    color: var(--primary);
+    background-color: rgba(255, 107, 107, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: none;
+    border-left: 4px solid var(--primary);
+    box-shadow: 0 4px 8px rgba(255, 107, 107, 0.2);
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.success-message {
+    color: var(--secondary);
+    background-color: rgba(78, 205, 196, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    display: none;
+    border-left: 4px solid var(--secondary);
+    box-shadow: 0 4px 8px rgba(78, 205, 196, 0.2);
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* 页脚 */
+.anime-footer {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: 40px;
+    margin-top: 60px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-text {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+    padding: 5px 10px;
+}
+
+.footer-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.footer-link:hover::after {
+    width: 100%;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    .anime-header {
+        padding: 40px 20px;
+    }
+
+    .anime-logo {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .anime-logo h1 {
+        font-size: 2.5em;
+    }
+
+    .header-subtitle {
+        font-size: 1.1em;
+    }
+
+    .character-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .anime-card {
+        padding: 30px 20px;
+    }
+
+    .section-title {
+        font-size: 1.5em;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .upload-area {
+        padding: 40px 20px;
+    }
+
+    .upload-icon {
+        font-size: 3em;
+    }
+
+    .format-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .format-label {
+        min-width: unset;
+        text-align: center;
+    }
+
+    .format-select {
+        min-width: unset;
+    }
+
+    .anime-btn {
+        font-size: 1.1em;
+        padding: 15px 30px;
+        width: 100%;
+    }
+
+    .file-item,
+    .result-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .file-info,
+    .result-info {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .file-preview,
+    .result-preview {
+        align-self: center;
+    }
+
+    .footer-links {
+        gap: 20px;
+    }
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* 滚动动画 */
+.scroll-animate {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.scroll-animate.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 脉冲效果 */
+.pulse {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
