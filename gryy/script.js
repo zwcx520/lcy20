@@ -44,7 +44,7 @@ class MusicPlayer {
                 title: '小流年',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=0',
-                created: '2026-02-08',
+                created: '2026-02-10',
                 category: '原创作品'
             },
             {
@@ -993,5 +993,6 @@ try {
     console.error('Failed to initialize music player:', error);
 
 }
+
 
 
