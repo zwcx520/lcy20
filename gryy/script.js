@@ -41,7 +41,7 @@ class MusicPlayer {
         const musicFiles = [
             {
                 filename: '不见桃花不见秋-小流年.mp3',
-                title: '不见桃花不见秋-小流年',
+                title: '小流年',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=0',
                 created: '2026-02-08',
@@ -985,3 +985,4 @@ try {
     console.error('Failed to initialize music player:', error);
 
 }
+
