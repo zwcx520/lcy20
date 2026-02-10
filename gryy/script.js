@@ -518,6 +518,14 @@ class MusicPlayer {
                 cover: 'https://picsum.photos/300/300?random=59',
                 created: '2026-02-07',
                 category: '合作作品'
+            },
+            {
+                filename: '不见桃花不见秋-未寄出的信.mp3',
+                title: '未寄出的信',
+                artist: '不见桃花不见秋',
+                cover: 'https://picsum.photos/300/300?random=60',
+                created: '2026-02-11',
+                category: '原创作品'
             }
         ];
         
@@ -985,4 +993,5 @@ try {
     console.error('Failed to initialize music player:', error);
 
 }
+
 
