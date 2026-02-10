@@ -40,6 +40,14 @@ class MusicPlayer {
     loadMusicFiles() {
         const musicFiles = [
             {
+                filename: '不见桃花不见秋-小流年.mp3',
+                title: '不见桃花不见秋-小流年',
+                artist: '不见桃花不见秋',
+                cover: 'https://picsum.photos/300/300?random=0',
+                created: '2026-02-08',
+                category: '原创作品'
+            },
+            {
                 filename: '不见桃花不见秋 - 1990.mp3',
                 title: '1990',
                 artist: '不见桃花不见秋',
@@ -975,4 +983,5 @@ try {
     window.musicPlayer = new MusicPlayer();
 } catch (error) {
     console.error('Failed to initialize music player:', error);
+
 }
