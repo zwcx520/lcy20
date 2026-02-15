@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>菜单导航 - 川味厨房</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E63946',
+            secondary: '#F4A261',
+            dark: '#1D3557',
+            light: '#F1FAEE',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light text-dark antialiased">
+
+<!-- 顶部导航 -->
+<header class="sticky top-0 bg-white shadow-md z-30">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="text-xl text-dark">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="index.html" class="text-2xl font-bold text-primary">川味厨房</a>
+    <a href="search.html" class="text-xl text-dark">
+      <i class="fa fa-search"></i>
+    </a>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-6">
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-4 border-b">
+      <h3 class="text-xl font-bold">菜单导航</h3>
+      <p class="text-sm text-gray-500">浏览所有分类和功能</p>
+    </div>
+    
+    <div class="p-4 space-y-6">
+      <div>
+        <h4 class="text-sm uppercase text-gray-400 mb-3 font-medium">菜谱分类</h4>
+        <ul class="space-y-2">
+          <li>
+            <a href="recipes.html" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-fire"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">经典川菜</h5>
+                <p class="text-xs text-gray-500">麻婆豆腐、水煮肉片等</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+          <li>
+            <a href="recipes.html" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-fire"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">火锅串串</h5>
+                <p class="text-xs text-gray-500">麻辣火锅、钵钵鸡等</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+          <li>
+            <a href="recipes.html" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-fire"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">小吃面点</h5>
+                <p class="text-xs text-gray-500">担担面、龙抄手等</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+          <li>
+            <a href="recipes.html" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-fire"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">凉菜系列</h5>
+                <p class="text-xs text-gray-500">夫妻肺片、凉拌黄瓜等</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+          <li>
+            <a href="recipes.html" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-fire"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">家常小炒</h5>
+                <p class="text-xs text-gray-500">鱼香肉丝、宫保鸡丁等</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <div>
+        <h4 class="text-sm uppercase text-gray-400 mb-3 font-medium">功能</h4>
+        <ul class="space-y-2">
+          <li>
+            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-heart"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">我的收藏</h5>
+                <p class="text-xs text-gray-500">保存的菜谱</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-upload"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">上传菜谱</h5>
+                <p class="text-xs text-gray-500">分享你的厨艺</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+          <li>
+            <a href="footer.html" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+              <div class="text-primary mr-3">
+                <i class="fa fa-info-circle"></i>
+              </div>
+              <div>
+                <h5 class="font-medium">关于我们</h5>
+                <p class="text-xs text-gray-500">了解川味厨房</p>
+              </div>
+              <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="mt-10 bg-dark text-white py-6">
+  <div class="container mx-auto px-4 text-center">
+    <p class="text-sm opacity-70">川味厨房 © 2026 专注正宗四川菜谱</p>
+  </div>
+</footer>
+
+<script>
+  // 动态分类展示
+  document.addEventListener('DOMContentLoaded', () => {
+    const categoryList = document.querySelector('ul.space-y-2');
+    
+    // 分类图标映射
+    const categoryIcons = {
+      all: 'fa-fire',
+      classic: 'fa-fire',
+      hotpot: 'fa-fire',
+      snack: 'fa-fire',
+      cold: 'fa-fire',
+      home: 'fa-fire'
+    };
+    
+    // 分类描述映射
+    const categoryDescriptions = {
+      all: '浏览所有川菜',
+      classic: '麻婆豆腐、水煮肉片等',
+      hotpot: '麻辣火锅、钵钵鸡等',
+      snack: '担担面、龙抄手等',
+      cold: '夫妻肺片、凉拌黄瓜等',
+      home: '鱼香肉丝、宫保鸡丁等'
+    };
+    
+    // 渲染分类列表
+    function renderCategories() {
+      categoryList.innerHTML = '';
+      
+      // 遍历分类
+      Object.entries(recipeData.categories).forEach(([category, info]) => {
+        // 跳过all分类，因为它是默认分类
+        if (category === 'all') return;
+        
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <a href="recipes.html?category=${category}" class="flex items-center p-3 rounded-lg hover:bg-red-50 transition-colors">
+            <div class="text-primary mr-3">
+              <i class="fa ${categoryIcons[category] || 'fa-fire'}"></i>
+            </div>
+            <div>
+              <h5 class="font-medium">${info.title}</h5>
+              <p class="text-xs text-gray-500">${categoryDescriptions[category] || ''}</p>
+            </div>
+            <i class="fa fa-chevron-right text-gray-400 ml-auto"></i>
+          </a>
+        `;
+        categoryList.appendChild(li);
+      });
+    }
+    
+    renderCategories();
+  });
+</script>
+</body>
+</html>

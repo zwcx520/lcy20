@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜索菜谱 - 川味厨房</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E63946',
+            secondary: '#F4A261',
+            dark: '#1D3557',
+            light: '#F1FAEE',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light text-dark antialiased">
+
+<!-- 顶部导航 -->
+<header class="sticky top-0 bg-white shadow-md z-30">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="text-xl text-dark">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="index.html" class="text-2xl font-bold text-primary">川味厨房</a>
+    <a href="menu.html" class="text-xl text-dark">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-6">
+  <!-- 搜索栏 -->
+  <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+    <div class="relative">
+      <input type="text" placeholder="搜索川菜..." class="w-full p-3 pl-12 pr-4 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50 text-lg">
+      <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl"></i>
+      <button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+        <i class="fa fa-microphone"></i>
+      </button>
+    </div>
+    
+    <div class="mt-4">
+      <h4 class="text-sm text-gray-500 mb-2">热门搜索</h4>
+      <div class="flex flex-wrap gap-2">
+        <a href="#" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-primary transition-colors">麻婆豆腐</a>
+        <a href="#" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-primary transition-colors">水煮肉片</a>
+        <a href="#" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-primary transition-colors">回锅肉</a>
+        <a href="#" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-primary transition-colors">鱼香肉丝</a>
+        <a href="#" class="px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-red-50 hover:text-primary transition-colors">宫保鸡丁</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 搜索结果 -->
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-4 border-b">
+      <h3 class="text-lg font-bold">搜索结果</h3>
+      <p class="text-sm text-gray-500">找到相关菜谱</p>
+    </div>
+    
+    <div class="divide-y">
+      <a href="recipe-detail.html" class="flex p-4 hover:bg-gray-50 transition-colors">
+        <img src="https://picsum.photos/id/292/100/100" alt="麻婆豆腐" class="w-20 h-20 rounded-lg object-cover mr-4">
+        <div class="flex-1">
+          <h4 class="font-bold">麻婆豆腐</h4>
+          <p class="text-sm text-gray-500 mb-2">麻辣鲜香、豆腐滑嫩</p>
+          <div class="flex items-center text-xs text-gray-400">
+            <span class="flex items-center mr-3">
+              <i class="fa fa-clock-o mr-1"></i> 15分钟
+            </span>
+            <span class="flex items-center">
+              <i class="fa fa-fire mr-1"></i> 麻辣
+            </span>
+          </div>
+        </div>
+        <i class="fa fa-chevron-right text-gray-400 self-center"></i>
+      </a>
+      
+      <a href="recipe-detail.html" class="flex p-4 hover:bg-gray-50 transition-colors">
+        <img src="https://picsum.photos/id/431/100/100" alt="水煮肉片" class="w-20 h-20 rounded-lg object-cover mr-4">
+        <div class="flex-1">
+          <h4 class="font-bold">水煮肉片</h4>
+          <p class="text-sm text-gray-500 mb-2">麻辣过瘾、肉片滑嫩</p>
+          <div class="flex items-center text-xs text-gray-400">
+            <span class="flex items-center mr-3">
+              <i class="fa fa-clock-o mr-1"></i> 20分钟
+            </span>
+            <span class="flex items-center">
+              <i class="fa fa-fire mr-1"></i> 特辣
+            </span>
+          </div>
+        </div>
+        <i class="fa fa-chevron-right text-gray-400 self-center"></i>
+      </a>
+      
+      <a href="recipe-detail.html" class="flex p-4 hover:bg-gray-50 transition-colors">
+        <img src="https://picsum.photos/id/312/100/100" alt="回锅肉" class="w-20 h-20 rounded-lg object-cover mr-4">
+        <div class="flex-1">
+          <h4 class="font-bold">回锅肉</h4>
+          <p class="text-sm text-gray-500 mb-2">肥而不腻、酱香浓郁</p>
+          <div class="flex items-center text-xs text-gray-400">
+            <span class="flex items-center mr-3">
+              <i class="fa fa-clock-o mr-1"></i> 25分钟
+            </span>
+            <span class="flex items-center">
+              <i class="fa fa-fire mr-1"></i> 中辣
+            </span>
+          </div>
+        </div>
+        <i class="fa fa-chevron-right text-gray-400 self-center"></i>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="mt-10 bg-dark text-white py-6">
+  <div class="container mx-auto px-4 text-center">
+    <p class="text-sm opacity-70">川味厨房 © 2026 专注正宗四川菜谱</p>
+  </div>
+</footer>
+
+<script>
+  // 搜索功能
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('input[type="text"]');
+    const searchResults = document.querySelector('.divide-y');
+    const resultCount = document.querySelector('.text-sm.text-gray-500');
+    
+    // 初始显示所有菜谱
+    renderRecipes(recipeData.getAllRecipes(), '');
+    
+    // 监听搜索输入
+    searchInput.addEventListener('input', (e) => {
+      const keyword = e.target.value.trim();
+      let recipes;
+      
+      if (keyword) {
+        recipes = recipeData.searchRecipes(keyword);
+      } else {
+        recipes = recipeData.getAllRecipes();
+      }
+      
+      renderRecipes(recipes, keyword);
+    });
+    
+    // 高亮显示搜索关键词
+    function highlightKeyword(text, keyword) {
+      if (!keyword) return text;
+      const regex = new RegExp(`(${keyword})`, 'gi');
+      return text.replace(regex, '<span class="bg-yellow-200 text-dark font-medium">$1</span>');
+    }
+    
+    // 渲染菜谱列表
+    function renderRecipes(recipes, keyword) {
+      searchResults.innerHTML = '';
+      
+      if (recipes.length === 0) {
+        searchResults.innerHTML = `
+          <div class="p-8 text-center">
+            <i class="fa fa-search text-gray-300 text-4xl mb-3"></i>
+            <p class="text-gray-500">未找到相关菜谱</p>
+          </div>
+        `;
+        resultCount.textContent = '找到 0 个相关菜谱';
+        return;
+      }
+      
+      resultCount.textContent = `找到 ${recipes.length} 个相关菜谱`;
+      
+      recipes.forEach(recipe => {
+        const a = document.createElement('a');
+        a.href = `recipe-detail.html?id=${recipe.id}`;
+        a.className = 'flex p-4 hover:bg-gray-50 transition-colors';
+        a.innerHTML = `
+          <img src="${recipe.image}" alt="${recipe.name}" class="w-20 h-20 rounded-lg object-cover mr-4">
+          <div class="flex-1">
+            <h4 class="font-bold">${highlightKeyword(recipe.name, keyword)}</h4>
+            <p class="text-sm text-gray-500 mb-2">${highlightKeyword(recipe.desc, keyword)}</p>
+            <div class="flex items-center text-xs text-gray-400">
+              <span class="flex items-center mr-3">
+                <i class="fa fa-clock-o mr-1"></i> ${recipe.time}
+              </span>
+              <span class="flex items-center">
+                <i class="fa fa-fire mr-1"></i> ${recipe.spice}
+              </span>
+            </div>
+          </div>
+          <i class="fa fa-chevron-right text-gray-400 self-center"></i>
+        `;
+        searchResults.appendChild(a);
+      });
+    }
+  });
+</script>
+</body>
+</html>

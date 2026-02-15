@@ -1,1 +1,141 @@
-cwcf
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>川味厨房 - 正宗四川菜谱</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E63946',
+            secondary: '#F4A261',
+            dark: '#1D3557',
+            light: '#F1FAEE',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light text-dark antialiased">
+
+<!-- 顶部导航 -->
+<header class="sticky top-0 bg-white shadow-md z-30">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="menu.html" class="text-xl text-dark">
+      <i class="fa fa-bars"></i>
+    </a>
+    <a href="index.html" class="text-2xl font-bold text-primary">川味厨房</a>
+    <a href="search.html" class="text-xl text-dark">
+      <i class="fa fa-search"></i>
+    </a>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-6">
+  <!-- 轮播区域 -->
+  <div class="rounded-xl overflow-hidden shadow-lg mb-8">
+    <img src="favicon.png" alt="川菜banner" class="w-full h-48 md:h-64 object-cover">
+  </div>
+
+  <!-- 功能导航 -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <a href="recipes.html" class="bg-white rounded-xl shadow-md p-4 text-center hover:shadow-lg transition-shadow">
+      <div class="text-primary text-3xl mb-2">
+        <i class="fa fa-cutlery"></i>
+      </div>
+      <h3 class="font-bold">菜谱分类</h3>
+      <p class="text-sm text-gray-500">浏览所有川菜</p>
+    </a>
+    
+    <a href="search.html" class="bg-white rounded-xl shadow-md p-4 text-center hover:shadow-lg transition-shadow">
+      <div class="text-primary text-3xl mb-2">
+        <i class="fa fa-search"></i>
+      </div>
+      <h3 class="font-bold">搜索菜谱</h3>
+      <p class="text-sm text-gray-500">查找特定菜品</p>
+    </a>
+    <a href="footer.html" class="bg-white rounded-xl shadow-md p-4 text-center hover:shadow-lg transition-shadow">
+      <div class="text-primary text-3xl mb-2">
+        <i class="fa fa-info-circle"></i>
+      </div>
+      <h3 class="font-bold">关于我们</h3>
+      <p class="text-sm text-gray-500">了解川味厨房</p>
+    </a>
+  </div>
+  
+  <!-- 热门菜谱 -->
+  <div class="mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-bold">热门菜谱</h2>
+      <a href="recipes.html" class="text-primary text-sm font-medium">查看全部</a>
+    </div>
+    <div id="popular-recipes" class="grid grid-cols-2 gap-4">
+      <!-- 热门菜谱将通过JavaScript动态生成 -->
+    </div>
+  </div>
+</main>
+
+<footer class="mt-10 bg-dark text-white py-6">
+  <div class="container mx-auto px-4 text-center">
+    <p class="text-sm opacity-70">川味厨房 © 2026 专注正宗四川菜谱</p>
+  </div>
+</footer>
+
+<script>
+  // 热门菜谱展示
+  document.addEventListener('DOMContentLoaded', () => {
+    const popularRecipesContainer = document.getElementById('popular-recipes');
+    
+    // 获取所有菜谱并按评分排序，显示前4个
+    const recipes = recipeData.getAllRecipes()
+      .sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
+      .slice(0, 4);
+    
+    renderPopularRecipes(recipes);
+    
+    // 渲染热门菜谱
+    function renderPopularRecipes(recipes) {
+      popularRecipesContainer.innerHTML = '';
+      
+      recipes.forEach(recipe => {
+        const a = document.createElement('a');
+        a.href = `recipe-detail.html?id=${recipe.id}`;
+        a.className = 'bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow';
+        a.innerHTML = `
+          <img src="${recipe.image}" alt="${recipe.name}" class="w-full h-40 object-cover">
+          <div class="p-4">
+            <h3 class="font-bold mb-1">${recipe.name}</h3>
+            <p class="text-sm text-gray-500 mb-2">${recipe.desc}</p>
+            <div class="flex items-center text-xs text-gray-400">
+              <span class="flex items-center mr-3">
+                <i class="fa fa-clock-o mr-1"></i> ${recipe.time}
+              </span>
+              <span class="flex items-center">
+                <i class="fa fa-fire mr-1"></i> ${recipe.spice}
+              </span>
+            </div>
+          </div>
+        `;
+        popularRecipesContainer.appendChild(a);
+      });
+    }
+  });
+</script>
+</body>
+</html>

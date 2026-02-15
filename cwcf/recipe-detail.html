@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>菜谱详情 - 川味厨房</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E63946',
+            secondary: '#F4A261',
+            dark: '#1D3557',
+            light: '#F1FAEE',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .step-number {
+        @apply flex items-center justify-center w-8 h-8 bg-primary text-white rounded-full mr-3 flex-shrink-0;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light text-dark antialiased">
+
+<!-- 顶部导航 -->
+<header class="sticky top-0 bg-white shadow-md z-30">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="recipes.html" class="text-xl text-dark">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="index.html" class="text-2xl font-bold text-primary">川味厨房</a>
+    <a href="search.html" class="text-xl text-dark">
+      <i class="fa fa-search"></i>
+    </a>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-6">
+  <!-- 加载中状态 -->
+  <div class="flex justify-center items-center py-24 hidden" id="loading">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-primary"></div>
+  </div>
+  
+  <!-- 错误状态 -->
+  <div class="bg-white rounded-xl shadow-md p-8 text-center hidden" id="error">
+    <div class="text-gray-400 text-5xl mb-4">
+      <i class="fa fa-exclamation-circle"></i>
+    </div>
+    <h3 class="text-xl font-bold mb-2">菜谱不存在</h3>
+    <p class="text-gray-500 mb-6">抱歉，您访问的菜谱不存在或已被删除</p>
+    <a href="recipes.html" class="px-6 py-2 bg-primary text-white rounded-full font-medium">返回菜谱列表</a>
+  </div>
+  
+  <!-- 菜谱内容 -->
+  <div id="recipe-content" class="hidden">
+    <!-- 菜谱图片 -->
+    <div class="rounded-xl overflow-hidden shadow-lg mb-6">
+      <img id="recipe-image" src="" alt="菜谱图片" class="w-full h-64 md:h-80 object-cover">
+    </div>
+    
+    <!-- 菜谱标题和信息 -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+      <h1 id="recipe-title" class="text-2xl font-bold mb-2"></h1>
+      <p id="recipe-desc" class="text-gray-500 mb-4"></p>
+      
+      <div class="flex flex-wrap gap-4">
+        <div class="flex items-center">
+          <i class="fa fa-clock-o text-primary mr-2"></i>
+          <span id="recipe-time" class="text-sm"></span>
+        </div>
+        <div class="flex items-center">
+          <i class="fa fa-fire text-primary mr-2"></i>
+          <span id="recipe-spice" class="text-sm"></span>
+        </div>
+        <div class="flex items-center">
+          <i class="fa fa-cutlery text-primary mr-2"></i>
+          <span id="recipe-servings" class="text-sm"></span>
+        </div>
+        <div class="flex items-center">
+          <i class="fa fa-star text-primary mr-2"></i>
+          <span id="recipe-rating" class="text-sm"></span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 操作按钮 -->
+    <div class="flex gap-4 mb-6">
+      <button class="flex-1 py-3 bg-primary text-white rounded-full font-medium flex items-center justify-center">
+        <i class="fa fa-bookmark-o mr-2"></i>
+        收藏
+      </button>
+      <button class="flex-1 py-3 bg-white border border-gray-200 rounded-full font-medium flex items-center justify-center">
+        <i class="fa fa-share mr-2"></i>
+        分享
+      </button>
+    </div>
+    
+    <!-- 食材 -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+      <h2 class="text-xl font-bold mb-4 flex items-center">
+        <i class="fa fa-shopping-basket text-primary mr-2"></i>
+        食材
+      </h2>
+      <ul id="recipe-ingredients" class="space-y-2">
+        <!-- 食材列表将通过JavaScript动态生成 -->
+      </ul>
+    </div>
+    
+    <!-- 制作步骤 -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+      <h2 class="text-xl font-bold mb-4 flex items-center">
+        <i class="fa fa-list-ol text-primary mr-2"></i>
+        制作步骤
+      </h2>
+      <div id="recipe-steps" class="space-y-6">
+        <!-- 制作步骤将通过JavaScript动态生成 -->
+      </div>
+    </div>
+    
+    <!-- 小贴士 -->
+    <div class="bg-white rounded-xl shadow-md p-4 mb-6">
+      <h2 class="text-xl font-bold mb-4 flex items-center">
+        <i class="fa fa-lightbulb-o text-primary mr-2"></i>
+        小贴士
+      </h2>
+      <ul id="recipe-tips" class="space-y-2">
+        <!-- 小贴士将通过JavaScript动态生成 -->
+      </ul>
+    </div>
+    
+    <!-- 相关推荐 -->
+    <div class="mb-6">
+      <h2 class="text-xl font-bold mb-4">相关推荐</h2>
+      <div id="recipe-recommendations" class="grid grid-cols-2 gap-4">
+        <!-- 相关推荐将通过JavaScript动态生成 -->
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="mt-10 bg-dark text-white py-6">
+  <div class="container mx-auto px-4 text-center">
+    <p class="text-sm opacity-70">川味厨房 © 2026 专注正宗四川菜谱</p>
+  </div>
+</footer>
+
+<script>
+  // 获取URL参数
+  function getUrlParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+  }
+  
+  // DOM元素
+  const loadingElement = document.getElementById('loading');
+  const errorElement = document.getElementById('error');
+  const recipeContentElement = document.getElementById('recipe-content');
+  
+  // 初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    // 获取菜谱ID，默认为1
+    const recipeId = parseInt(getUrlParam('id')) || 1;
+    
+    // 显示加载状态
+    loadingElement.classList.remove('hidden');
+    errorElement.classList.add('hidden');
+    recipeContentElement.classList.add('hidden');
+    
+    // 模拟加载延迟
+    setTimeout(() => {
+      // 检查菜谱是否存在
+      const recipe = recipeData.getRecipeById(recipeId);
+      if (recipe) {
+        renderRecipe(recipe);
+        loadingElement.classList.add('hidden');
+        recipeContentElement.classList.remove('hidden');
+      } else {
+        loadingElement.classList.add('hidden');
+        errorElement.classList.remove('hidden');
+      }
+    }, 500);
+  });
+  
+  // 渲染菜谱
+  function renderRecipe(recipe) {
+    // 更新页面标题
+    document.title = `${recipe.name} - 详细教程 - 川味厨房`;
+    
+    // 更新菜谱基本信息
+    document.getElementById('recipe-image').src = recipe.imageLarge || recipe.image;
+    document.getElementById('recipe-image').alt = recipe.name;
+    document.getElementById('recipe-title').textContent = recipe.name;
+    document.getElementById('recipe-desc').textContent = recipe.desc;
+    document.getElementById('recipe-time').textContent = recipe.time;
+    document.getElementById('recipe-spice').textContent = recipe.spice;
+    document.getElementById('recipe-servings').textContent = recipe.servings;
+    document.getElementById('recipe-rating').textContent = recipe.rating;
+    
+    // 渲染食材
+    const ingredientsElement = document.getElementById('recipe-ingredients');
+    ingredientsElement.innerHTML = '';
+    recipe.ingredients.forEach(ingredient => {
+      const li = document.createElement('li');
+      li.className = 'flex justify-between';
+      li.innerHTML = `
+        <span>${ingredient.name}</span>
+        <span class="text-gray-500">${ingredient.amount}</span>
+      `;
+      ingredientsElement.appendChild(li);
+    });
+    
+    // 渲染制作步骤
+    const stepsElement = document.getElementById('recipe-steps');
+    stepsElement.innerHTML = '';
+    recipe.steps.forEach((step, index) => {
+      const div = document.createElement('div');
+      div.className = 'flex';
+      div.innerHTML = `
+        <div class="step-number">${index + 1}</div>
+        <div class="flex-1">
+          <p>${step}</p>
+        </div>
+      `;
+      stepsElement.appendChild(div);
+    });
+    
+    // 渲染小贴士
+    const tipsElement = document.getElementById('recipe-tips');
+    tipsElement.innerHTML = '';
+    recipe.tips.forEach(tip => {
+      const li = document.createElement('li');
+      li.className = 'flex items-start';
+      li.innerHTML = `
+        <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+        <span>${tip}</span>
+      `;
+      tipsElement.appendChild(li);
+    });
+    
+    // 渲染相关推荐
+    const recommendationsElement = document.getElementById('recipe-recommendations');
+    recommendationsElement.innerHTML = '';
+    recipe.recommendations.forEach(recId => {
+      const recRecipe = recipeData.getRecipeById(recId);
+      if (recRecipe) {
+        const a = document.createElement('a');
+        a.href = `recipe-detail.html?id=${recId}`;
+        a.className = 'bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow';
+        a.innerHTML = `
+          <img src="${recRecipe.image}" alt="${recRecipe.name}" class="w-full h-32 object-cover">
+          <div class="p-3">
+            <h3 class="font-bold text-sm">${recRecipe.name}</h3>
+            <p class="text-xs text-gray-500">${recRecipe.desc}</p>
+          </div>
+        `;
+        recommendationsElement.appendChild(a);
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

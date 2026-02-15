@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我们 - 川味厨房</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E63946',
+            secondary: '#F4A261',
+            dark: '#1D3557',
+            light: '#F1FAEE',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+</head>
+<body class="bg-light text-dark antialiased">
+
+<!-- 顶部导航 -->
+<header class="sticky top-0 bg-white shadow-md z-30">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <a href="index.html" class="text-xl text-dark">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a href="index.html" class="text-2xl font-bold text-primary">川味厨房</a>
+    <a href="menu.html" class="text-xl text-dark">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</header>
+
+<main class="container mx-auto px-4 py-6">
+  <!-- 关于我们 -->
+  <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+    <h2 class="text-2xl font-bold mb-4 flex items-center">
+      <i class="fa fa-info-circle text-primary mr-2"></i>
+      关于我们
+    </h2>
+    <div class="space-y-4">
+      <p>川味厨房是一家专注于正宗四川菜谱的美食网站，致力于为广大美食爱好者提供详细、实用的川菜制作教程。</p>
+      <p>我们的团队由一群热爱川菜文化的美食专家组成，深入研究川菜的传统工艺和创新做法，为您带来最地道的川菜体验。</p>
+      <p>无论是经典的麻婆豆腐、水煮肉片，还是传统的火锅串串，我们都有详细的步骤教程和专业的烹饪技巧，让您在家也能轻松做出 restaurant-quality 的川菜。</p>
+      <p>我们相信，美食是连接人与人之间的桥梁，通过分享川菜文化，我们希望能够让更多人了解和喜爱四川的美食文化。</p>
+    </div>
+  </div>
+  
+  <!-- 联系方式 -->
+  <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+    <h2 class="text-2xl font-bold mb-4 flex items-center">
+      <i class="fa fa-envelope text-primary mr-2"></i>
+      联系方式
+    </h2>
+    <div class="space-y-3">
+      <div class="flex items-center">
+        <i class="fa fa-map-marker text-primary w-6"></i>
+        <span>四川省内江市威远县国际新城</span>
+      </div>
+      <div class="flex items-center">
+        <i class="fa fa-phone text-primary w-6"></i>
+        <span>17828295500</span>
+      </div>
+      <div class="flex items-center">
+        <i class="fa fa-envelope-o text-primary w-6"></i>
+        <span>1837601513@qq.com</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 社交媒体 -->
+  <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+    <h2 class="text-2xl font-bold mb-4 flex items-center">
+      <i class="fa fa-weixin text-primary mr-2"></i>
+      关注我们
+    </h2>
+    <div class="flex space-x-6">
+      <a href="#" class="flex flex-col items-center">
+        <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-primary text-2xl mb-2 hover:bg-primary hover:text-white transition-colors">
+          <i class="fa fa-weixin"></i>
+        </div>
+        <span class="text-sm">微信公众号</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-primary text-2xl mb-2 hover:bg-primary hover:text-white transition-colors">
+          <i class="fa fa-weibo"></i>
+        </div>
+        <span class="text-sm">微博</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-primary text-2xl mb-2 hover:bg-primary hover:text-white transition-colors">
+          <i class="fa fa-youtube-play"></i>
+        </div>
+        <span class="text-sm">YouTube</span>
+      </a>
+      <a href="#" class="flex flex-col items-center">
+        <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center text-primary text-2xl mb-2 hover:bg-primary hover:text-white transition-colors">
+          <i class="fa fa-instagram"></i>
+        </div>
+        <span class="text-sm">Instagram</span>
+      </a>
+    </div>
+  </div>
+  
+  <!-- 版权信息 -->
+  <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+    <h2 class="text-2xl font-bold mb-4 flex items-center">
+      <i class="fa fa-copyright text-primary mr-2"></i>
+      版权信息
+    </h2>
+    <div class="space-y-3">
+      <p>© 2026 川味厨房 版权所有</p>
+      <p>本网站所有菜谱内容仅供参考，未经授权不得转载或用于商业用途</p>
+      <p>网站设计与开发：川味厨房团队</p>
+    </div>
+  </div>
+  
+  <!-- 快速链接 -->
+  <div class="bg-white rounded-xl shadow-md p-6">
+    <h2 class="text-2xl font-bold mb-4 flex items-center">
+      <i class="fa fa-link text-primary mr-2"></i>
+      快速链接
+    </h2>
+    <div class="grid grid-cols-2 gap-4">
+      <a href="index.html" class="flex items-center p-2 rounded hover:bg-red-50 transition-colors">
+        <i class="fa fa-home text-primary mr-2"></i>
+        <span>首页</span>
+      </a>
+      <a href="recipes.html" class="flex items-center p-2 rounded hover:bg-red-50 transition-colors">
+        <i class="fa fa-cutlery text-primary mr-2"></i>
+        <span>菜谱分类</span>
+      </a>
+      <a href="menu.html" class="flex items-center p-2 rounded hover:bg-red-50 transition-colors">
+        <i class="fa fa-list text-primary mr-2"></i>
+        <span>菜单导航</span>
+      </a>
+      <a href="search.html" class="flex items-center p-2 rounded hover:bg-red-50 transition-colors">
+        <i class="fa fa-search text-primary mr-2"></i>
+        <span>搜索菜谱</span>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="mt-10 bg-dark text-white py-6">
+  <div class="container mx-auto px-4 text-center">
+    <p class="text-sm opacity-70">川味厨房 © 2026 专注正宗四川菜谱</p>
+  </div>
+</footer>
+
+</body>
+</html>
