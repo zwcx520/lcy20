@@ -1,1 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌸 萌系财务记账本</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body {
+    background: #fff5fd;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  /* 固定顶部导航栏 */
+  .moe-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #ff92d6, #ff66b8);
+    z-index: 999;
+    box-shadow: 0 4px 20px rgba(255, 140, 200, 0.3);
+  }
+  .moe-card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(255, 140, 200, 0.1);
+    transition: all 0.3s ease;
+  }
+  .moe-card:hover {
+    box-shadow: 0 12px 32px rgba(255, 140, 200, 0.15);
+    transform: translateY(-2px);
+  }
+  .moe-btn {
+    background: linear-gradient(90deg, #ff92d6, #ff66b8);
+    color: #fff;
+    border-radius: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  .moe-btn:hover {
+    box-shadow: 0 4px 16px rgba(255, 140, 200, 0.4);
+  }
+  .moe-btn:active {
+    transform: scale(0.96);
+  }
+  .moe-input {
+    border-radius: 16px;
+    border: 1px solid #ffd1f0;
+    background: #fffafc;
+    transition: all 0.3s ease;
+  }
+  .moe-input:focus {
+    outline: none;
+    border-color: #ff92d6;
+    box-shadow: 0 0 0 3px rgba(255, 146, 214, 0.1);
+  }
+  .moe-tab {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  .moe-tab:hover {
+    transform: translateY(-1px);
+  }
+  /* 响应式调整 */
+  @media (max-width: 768px) {
+    .moe-card {
+      border-radius: 20px;
+    }
+    .moe-header {
+      padding: 12px 20px;
+    }
+  }
+  /* 滚动条样式 */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #fffafc;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #ffd1f0;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff92d6;
+  }
+</style>
+</head>
 
+<body class="pb-24">
+
+<!-- 🌸 固定顶部导航栏 -->
+<div class="moe-header px-5 py-4 flex justify-between items-center">
+  <h2 class="text-white text-xl font-bold">萌系记账本</h2>
+  <div class="flex gap-6">
+    <button onclick="goHome()" class="text-white text-sm font-medium">首页</button>
+    <button onclick="openChart()" class="text-white text-sm font-medium">收支图表</button>
+  </div>
+</div>
+
+<!-- 主体内容（顶部留出导航栏高度） -->
+<div id="main" class="pt-24 px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-32">
+  <div class="max-w-7xl mx-auto">
+    <!-- 统计卡片 -->
+    <div class="moe-card p-6 mb-6">
+      <p class="text-center text-pink-300 text-sm mb-4">本月收支概况</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div class="p-4 rounded-xl bg-pink-50">
+          <p class="text-sm text-pink-400 mb-2">总收入</p>
+          <p id="totalIncome" class="text-2xl font-bold text-emerald-400">¥0.00</p>
+        </div>
+        <div class="p-4 rounded-xl bg-pink-50">
+          <p class="text-sm text-pink-400 mb-2">总支出</p>
+          <p id="totalExpense" class="text-2xl font-bold text-pink-500">¥0.00</p>
+        </div>
+        <div class="p-4 rounded-xl bg-pink-50">
+          <p class="text-sm text-pink-400 mb-2">结余</p>
+          <p id="balance" class="text-2xl font-bold text-[#ff5faf]">¥0.00</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主要内容区 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- 左侧：记账 -->
+      <div class="lg:col-span-1">
+        <div class="moe-card p-6 h-full">
+          <h2 class="text-[#ff5faf] text-lg font-bold mb-4">➕ 添加记账</h2>
+          <div class="flex gap-2 mb-4">
+            <button id="typeExpense" class="flex-1 py-2.5 moe-tab bg-pink-100 text-pink-500 font-medium text-sm">支出</button>
+            <button id="typeIncome" class="flex-1 py-2.5 moe-tab bg-white border border-pink-200 text-gray-400 text-sm">收入</button>
+          </div>
+          <input type="number" id="amount" class="moe-input w-full p-3.5 mb-3" placeholder="请输入金额">
+          <input type="text" id="note" class="moe-input w-full p-3.5 mb-3" placeholder="备注（餐饮/工资/购物）">
+          <input type="date" id="date" class="moe-input w-full p-3.5 mb-4">
+          <button onclick="addRecord()" class="w-full py-3.5 moe-btn">保存记录 ✅</button>
+        </div>
+      </div>
+
+      <!-- 右侧：月度统计和记录列表 -->
+      <div class="lg:col-span-2 space-y-6">
+        <!-- 月度统计 -->
+        <div class="moe-card p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-[#ff5faf] text-lg font-bold">📅 月度收支</h2>
+          </div>
+          <div id="monthStats" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+        </div>
+
+        <!-- 记录列表 -->
+        <div class="moe-card p-6">
+          <h2 class="text-[#ff5faf] text-lg font-bold mb-4">📋 记录列表</h2>
+          <div id="recordList" class="space-y-3 max-h-[500px] overflow-y-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 图表页面 -->
+<div id="chartPage" class="hidden pt-24 px-4 md:px-8 lg:px-16 xl:px-24 2xl:px-32">
+  <div class="max-w-4xl mx-auto">
+    <div class="moe-card p-8">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-[#ff5faf] text-xl font-bold">📊 收支图表</h2>
+        <button onclick="goHome()" class="text-pink-500 font-medium">返回首页</button>
+      </div>
+      <div class="flex justify-center">
+        <canvas id="pieChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentType = 'expense';
+  let records = JSON.parse(localStorage.getItem('moeFinance')) || [];
+  document.getElementById('date').valueAsDate = new Date();
+  
+  // ⚠️ 删除密码（可自己修改）
+  const DEL_PASSWORD = 'lcy';
+
+  // 切换收入支出
+  document.getElementById('typeExpense').onclick = () => {
+    currentType = 'expense';
+    updateTab(true);
+  };
+  document.getElementById('typeIncome').onclick = () => {
+    currentType = 'income';
+    updateTab(false);
+  };
+
+  function updateTab(isExpense) {
+    const e = document.getElementById('typeExpense');
+    const i = document.getElementById('typeIncome');
+    if (isExpense) {
+      e.className = "flex-1 py-2.5 moe-tab bg-pink-100 text-pink-500 font-medium text-sm";
+      i.className = "flex-1 py-2.5 moe-tab bg-white border border-pink-200 text-gray-400 text-sm";
+    } else {
+      i.className = "flex-1 py-2.5 moe-tab bg-pink-100 text-pink-500 font-medium text-sm";
+      e.className = "flex-1 py-2.5 moe-tab bg-white border border-pink-200 text-gray-400 text-sm";
+    }
+  }
+
+  // 格式化金额
+  function money(num) {
+    return parseFloat(num || 0).toFixed(2);
+  }
+
+  // 新增记录（本地存储）
+  function addRecord() {
+    const amount = document.getElementById('amount').value;
+    const note = document.getElementById('note').value || '无备注';
+    const date = document.getElementById('date').value;
+    if (!amount || amount <= 0) return alert('请输入正确的金额');
+
+    records.unshift({ id: Date.now(), type: currentType, amount, note, date });
+    localStorage.setItem('moeFinance', JSON.stringify(records));
+
+    document.getElementById('amount').value = '';
+    document.getElementById('note').value = '';
+    renderAll();
+  }
+
+  // ⚠️ 删除记录（需密码验证）
+  function del(id) {
+    let inputPwd = prompt('请输入删除密码：');
+    if(inputPwd === null) return;
+    if(inputPwd === DEL_PASSWORD){
+      records = records.filter(x => x.id !== id);
+      localStorage.setItem('moeFinance', JSON.stringify(records));
+      renderAll();
+      alert('删除成功！');
+    }else{
+      alert('密码错误，无法删除！');
+    }
+  }
+
+  // 渲染全部
+  function renderAll() {
+    renderList();
+    renderStats();
+    renderMonth();
+  }
+
+  // 列表
+  function renderList() {
+    const list = document.getElementById('recordList');
+    list.innerHTML = '';
+    records.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'flex justify-between items-center p-4 rounded-xl bg-pink-50';
+      div.innerHTML = `
+        <div>
+          <div class="text-sm font-medium">${item.note}</div>
+          <div class="text-xs text-pink-300">${item.date}</div>
+        </div>
+        <div class="text-right">
+          <div class="font-bold ${item.type === 'income' ? 'text-emerald-400' : 'text-pink-500'}">
+            ${item.type === 'income' ? '+' : '-'}¥${money(item.amount)}
+          </div>
+          <button onclick="del(${item.id})" class="text-xs text-pink-300 mt-1">删除</button>
+        </div>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  // 统计
+  function renderStats() {
+    let inSum = 0, exSum = 0;
+    records.forEach(r => {
+      r.type === 'income' ? inSum += parseFloat(r.amount) : exSum += parseFloat(r.amount);
+    });
+    document.getElementById('totalIncome').innerText = '¥' + money(inSum);
+    document.getElementById('totalExpense').innerText = '¥' + money(exSum);
+    document.getElementById('balance').innerText = '¥' + money(inSum - exSum);
+  }
+
+  // 月度统计
+  function renderMonth() {
+    const monthData = {};
+    records.forEach(r => {
+      const ym = r.date.slice(0, 7);
+      if (!monthData[ym]) monthData[ym] = { in: 0, ex: 0 };
+      r.type === 'income' ? monthData[ym].in += parseFloat(r.amount) : monthData[ym].ex += parseFloat(r.amount);
+    });
+    const dom = document.getElementById('monthStats');
+    dom.innerHTML = '';
+    Object.keys(monthData).sort().forEach(ym => {
+      const item = document.createElement('div');
+      item.className = 'p-3 rounded-xl bg-pink-50 text-center';
+      item.innerHTML = `
+        <div class="text-pink-400">${ym}</div>
+        <div class="text-emerald-400">${money(monthData[ym].in)}</div>
+        <div class="text-pink-500">${money(monthData[ym].ex)}</div>
+      `;
+      dom.appendChild(item);
+    });
+  }
+
+  // 图表 & 导航
+  let chart;
+  function openChart() {
+    document.getElementById('main').classList.add('hidden');
+    document.getElementById('chartPage').classList.remove('hidden');
+    drawChart();
+  }
+  function goHome() {
+    document.getElementById('chartPage').classList.add('hidden');
+    document.getElementById('main').classList.remove('hidden');
+  }
+  function drawChart() {
+    const inSum = records.filter(x => x.type === 'income').reduce((a, b) => a + parseFloat(b.amount), 0);
+    const exSum = records.filter(x => x.type === 'expense').reduce((a, b) => a + parseFloat(b.amount), 0);
+    if (chart) chart.destroy();
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['收入', '支出'],
+        datasets: [{
+          data: [inSum, exSum],
+          backgroundColor: ['#4ade80', '#ff5faf']
+        }]
+      }
+    });
+  }
+
+  renderAll();
+</script>
+</body>
+</html>
