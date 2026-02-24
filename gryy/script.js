@@ -520,6 +520,14 @@ class MusicPlayer {
                 category: '合作作品'
             },
             {
+                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 少年旧梦长.mp3',
+                title: '少年旧梦长',
+                artist: '不见桃花不见秋',
+                cover: 'https://picsum.photos/300/300?random=61',
+                created: '2026-02-07',
+                category: '原创作品'
+            },
+            {
                 filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋-未寄出的信.mp3',
                 title: '未寄出的信',
                 artist: '不见桃花不见秋',
@@ -993,6 +1001,7 @@ try {
     console.error('Failed to initialize music player:', error);
 
 }
+
 
 
 
