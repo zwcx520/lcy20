@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APP版本更新日志</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --light-bg: #f8f9ff;
+      --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --card-hover-shadow: 0 8px 30px rgba(67, 97, 238, 0.15);
+    }
+    
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .app-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 3rem 0 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
+    }
+    
+    .app-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      margin-bottom: 1rem;
+    }
+    
+    .header-title {
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .header-subtitle {
+      opacity: 0.9;
+      font-weight: 400;
+    }
+    
+    .version-card {
+      background: white;
+      border-radius: 16px;
+      padding: 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+      border: none;
+    }
+    
+    .version-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--card-hover-shadow);
+    }
+    
+    .version-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .version-tag {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    
+    .version-date {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+    
+    .update-list {
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .update-list li {
+      margin-bottom: 0.5rem;
+      position: relative;
+      list-style: none;
+    }
+    
+    .update-list li::before {
+      content: '\f058';
+      font-family: FontAwesome;
+      color: var(--primary-color);
+      position: absolute;
+      left: -1.2rem;
+      top: 0.2rem;
+    }
+    
+    .download-btn {
+      border-radius: 8px;
+      padding: 0.6rem 1.5rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .download-btn:hover {
+      transform: scale(1.03);
+    }
+    
+    .latest-tag {
+      background-color: #e63946;
+      margin-left: 0.5rem;
+    }
+    
+    .app-footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: #6c757d;
+      margin-top: 3rem;
+    }
+    
+    @media (max-width: 768px) {
+      .app-icon {
+        width: 65px;
+        height: 65px;
+      }
+      .header-title {
+        font-size: 1.8rem;
+      }
+      .version-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .version-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="app-header text-center">
+    <div class="container">
+      <!-- ========== 这里是 App 图标 ========== -->
+      <img 
+        src="app.jpg" 
+        class="app-icon" 
+        alt="App Icon"
+      >
+      <!-- =================================== -->
+      <h1 class="header-title">应用版本更新日志</h1>
+      <p class="header-subtitle mb-0">记录每一次功能优化与版本迭代</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-12">
+        
+        <div class="version-card">
+          <div class="version-header">
+            <div>
+              <span class="version-tag">v1.7.5</span>
+              <span class="latest-tag version-tag">最新版本</span>
+            </div>
+            <span class="version-date">更新时间：2026-03-02</span>
+          </div>
+          <h5 class="mb-3 text-primary">✨ 本次更新亮点</h5>
+          <ul class="update-list">
+            <li>优化APP，提高运行速度，修复潜在BUG</li>
+            
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="gd.apk" class="btn btn-primary download-btn">
+              <i class="fa fa-android me-1"></i> 正式版
+            </a>
+            <a href="gdjb.apk" class="btn btn-outline-primary download-btn">
+              <i class="fa fa-apple me-1"></i> 旧框架版 下载
+            </a>
+          </div>
+        </div>
+        
+        <div class="version-card">
+          <div class="version-header">
+            <div>
+              <span class="version-tag">v1.7.4</span>
+              
+            </div>
+            <span class="version-date">更新时间：2026-01-06</span>
+          </div>
+          <h5 class="mb-3 text-primary">✨ 本次更新亮点</h5>
+          <ul class="update-list">
+            <li>全新UI界面升级，视觉体验全面优化</li>
+            <li>新增AI智能助手功能，操作更便捷</li>
+            <li>优化应用启动速度，提升运行流畅度</li>
+            <li>修复已知Bug，增强系统稳定性</li>
+            <li>新增深色模式，夜间使用更护眼</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="gd1.7.4.apk" class="btn btn-primary download-btn">
+              <i class="fa fa-android me-1"></i> 正式版
+            </a>
+            <a href="gdjb1.7.4.apk" class="btn btn-outline-primary download-btn">
+              <i class="fa fa-apple me-1"></i> 旧框架版 下载
+            </a>
+          </div>
+        </div>
+
+        <div class="version-card">
+          <div class="version-header">
+            <span class="version-tag">v1.7.3</span>
+            <span class="version-date">更新时间：2025-09-15</span>
+          </div>
+          <h5 class="mb-3 text-primary">🔧 功能优化</h5>
+          <ul class="update-list">
+            <li>优化文件上传功能，支持大文件传输</li>
+            <li>新增消息推送提醒，不错过重要信息</li>
+            <li>优化网络请求逻辑，减少流量消耗</li>
+            <li>修复部分机型闪退问题</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="btn btn-primary download-btn">
+              <i class="fa fa-android me-1"></i> 正式版
+            </a>
+            <a href="#" class="btn btn-outline-primary download-btn">
+              <i class="fa fa-apple me-1"></i> 旧框架版 下载
+            </a>
+          </div>
+        </div>
+
+        <div class="version-card">
+          <div class="version-header">
+            <span class="version-tag">v1.7.2</span>
+            <span class="version-date">更新时间：2025-08-20</span>
+          </div>
+          <h5 class="mb-3 text-primary">🌟 功能新增</h5>
+          <ul class="update-list">
+            <li>新增用户个性化主题切换功能</li>
+            <li>优化登录注册流程，支持一键登录</li>
+            <li>新增数据统计图表，直观展示使用数据</li>
+            <li>提升页面加载速度，优化用户体验</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="btn btn-primary download-btn">
+              <i class="fa fa-android me-1"></i> 正式版
+            </a>
+            <a href="#" class="btn btn-outline-primary download-btn">
+              <i class="fa fa-apple me-1"></i> 旧框架版 下载
+            </a>
+          </div>
+        </div>
+
+        <div class="version-card">
+          <div class="version-header">
+            <span class="version-tag">v1.7.1</span>
+            <span class="version-date">更新时间：2025-07-01</span>
+          </div>
+          <h5 class="mb-3 text-primary">🚀 重大更新</h5>
+          <ul class="update-list">
+            <li>全新架构重构，性能大幅提升</li>
+            <li>新增多端数据同步功能</li>
+            <li>全面适配折叠屏手机</li>
+            <li>优化权限管理，保护用户隐私</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="btn btn-primary download-btn">
+              <i class="fa fa-android me-1"></i> 正式版
+            </a>
+            <a href="#" class="btn btn-outline-primary download-btn">
+              <i class="fa fa-apple me-1"></i> 旧框架版 下载
+            </a>
+          </div>
+        </div>
+
+        <div class="version-card">
+          <div class="version-header">
+            <span class="version-tag">v1.0.0</span>
+            <span class="version-date">更新时间：2024-06-24</span>
+          </div>
+          <h5 class="mb-3 text-primary">🎉 正式发布</h5>
+          <ul class="update-list">
+            <li>应用正式上线，基础功能全部完成</li>
+            <li>支持用户注册、登录、个人中心</li>
+            <li>核心业务功能全面开放使用</li>
+            <li>基础UI界面与交互逻辑完成</li>
+          </ul>
+          <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="btn btn-primary download-btn">
+              <i class="fa fa-android me-1"></i> 正式版
+            </a>
+            <a href="#" class="btn btn-outline-primary download-btn">
+              <i class="fa fa-apple me-1"></i> 旧框架版 下载
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p class="mb-0">©<span class="年份检测" id="yearSpan"></span> 归档-时光卷轴 版本更新日志</p>
+    </div>
+  </footer>
+<script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
