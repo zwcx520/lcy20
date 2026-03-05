@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APP | 维护中......</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Comic Sans MS", "幼圆", "Arial Rounded MT Bold", sans-serif;
+        }
+
+        body {
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 全屏卡片 */
+        .error-card {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 240, 245, 0.85);
+            border: 6px solid #ff66aa;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 
+                0 0 50px rgba(255, 102, 170, 0.5),
+                inset 0 0 30px rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* 卡片内部黑客帝国背景 */
+        .matrix-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        #matrix-bg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 动漫角色图 */
+        .anime-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid #ff66aa;
+            margin: 0 auto 30px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 102, 170, 0.7);
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .anime-img::before {
+            content: "✨";
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 30px;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .anime-img img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* 占位图样式 */
+        .placeholder-img {
+            background-image: url('https://picsum.photos/110/110');
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #ff99cc, #ff66aa);
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        /* 标题样式 */
+        .error-title {
+            font-size: 80px;
+            color: #ff3399;
+            margin-bottom: 20px;
+            text-shadow: 
+                2px 2px 0 #ffb3d9,
+                4px 4px 0 rgba(0, 0, 0, 0.1);
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            z-index: 2;
+        }
+
+        .error-title::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff66aa, transparent);
+        }
+
+        /* 更新提示文案 */
+        .update-tip {
+            font-size: 24px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            padding: 0 10px;
+            position: relative;
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        .update-tip span {
+            color: #ff3399;
+            font-weight: bold;
+            font-size: 26px;
+            text-shadow: 1px 1px 0 #ffb3d9;
+            position: relative;
+            display: inline-block;
+        }
+
+        .update-tip span::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ff66aa;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .update-tip span:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* 动漫风按钮组 */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 2;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff66aa, #ff99cc);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 102, 170, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            color: #ff66aa;
+            border: 2px solid #ff99cc;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 102, 170, 0.3);
+        }
+
+        /* 装饰性角标 */
+        .decor-top-left, .decor-bottom-right {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            z-index: 1;
+        }
+
+        .decor-top-left {
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #ff66aa, transparent 70%);
+        }
+
+        .decor-bottom-right {
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(315deg, #ff66aa, transparent 70%);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .error-title {
+                font-size: 60px;
+            }
+            
+            .update-tip {
+                font-size: 20px;
+            }
+            
+            .anime-img {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-title {
+                font-size: 50px;
+            }
+            
+            .update-tip {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-card">
+        <!-- 装饰角标 -->
+        <div class="decor-top-left"></div>
+        <div class="decor-bottom-right"></div>
+        
+        <!-- 卡片内部黑客帝国背景 -->
+        <div class="matrix-container">
+            <canvas id="matrix-bg"></canvas>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="anime-img">
+            <div class="placeholder-img"><img src="https://picsum.photos/200/200"></div>
+        </div>
+        
+        <h1 class="error-title">APP维护中</h1>
+        
+        <p class="update-tip">
+            呜哇！你要的<span>内容</span>还在次元夹缝中~<br>
+            可能是开发大大还在肝新版本<br>
+            先返回首页康康公告内容吧！
+        </p>
+        
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="window.location.href='index.html'">返回首页</button>
+            <button class="btn btn-secondary" onclick="window.location.href='https://lcy20.netlify.app/'">官网</button>
+        </div>
+    </div>
+
+    <script>
+        // 黑客帝国代码雨效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('matrix-bg');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置画布尺寸
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // 粉色系字符
+            const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+            const charArray = chars.split("");
+            
+            const fontSize = 14;
+            const columns = canvas.width / fontSize;
+            
+            // 创建雨滴数组
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+            }
+            
+            // 粉色系颜色
+            const colors = [
+                "#ff66aa", "#ff99cc", "#ff3399", "#ff69b4", 
+                "#ff1493", "#ffb6c1", "#ffc0cb", "#db7093"
+            ];
+            
+            function drawMatrix() {
+                // 半透明背景，创造拖尾效果
+                ctx.fillStyle = "rgba(255, 240, 245, 0.05)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 设置字体
+                ctx.font = `${fontSize}px 'Courier New', monospace`;
+                
+                for (let i = 0; i < drops.length; i++) {
+                    // 随机选择字符和颜色
+                    const text = charArray[Math.floor(Math.random() * charArray.length)];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    ctx.fillStyle = color;
+                    
+                    // 绘制字符
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    // 移动雨滴
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i]++;
+                }
+            }
+            
+            // 动画循环
+            setInterval(drawMatrix, 35);
+        });
+    </script>
+</body>
+</html>
