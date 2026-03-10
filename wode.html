@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>个人简介 | 不见桃花不见秋</title>
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  
+  <!-- Tailwind 自定义配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#8B5CF6', // 主色调-梦幻紫
+            secondary: '#EC4899', // 辅助色-甜妹粉
+            accent: '#06B6D4', // 点缀色-青蓝
+            dark: '#1F2937',
+            light: '#F9FAFB'
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-fast': 'float 4s ease-in-out infinite',
+            'pulse-soft': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- 自定义样式 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .glass-dark {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .text-gradient {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+      .border-gradient {
+        border-image: linear-gradient(to right, #8B5CF6, #EC4899) 1;
+      }
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* 滚动条美化 */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #8B5CF6, #EC4899);
+      border-radius: 10px;
+    }
+  </style>
+
+  <!-- 预加载字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-light text-dark">
+  <!-- 背景装饰元素 - 动漫氛围感 -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute top-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 animate-float-slow"></div>
+    <div class="absolute top-1/3 right-0 w-80 h-80 bg-secondary/20 rounded-full blur-3xl translate-x-1/2 animate-float"></div>
+    <div class="absolute bottom-0 left-1/3 w-72 h-72 bg-accent/20 rounded-full blur-3xl animate-float-fast"></div>
+  </div>
+
+  <!-- 导航栏 -->
+  <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="glass rounded-full px-6 py-3 flex items-center justify-between shadow-lg border border-white/20">
+        <a href="#" class="text-2xl font-bold text-gradient bg-gradient-to-r from-primary to-secondary">
+          MyProfile
+        </a>
+
+        <!-- 桌面端导航 -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#home" class="font-medium hover:text-primary transition-colors">首页</a>
+          <a href="#about" class="font-medium hover:text-primary transition-colors">关于我</a>
+          <a href="#skills" class="font-medium hover:text-primary transition-colors">技能爱好</a>
+          <a href="#works" class="font-medium hover:text-primary transition-colors">我的作品</a>
+          <a href="#contact" class="font-medium hover:text-primary transition-colors">联系我</a>
+        </div>
+
+        <!-- 移动端汉堡按钮 -->
+        <button id="menuBtn" class="md:hidden text-xl focus:outline-none">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- 移动端导航菜单 -->
+    <div id="mobileMenu" class="fixed inset-0 z-40 glass-dark flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-300 md:hidden">
+      <button id="closeBtn" class="absolute top-6 right-6 text-white text-2xl focus:outline-none">
+        <i class="fa fa-times"></i>
+      </button>
+      <a href="#home" class="text-white text-2xl font-medium hover:text-primary transition-colors">首页</a>
+      <a href="#about" class="text-white text-2xl font-medium hover:text-primary transition-colors">关于我</a>
+      <a href="#skills" class="text-white text-2xl font-medium hover:text-primary transition-colors">技能爱好</a>
+      <a href="#works" class="text-white text-2xl font-medium hover:text-primary transition-colors">我的作品</a>
+      <a href="#contact" class="text-white text-2xl font-medium hover:text-primary transition-colors">联系我</a>
+    </div>
+  </nav>
+
+  <!-- Hero区域 - 首页 -->
+  <section id="home" class="min-h-screen flex items-center justify-center pt-20 pb-10">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+        <!-- 文字内容 -->
+        <div class="md:w-1/2" data-aos="fade-right" data-aos-duration="1000">
+          <h3 class="text-lg md:text-xl font-medium text-primary mb-2">哈喽 👋 我是</h3>
+          <h1 class="text-[clamp(2.5rem,8vw,4.5rem)] font-bold leading-tight mb-4">
+            <span class="text-gradient bg-gradient-to-r from-primary to-secondary">不见桃花不见秋</span>
+          </h1>
+          <h2 class="text-[clamp(1.2rem,4vw,1.8rem)] font-semibold text-dark/80 mb-6">
+            2004 / <span id="typingText" class="text-primary"></span>
+          </h2>
+          <p class="text-base md:text-lg text-dark/70 mb-8 max-w-xl leading-relaxed">
+            热爱动漫、绘画与创作，用想象力构建属于自己的世界，同时也在不断探索技术与艺术的结合，把热爱变成生活的一部分。
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#works" class="px-8 py-3 rounded-full bg-gradient-to-r from-primary to-secondary text-white font-semibold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-300">
+              查看我的作品
+            </a>
+            <a href="#contact" class="px-8 py-3 rounded-full border-2 border-primary text-primary font-semibold hover:bg-primary/5 hover:scale-105 transition-all duration-300">
+              联系我
+            </a>
+          </div>
+        </div>
+
+        <!-- 头像区域 -->
+        <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-duration="1000">
+          <div class="relative">
+            <!-- 头像外框 - 动漫风格渐变环 -->
+            <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur-md animate-pulse-soft"></div>
+            <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-white overflow-hidden">
+              <!-- 替换为你的头像图片 -->
+              <img src="logo.jpg" alt="个人头像" class="w-full h-full object-cover">
+            </div>
+            <!-- 装饰元素 -->
+            <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-secondary rounded-full flex items-center justify-center text-white text-2xl animate-float-fast">
+              <i class="fa fa-star"></i>
+            </div>
+            <div class="absolute -top-4 -left-4 w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white text-xl animate-float">
+              <i class="fa fa-heart"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我区域 -->
+  <section id="about" class="py-20">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">
+          <span class="text-gradient bg-gradient-to-r from-primary to-secondary">关于我</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+      </div>
+
+      <div class="glass rounded-3xl p-8 md:p-12 shadow-xl border border-white/20" data-aos="fade-up" data-aos-duration="1000">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-6">我的故事</h3>
+            <p class="text-dark/70 mb-4 leading-relaxed">
+从小学开始接触乒乓球，持续11年+热爱，期间逐渐接触计算机技术，开始自学编程，学C语言，学前端设计布局，偶尔学习PS修图，也不间断基础网络安全和网络硬件设备，学习Kali ，web服务器搭建。期间还学习一丢丢咏春拳发锻炼身体，学习编曲和音乐创作，2023年入驻腾讯音乐平台，在酷狗音乐，酷我音乐，QQ音乐平台发曲。2024年开始归档-时光卷轴APP软件制作开发。无聊时喜欢听歌和吃鸡，游戏玩光遇和王牌竞速游戏，节奏大师。
+            </p>
+            <p class="text-dark/70 mb-4 leading-relaxed">
+              我相信每一份热爱都值得全力以赴，无论是音乐创作，还是用代码实现有趣的交互效果，我都愿意不断尝试，把生活的美好融入到现实的创作中。
+            </p>
+            <p class="text-dark/70 leading-relaxed">
+              目前正在持续学习与成长中，希望能通过自己的作品，给更多人带来快乐与治愈。
+            </p>
+
+            <div class="grid grid-cols-2 gap-4 mt-8">
+              <div class="bg-white/50 rounded-xl p-4">
+                <h4 class="font-bold text-primary text-xl mb-1">75+</h4>
+                <p class="text-dark/70 text-sm">乒乓球</p>
+              </div>
+              <div class="bg-white/50 rounded-xl p-4">
+                <h4 class="font-bold text-primary text-xl mb-1">50+</h4>
+                <p class="text-dark/70 text-sm">台球</p>
+              </div>
+              <div class="bg-white/50 rounded-xl p-4">
+                <h4 class="font-bold text-primary text-xl mb-1">100+</h4>
+                <p class="text-dark/70 text-sm">归档APP</p>
+              </div>
+              <div class="bg-white/50 rounded-xl p-4">
+                <h4 class="font-bold text-primary text-xl mb-1">50+</h4>
+                <p class="text-dark/70 text-sm">作品音乐</p>
+              </div>
+              <div class="bg-white/50 rounded-xl p-4">
+                <h4 class="font-bold text-primary text-xl mb-1">0+</h4>
+                <p class="text-dark/70 text-sm">粉丝喜爱</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-3xl -rotate-3"></div>
+            <img src="https://picsum.photos/800/1000" alt="个人生活照" class="relative rounded-3xl w-full h-auto object-cover shadow-lg">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能爱好区域 -->
+  <section id="skills" class="py-20">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">
+          <span class="text-gradient bg-gradient-to-r from-primary to-secondary">技能&爱好</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        <p class="text-dark/70 mt-6 max-w-2xl mx-auto">
+          把热爱做到极致，在喜欢的领域里不断发光
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 技能卡片1 -->
+        <div class="glass rounded-2xl p-6 shadow-lg border border-white/20 hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+          <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl mb-6">
+            <i class="fa fa-paint-brush"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">编曲创作</h3>
+          <p class="text-dark/70 mb-6">使用FL Studio编曲作曲，学习编曲知识</p>
+          <div class="w-full bg-white/50 rounded-full h-2 mb-2">
+            <div class="bg-gradient-to-r from-primary to-secondary h-2 rounded-full" style="width: 95%"></div>
+          </div>
+          <p class="text-sm text-dark/50 font-medium">熟练度 45%</p>
+        </div>
+
+
+
+        <!-- 技能卡片2 -->
+        <div class="glass rounded-2xl p-6 shadow-lg border border-white/20 hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+          <div class="w-14 h-14 rounded-full bg-accent/10 flex items-center justify-center text-accent text-2xl mb-6">
+            <i class="fa fa-code"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-4">前端开发</h3>
+          <p class="text-dark/70 mb-6">HTML/CSS/JavaScript开发，能实现创意网页设计与交互效果，将动漫风格与现代网页完美结合</p>
+          <div class="w-full bg-white/50 rounded-full h-2 mb-2">
+            <div class="bg-gradient-to-r from-accent to-primary h-2 rounded-full" style="width: 85%"></div>
+          </div>
+          <p class="text-sm text-dark/50 font-medium">熟练度 85%</p>
+        </div>
+      </div>
+
+      <!-- 爱好标签 -->
+      <div class="mt-16" data-aos="fade-up" data-aos-duration="800">
+        <h3 class="text-center text-2xl font-bold mb-8">我的爱好</h3>
+        <div class="flex flex-wrap justify-center gap-4">
+          <span class="px-6 py-3 rounded-full bg-primary/10 text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 cursor-default">动漫追番</span>
+          <span class="px-6 py-3 rounded-full bg-secondary/10 text-secondary font-medium hover:bg-secondary hover:text-white transition-all duration-300 cursor-default">吃鸡</span>
+          <span class="px-6 py-3 rounded-full bg-accent/10 text-accent font-medium hover:bg-accent hover:text-white transition-all duration-300 cursor-default">摄影</span>
+          <span class="px-6 py-3 rounded-full bg-primary/10 text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 cursor-default">网页设计</span>
+          <span class="px-6 py-3 rounded-full bg-secondary/10 text-secondary font-medium hover:bg-secondary hover:text-white transition-all duration-300 cursor-default">听歌</span>
+          <span class="px-6 py-3 rounded-full bg-accent/10 text-accent font-medium hover:bg-accent hover:text-white transition-all duration-300 cursor-default">编曲</span>
+          <span class="px-6 py-3 rounded-full bg-primary/10 text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 cursor-default">次元</span>
+          <span class="px-6 py-3 rounded-full bg-secondary/10 text-secondary font-medium hover:bg-secondary hover:text-white transition-all duration-300 cursor-default">光遇</span>
+          <span class="px-6 py-3 rounded-full bg-primary/10 text-primary font-medium hover:bg-primary hover:text-white transition-all duration-300 cursor-default">乒乓球</span>
+          <span class="px-6 py-3 rounded-full bg-secondary/10 text-secondary font-medium hover:bg-secondary hover:text-white transition-all duration-300 cursor-default">台球</span>
+          <span class="px-6 py-3 rounded-full bg-accent/10 text-accent font-medium hover:bg-accent hover:text-white transition-all duration-300 cursor-default">追剧</span>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 作品区域 -->
+  <section id="works" class="py-20">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">
+          <span class="text-gradient bg-gradient-to-r from-primary to-secondary">我的作品</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        <p class="text-dark/70 mt-6 max-w-2xl mx-auto">
+          每一份作品都承载着我的热爱与创意，记录着我的成长轨迹
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 作品卡片1 -->
+        <div class="glass rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+          <div class="overflow-hidden">
+            <img src="app.jpg" alt="作品1" class="w-full h-56 object-cover hover:scale-110 transition-all duration-500">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">归档时-光卷轴APP官网</h3>
+            <p class="text-dark/70 mb-4">记录岁月变迁，时光芿苒。</p>
+            <a href="index.html" class="text-primary font-medium hover:text-secondary transition-colors inline-flex items-center gap-2">
+              查看作品 <i class="fa fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+<!-- 作品卡片2-->
+        <div class="glass rounded-2xl overflow-hidden shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+          <div class="overflow-hidden">
+            <img src="cwcf/favicon.png" alt="作品1" class="w-full h-56 object-cover hover:scale-110 transition-all duration-500">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-2">川味厨房</h3>
+            <p class="text-dark/70 mb-4">川味菜系做法，四川家常菜做法大全</p>
+            <a href="cwcf/index.html" class="text-primary font-medium hover:text-secondary transition-colors inline-flex items-center gap-2">
+              查看作品 <i class="fa fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+
+        
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系我区域 -->
+  <section id="contact" class="py-20">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center mb-16" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">
+          <span class="text-gradient bg-gradient-to-r from-primary to-secondary">联系我</span>
+        </h2>
+        <div class="w-20 h-1 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
+        <p class="text-dark/70 mt-6 max-w-2xl mx-auto">
+          如果你也喜欢前端与音乐创作，或者有合作需求，欢迎随时找我交流~
+        </p>
+      </div>
+
+      <div class="glass rounded-3xl p-8 md:p-12 shadow-xl border border-white/20" data-aos="fade-up" data-aos-duration="1000">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <!-- 联系信息 -->
+          <div>
+            <h3 class="text-2xl md:text-3xl font-bold mb-6">来和我交朋友吧</h3>
+            <p class="text-dark/70 mb-8 leading-relaxed">
+              可以通过以下方式找到我，无论是合作约稿，还是同好交流，我都会尽快回复你！
+            </p>
+
+            <div class="space-y-6">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl">
+                  <i class="fa fa-envelope"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-dark">邮箱</h4>
+                  <p class="text-dark/70">1837601513@qq.com</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary text-xl">
+                  <i class="fa fa-weixin"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-dark">微信</h4>
+                  <p class="text-dark/70">ALCY-ALCY</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl">
+                  <i class="fa fa-map-marker"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-dark">所在地</h4>
+                  <p class="text-dark/70">中国 · 四川</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 社交媒体 -->
+            <div class="mt-10">
+              <h4 class="font-bold text-dark mb-4">关注我的社交平台</h4>
+              <div class="flex flex-wrap gap-4">
+               
+                <a href="#" class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary text-xl hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300">
+                  <i class="fa fa-weibo"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center text-accent text-xl hover:bg-accent hover:text-white hover:scale-110 transition-all duration-300">
+                  <i class="fa fa-instagram"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300">
+                  <i class="fa fa-qq"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center text-secondary text-xl hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300">
+                  <i class="fa fa-github"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="py-8">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center">
+        <p class="text-dark/70"><span class="年份检测" id="yearSpan"></span> ©  <span class="text-gradient bg-gradient-to-r from-primary to-secondary font-bold">不见桃花不见秋</span> All Rights Reserved.</p>
+        <p class="text-dark/50 text-sm mt-2">用热爱，奔赴每一场山海</p>
+      </div>
+    </div>
+  </footer>
+
+
+<script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+</script>
+  <!-- JavaScript 交互逻辑 -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('py-2');
+        navbar.classList.remove('py-4');
+      } else {
+        navbar.classList.add('py-4');
+        navbar.classList.remove('py-2');
+      }
+    });
+
+    // 移动端菜单
+    const menuBtn = document.getElementById('menuBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('translate-x-full');
+      document.body.style.overflow = 'auto';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('translate-x-full');
+        document.body.style.overflow = 'auto';
+      });
+    });
+
+    // 打字机效果
+    const typingText = document.getElementById('typingText');
+    const textArray = ['网页设计','摄影','吃鸡','光遇','台球','小说听书','乒乓球','编曲', '动漫', '追剧'];
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect() {
+      const currentText = textArray[textIndex];
+      
+      if (isDeleting) {
+        typingText.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        typingText.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === currentText.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1500);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % textArray.length;
+        setTimeout(typeEffect, 500);
+      } else {
+        setTimeout(typeEffect, isDeleting ? 50 : 150);
+      }
+    }
+
+    // 初始化AOS动画
+    AOS.init({
+      once: true,
+      offset: 100,
+      duration: 800,
+      easing: 'ease-in-out'
+    });
+
+    // 启动打字机效果
+    window.addEventListener('DOMContentLoaded', typeEffect);
+  </script>
+</body>
+</html>
