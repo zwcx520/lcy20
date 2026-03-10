@@ -63,7 +63,7 @@
         // 登录成功
         function loginSuccess() {
             alert('登录成功！');
-            window.location.href = '404.html';
+            window.location.href = 'gd.html';
         }
 
         // 处理注册
