@@ -40,7 +40,7 @@ class MusicPlayer {
     loadMusicFiles() {
         const musicFiles = [
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋-小流年.mp3',
+                filename: '不见桃花不见秋-小流年.mp3',
                 title: '小流年',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=0',
@@ -48,7 +48,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 1990.mp3',
+                filename: '不见桃花不见秋 - 1990.mp3',
                 title: '1990',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=1',
@@ -56,7 +56,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 321 (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - 321 (追吻辰星 remix).mp3',
                 title: '321 (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=2',
@@ -64,7 +64,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - Drown (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - Drown (追吻辰星 remix).mp3',
                 title: 'Drown (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=3',
@@ -72,7 +72,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - Heist (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - Heist (追吻辰星 remix).mp3',
                 title: 'Heist (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=4',
@@ -80,7 +80,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - Imaging (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - Imaging (追吻辰星 remix).mp3',
                 title: 'Imaging (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=5',
@@ -88,7 +88,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - Natural (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - Natural (追吻辰星 remix).mp3',
                 title: 'Natural (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=6',
@@ -96,7 +96,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - Ride It (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - Ride It (追吻辰星 remix).mp3',
                 title: 'Ride It (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=7',
@@ -104,7 +104,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - Trade (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - Trade (追吻辰星 remix).mp3',
                 title: 'Trade (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=8',
@@ -112,7 +112,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - it (Remix).mp3',
+                filename: '不见桃花不见秋 - it (Remix).mp3',
                 title: 'it (Remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=9',
@@ -120,7 +120,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 一个人的十字路口.mp3',
+                filename: '不见桃花不见秋 - 一个人的十字路口.mp3',
                 title: '一个人的十字路口',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=10',
@@ -128,7 +128,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 乘风的我.mp3',
+                filename: '不见桃花不见秋 - 乘风的我.mp3',
                 title: '乘风的我',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=11',
@@ -136,7 +136,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 他总在深夜数着期待.mp3',
+                filename: '不见桃花不见秋 - 他总在深夜数着期待.mp3',
                 title: '他总在深夜数着期待',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=12',
@@ -144,7 +144,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 住在心里的陌生人.mp3',
+                filename: '不见桃花不见秋 - 住在心里的陌生人.mp3',
                 title: '住在心里的陌生人',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=13',
@@ -152,7 +152,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 余温·一.mp3',
+                filename: '不见桃花不见秋 - 余温·一.mp3',
                 title: '余温·一',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=14',
@@ -160,7 +160,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 余温·二.mp3',
+                filename: '不见桃花不见秋 - 余温·二.mp3',
                 title: '余温·二',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=15',
@@ -168,7 +168,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 你存在我第二个不存在的世界.mp3',
+                filename: '不见桃花不见秋 - 你存在我第二个不存在的世界.mp3',
                 title: '你存在我第二个不存在的世界',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=16',
@@ -176,7 +176,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 借我一个依靠.mp3',
+                filename: '不见桃花不见秋 - 借我一个依靠.mp3',
                 title: '借我一个依靠',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=17',
@@ -184,7 +184,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 回忆中的风.mp3',
+                filename: '不见桃花不见秋 - 回忆中的风.mp3',
                 title: '回忆中的风',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=18',
@@ -192,7 +192,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 回忆存折.mp3',
+                filename: '不见桃花不见秋 - 回忆存折.mp3',
                 title: '回忆存折',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=19',
@@ -200,7 +200,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 太空旋律 (追吻辰星 remix).mp3',
+                filename: '不见桃花不见秋 - 太空旋律 (追吻辰星 remix).mp3',
                 title: '太空旋律 (追吻辰星 remix)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=20',
@@ -208,7 +208,7 @@ class MusicPlayer {
                 category: 'Remix'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 她的故乡威远.mp3',
+                filename: '不见桃花不见秋 - 她的故乡威远.mp3',
                 title: '她的故乡威远',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=21',
@@ -216,7 +216,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 季风信封.mp3',
+                filename: '不见桃花不见秋 - 季风信封.mp3',
                 title: '季风信封',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=22',
@@ -224,7 +224,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 寂.mp3',
+                filename: '不见桃花不见秋 - 寂.mp3',
                 title: '寂',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=23',
@@ -232,7 +232,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 寄往昨日收件人.mp3',
+                filename: '不见桃花不见秋 - 寄往昨日收件人.mp3',
                 title: '寄往昨日收件人',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=24',
@@ -240,7 +240,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 寒阶落梅.mp3',
+                filename: '不见桃花不见秋 - 寒阶落梅.mp3',
                 title: '寒阶落梅',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=25',
@@ -248,7 +248,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 念.mp3',
+                filename: '不见桃花不见秋 - 念.mp3',
                 title: '念',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=26',
@@ -256,7 +256,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 惊艳时光温柔岁月的你.mp3',
+                filename: '不见桃花不见秋 - 惊艳时光温柔岁月的你.mp3',
                 title: '惊艳时光温柔岁月的你',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=27',
@@ -264,7 +264,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 想念的夜.mp3',
+                filename: '不见桃花不见秋 - 想念的夜.mp3',
                 title: '想念的夜',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=28',
@@ -272,7 +272,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 散不去的余温.mp3',
+                filename: '不见桃花不见秋 - 散不去的余温.mp3',
                 title: '散不去的余温',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=29',
@@ -280,7 +280,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 旅途.mp3',
+                filename: '不见桃花不见秋 - 旅途.mp3',
                 title: '旅途',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=30',
@@ -288,7 +288,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 无尽思念.mp3',
+                filename: '不见桃花不见秋 - 无尽思念.mp3',
                 title: '无尽思念',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=31',
@@ -296,7 +296,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 时光折痕.mp3',
+                filename: '不见桃花不见秋 - 时光折痕.mp3',
                 title: '时光折痕',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=32',
@@ -304,7 +304,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 月满庭.mp3',
+                filename: '不见桃花不见秋 - 月满庭.mp3',
                 title: '月满庭',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=33',
@@ -312,7 +312,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 未完成的故事.mp3',
+                filename: '不见桃花不见秋 - 未完成的故事.mp3',
                 title: '未完成的故事',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=34',
@@ -320,7 +320,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 某夜的梦.mp3',
+                filename: '不见桃花不见秋 - 某夜的梦.mp3',
                 title: '某夜的梦',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=35',
@@ -328,7 +328,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 橘色星途.mp3',
+                filename: '不见桃花不见秋 - 橘色星途.mp3',
                 title: '橘色星途',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=36',
@@ -336,7 +336,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 没有你的日子会下雪.mp3',
+                filename: '不见桃花不见秋 - 没有你的日子会下雪.mp3',
                 title: '没有你的日子会下雪',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=37',
@@ -344,7 +344,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 灰烬标本.mp3',
+                filename: '不见桃花不见秋 - 灰烬标本.mp3',
                 title: '灰烬标本',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=38',
@@ -352,7 +352,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 烂尾剧本.mp3',
+                filename: '不见桃花不见秋 - 烂尾剧本.mp3',
                 title: '烂尾剧本',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=39',
@@ -360,7 +360,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 电台情歌.mp3',
+                filename: '不见桃花不见秋 - 电台情歌.mp3',
                 title: '电台情歌',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=40',
@@ -368,7 +368,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 缝补时光的你.mp3',
+                filename: '不见桃花不见秋 - 缝补时光的你.mp3',
                 title: '缝补时光的你',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=41',
@@ -376,7 +376,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 落日归航.mp3',
+                filename: '不见桃花不见秋 - 落日归航.mp3',
                 title: '落日归航',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=42',
@@ -384,7 +384,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 褪色日历.mp3',
+                filename: '不见桃花不见秋 - 褪色日历.mp3',
                 title: '褪色日历',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=43',
@@ -392,7 +392,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 过期的船票.mp3',
+                filename: '不见桃花不见秋 - 过期的船票.mp3',
                 title: '过期的船票',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=44',
@@ -400,7 +400,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 过期约定.mp3',
+                filename: '不见桃花不见秋 - 过期约定.mp3',
                 title: '过期约定',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=45',
@@ -408,7 +408,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 遇见你刚刚好.mp3',
+                filename: '不见桃花不见秋 - 遇见你刚刚好.mp3',
                 title: '遇见你刚刚好',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=46',
@@ -416,7 +416,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 阴雨过后.mp3',
+                filename: '不见桃花不见秋 - 阴雨过后.mp3',
                 title: '阴雨过后',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=47',
@@ -424,7 +424,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 难.mp3',
+                filename: '不见桃花不见秋 - 难.mp3',
                 title: '难',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=48',
@@ -432,7 +432,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 雨鸣.mp3',
+                filename: '不见桃花不见秋 - 雨鸣.mp3',
                 title: '雨鸣',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=49',
@@ -440,7 +440,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 雪吻·一.mp3',
+                filename: '不见桃花不见秋 - 雪吻·一.mp3',
                 title: '雪吻·一',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=50',
@@ -448,7 +448,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 雪吻·二.mp3',
+                filename: '不见桃花不见秋 - 雪吻·二.mp3',
                 title: '雪吻·二',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=51',
@@ -456,7 +456,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 雪落无归·一.mp3',
+                filename: '不见桃花不见秋 - 雪落无归·一.mp3',
                 title: '雪落无归·一',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=52',
@@ -464,7 +464,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 雪落无归·二.mp3',
+                filename: '不见桃花不见秋 - 雪落无归·二.mp3',
                 title: '雪落无归·二',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=53',
@@ -472,7 +472,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 雾中的白玫瑰 (温柔版).mp3',
+                filename: '不见桃花不见秋 - 雾中的白玫瑰 (温柔版).mp3',
                 title: '雾中的白玫瑰 (温柔版)',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=54',
@@ -480,7 +480,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 青春里的温柔印记.mp3',
+                filename: '不见桃花不见秋 - 青春里的温柔印记.mp3',
                 title: '青春里的温柔印记',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=55',
@@ -488,7 +488,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 静.mp3',
+                filename: '不见桃花不见秋 - 静.mp3',
                 title: '静',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=56',
@@ -496,7 +496,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 风.mp3',
+                filename: '不见桃花不见秋 - 风.mp3',
                 title: '风',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=57',
@@ -504,7 +504,7 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋、贺存朋 - 风一样的老贺.mp3',
+                filename: '不见桃花不见秋、贺存朋 - 风一样的老贺.mp3',
                 title: '风一样的老贺',
                 artist: '不见桃花不见秋、贺存朋',
                 cover: 'https://picsum.photos/300/300?random=58',
@@ -512,7 +512,7 @@ class MusicPlayer {
                 category: '合作作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋、贺存朋 - 风会记得一朵花.mp3',
+                filename: '不见桃花不见秋、贺存朋 - 风会记得一朵花.mp3',
                 title: '风会记得一朵花',
                 artist: '不见桃花不见秋、贺存朋',
                 cover: 'https://picsum.photos/300/300?random=59',
@@ -520,7 +520,7 @@ class MusicPlayer {
                 category: '合作作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋 - 少年旧梦长.mp3',
+                filename: '不见桃花不见秋 - 少年旧梦长.mp3',
                 title: '少年旧梦长',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=61',
@@ -528,11 +528,19 @@ class MusicPlayer {
                 category: '原创作品'
             },
             {
-                filename: 'https://lcy20.netlify.app/gryy/不见桃花不见秋-未寄出的信.mp3',
+                filename: '不见桃花不见秋-未寄出的信.mp3',
                 title: '未寄出的信',
                 artist: '不见桃花不见秋',
                 cover: 'https://picsum.photos/300/300?random=60',
                 created: '2026-02-11',
+                category: '原创作品'
+            },
+            {
+                filename: '不见桃花不见秋 - 记得.mp3',
+                title: '记得',
+                artist: '不见桃花不见秋',
+                cover: 'https://picsum.photos/300/300?random=62',
+                created: '2026-03-13',
                 category: '原创作品'
             }
         ];
