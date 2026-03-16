@@ -312,7 +312,11 @@ APP要带着二次元专属的软萌质感，界面是马卡龙色系叠加淡�
     <!-- 底部萌系版权 -->
     <footer class="bg-cutePink/20 py-6 px-4">
         <div class="container mx-auto text-center">
-            <p class="font-cute text-xl text-gray-700"><span class="年份检测" id="yearSpan"></span> ©  归档-时光卷轴</p>
+            <p class="font-cute text-xl text-gray-700"><span class="年份检测" id="yearSpan"></span> © 
+             <a href="https://codeload.github.com/zwcx520/lcy20.github.io/zip/refs/heads/main">
+                归档-时光卷轴
+             </a>
+            </p>
             <p class="text-gray-600 text-sm mt-2">不见桃花不见秋:软软糯糯 治愈所有不开心 ✨</p>
         </div>
     </footer>
@@ -468,11 +472,11 @@ document.getElementById("yearSpan").innerText = new Date().getFullYear();
                 updateCarousel();
             });
 
-            // 自动轮播（3秒一次）
+            // 自动轮播（5秒一次）
             setInterval(() => {
                 currentIndex = (currentIndex + 1) % cardCount;
                 updateCarousel();
-            }, 3000);
+            }, 5000);
 
             // 平滑滚动
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
