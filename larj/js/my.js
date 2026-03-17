@@ -5,7 +5,7 @@ const aboutData = {
   developerImage: "favicon.png",
   websiteInfo: {
     title: "💖 程序介绍",
-    description: "这是一个开发者自己专为另一半设计的恋爱日记程序，旨在记录另一半之间的甜蜜时光和重要纪念日。通过这个网站，可以：",
+    description: "这是一个开发者自己专为另一半设计的恋爱日记程序，旨在记录另一半之间的甜蜜时光和重要纪念日。通过这个程序，可以：",
     features: [
       "查看恋爱日常和重要事件",
       "管理和查看重要纪念日",
