@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>我的 | 我们的恋爱日记</title>
+
+  <!-- 国内CDN -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts 浪漫可爱字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+
+</head>
+
+<body>
+
+  <!-- APP 整体容器 -->
+  <div class="app-wrapper">
+
+    <!-- 顶部实时状态栏 -->
+    <div class="app-status">
+      <span id="realTime">9:41</span>
+      <span>
+        <i class="fa-solid fa-signal"></i>
+        <span id="batteryText">99%</span>
+        <i id="batteryIcon" class="fa-solid fa-battery-full"></i>
+      </span>
+    </div>
+
+    <!-- 顶部标题 -->
+    <div class="app-header">
+      关于
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="app-content">
+
+      <!-- 我的页面 -->
+      <div class="page active" id="page-my">
+        <div class="card-box text-center" id="dev-card">
+          <!-- 动态插入 -->
+        </div>
+        
+        <div class="card-box" id="website-card">
+          <!-- 动态插入 -->
+        </div>
+        
+        <div class="card-box" id="developer-card">
+          <!-- 动态插入 -->
+        </div>
+        
+        <div class="card-box" id="terms-card">
+          <!-- 动态插入 -->
+        </div>
+        
+        <div class="card-box text-center" id="copyright-card">
+          <!-- 动态插入 -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部TAB导航 -->
+    <div class="app-tabbar">
+      <a href="index.html" class="tab-item">
+        <i class="fa-solid fa-home"></i>
+        首页
+      </a>
+      <a href="diary.html" class="tab-item">
+        <i class="fa-solid fa-book"></i>
+        日记
+      </a>
+      <a href="photo.html" class="tab-item">
+        <i class="fa-solid fa-camera"></i>
+        相册
+      </a>
+      <a href="my.html" class="tab-item active">
+        <i class="fa-solid fa-user"></i>
+       关于
+      </a>
+    </div>
+
+  </div>
+
+  <script src="js/script.js"></script>
+  <script src="js/my.js"></script>
+</body>
+</html>

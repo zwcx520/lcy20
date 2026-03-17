@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>日记 | 我们的恋爱日记</title>
+
+  <!-- 国内CDN -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts 浪漫可爱字体 -->
+  <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+
+  <style>
+    /* 搜索框样式 */
+    .search-box {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 40px 10px 16px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 14px;
+      outline: none;
+    }
+    .search-box input:focus {
+      border-color: #ff6b8b;
+      box-shadow: 0 0 0 2px rgba(255, 107, 139, 0.2);
+    }
+    .search-box i {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #999;
+    }
+    
+    /* 高亮显示样式 */
+    .highlight {
+      background-color: #fff5f7;
+      color: #ff6b8b;
+      font-weight: bold;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    
+    /* 年月日分类样式 */
+    .year-section {
+      margin-bottom: 20px;
+    }
+    .year-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 12px;
+      padding-left: 8px;
+      border-left: 4px solid #ff6b8b;
+    }
+    .month-section {
+      margin-left: 16px;
+      margin-bottom: 16px;
+    }
+    .month-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: #666;
+      margin-bottom: 8px;
+    }
+    .day-section {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+    .day-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #999;
+      margin-bottom: 8px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- APP 整体容器 -->
+  <div class="app-wrapper">
+
+    <!-- 顶部实时状态栏 -->
+    <div class="app-status">
+      <span id="realTime">9:41</span>
+      <span>
+        <i class="fa-solid fa-signal"></i>
+        <span id="batteryText">99%</span>
+        <i id="batteryIcon" class="fa-solid fa-battery-full"></i>
+      </span>
+    </div>
+
+    <!-- 顶部标题 -->
+    <div class="app-header">
+      恋爱日记
+    </div>
+
+    <!-- 内容区域 -->
+    <div class="app-content">
+
+      <!-- 日记页面 -->
+      <div class="page active" id="page-diary">
+        <!-- 搜索框 -->
+        <div class="card-box">
+          <div class="search-box">
+            <input type="text" id="search-input" placeholder="搜索日记内容...">
+            <i class="fa-solid fa-search"></i>
+          </div>
+        </div>
+        
+        <!-- 日记列表 -->
+        <div class="card-box">
+          <h6 class="mb-3">📖 恋爱日常记录</h3>
+          <div id="diary-list"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 底部TAB导航 -->
+    <div class="app-tabbar">
+      <a href="index.html" class="tab-item">
+        <i class="fa-solid fa-home"></i>
+        首页
+      </a>
+      <a href="diary.html" class="tab-item active">
+        <i class="fa-solid fa-book"></i>
+        日记
+      </a>
+      <a href="photo.html" class="tab-item">
+        <i class="fa-solid fa-camera"></i>
+        相册
+      </a>
+      <a href="my.html" class="tab-item">
+        <i class="fa-solid fa-user"></i>
+        关于
+      </a>
+    </div>
+
+  </div>
+
+  <script src="js/script.js"></script>
+  <script src="js/diary.js"></script>
+  <script>
+    // 页面加载完成后初始化
+    window.onload = initDiaryPage;
+  </script>
+</body>
+</html>
