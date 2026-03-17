@@ -2,7 +2,7 @@
 const aboutData = {
   title: "关于本APP",
   subtitle: "我们的恋爱日记 | 情侣专属空间",
-  developerImage: "https://picsum.photos/seed/developer/120/120.jpg",
+  developerImage: "favicon.png",
   websiteInfo: {
     title: "💖 APP介绍",
     description: "这是一个开发者自己专为另一半设计的恋爱日记APP，旨在记录另一半之间的甜蜜时光和重要纪念日。通过这个APP，可以：",
