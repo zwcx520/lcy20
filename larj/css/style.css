@@ -60,7 +60,7 @@ html, body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-image: url('https://picsum.photos/seed/heartlogo/40/40');
+  background-image: url('../favicon.png');
   background-size: cover;
   background-position: center;
   border: 2px solid rgba(255, 255, 255, 0.6);
