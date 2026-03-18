@@ -1,6 +1,6 @@
 // 关于页面数据
 const aboutData = {
-  title: "关于本程序",
+  title: "恋爱日记",
   subtitle: "我们的恋爱日记 | 情侣专属空间",
   developerImage: "favicon.png",
   websiteInfo: {
