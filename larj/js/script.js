@@ -69,12 +69,12 @@ function updateLoveDays() {
 // 生日数据
 const birthdays = {
   boy: {
-    name: '李先生',
+    name: '廖先生',
     birthday: '2004-10-22' // 假设男生生日
   },
   girl: {
-    name: '王小姐',
-    birthday: '1996-09-15' // 假设女生生日
+    name: '某女士',
+    birthday: '2000-01-01' // 假设女生生日
   }
 };
 
