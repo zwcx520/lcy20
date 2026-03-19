@@ -8,51 +8,9 @@ const photoData = [
   },
   {
     id: 2,
-    date: '2026-03-18',
+    date: '2026-01-18',
     src: 'https://picsum.photos/seed/cp2/300/300.jpg',
     description: '午餐约会'
-  },
-  {
-    id: 3,
-    date: '2026-03-17',
-    src: 'https://picsum.photos/seed/cp3/300/300.jpg',
-    description: '看电影'
-  },
-  {
-    id: 4,
-    date: '2026-03-17',
-    src: 'https://picsum.photos/seed/cp4/300/300.jpg',
-    description: '逛街'
-  },
-  {
-    id: 5,
-    date: '2026-02-14',
-    src: 'https://picsum.photos/seed/cp5/300/300.jpg',
-    description: '情人节'
-  },
-  {
-    id: 6,
-    date: '2026-02-14',
-    src: 'https://picsum.photos/seed/cp6/300/300.jpg',
-    description: '情人节晚餐'
-  },
-  {
-    id: 7,
-    date: '2025-12-25',
-    src: 'https://picsum.photos/seed/cp7/300/300.jpg',
-    description: '圣诞节'
-  },
-  {
-    id: 8,
-    date: '2025-12-25',
-    src: 'https://picsum.photos/seed/cp8/300/300.jpg',
-    description: '圣诞礼物'
-  },
-  {
-    id: 9,
-    date: '2025-12-25',
-    src: 'https://picsum.photos/seed/cp9/300/300.jpg',
-    description: '圣诞树'
   }
 ];
 
