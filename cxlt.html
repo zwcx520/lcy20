@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「不见桃花不见秋版」动漫主题风初心聊天论坛 </title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#ff7eb9',
+                        secondary: '#a8d8ff',
+                        dark: '#2d3748',
+                        light: '#f9f7ff',
+                        glow: '#ff4d94',
+                    },
+                    fontFamily: {
+                        comic: ['"ZCOOL KuaiLe"', 'Comic Neue', 'cursive'],
+                        sans: ['Comic Neue', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'anime': '0 0 15px rgba(255, 126, 185, 0.5), 0 0 5px rgba(168, 216, 255, 0.3)',
+                        'anime-hover': '0 0 20px rgba(255, 77, 148, 0.7), 0 0 10px rgba(168, 216, 255, 0.5)',
+                        'light-anime': '0 0 20px rgba(255, 110, 170, 0.6), 0 0 10px rgba(150, 200, 255, 0.4)'
+                    }
+                },
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow-anime {
+                text-shadow: 0 2px 4px rgba(255, 77, 148, 0.4), 0 0 10px rgba(168, 216, 255, 0.2);
+            }
+            .bg-gradient-anime {
+                background: linear-gradient(135deg, #f9f7ff 0%, #f0e8ff 100%);
+                background-size: 400% 400%;
+                animation: gradientFlow 15s ease infinite;
+            }
+            .border-anime {
+                border-image: linear-gradient(45deg, #ff7eb9, #a8d8ff, #ff7eb9) 1;
+            }
+            .animate-float {
+                animation: float 3s ease-in-out infinite;
+            }
+            .animate-pulse-slow {
+                animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+            .animate-slide-up {
+                animation: slideUp 0.8s ease-out forwards;
+            }
+            .animate-fade-in {
+                animation: fadeIn 0.8s ease-out forwards;
+            }
+            .perspective-1000 {
+                perspective: 1000px;
+            }
+            .transform-3d {
+                transform-style: preserve-3d;
+            }
+            .backface-hidden {
+                backface-visibility: hidden;
+            }
+            .text-gradient-flow {
+                background: linear-gradient(90deg, #ff7eb9, #a8d8ff, #ff7eb9);
+                background-size: 200% 100%;
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                animation: textFlow 3s linear infinite;
+            }
+            .animate-flip {
+                animation: flip 0.6s ease-in-out forwards;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes particleFloat {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(50px, -50px) rotate(360deg); opacity: 0; }
+        }
+        @keyframes clickEffect {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        @keyframes textFlow {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+        @keyframes flip {
+            0% { transform: rotateY(90deg); opacity: 0; }
+            100% { transform: rotateY(0deg); opacity: 1; }
+        }
+        @keyframes tailFlow {
+            0% { transform: translate(0,0); opacity: 1; }
+            100% { transform: translate(var(--x),var(--y)); opacity: 0; }
+        }
+    </style>
+    <style>
+        body { overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { background: #ff7eb9; border-radius: 4px; box-shadow: 0 0 5px rgba(255, 77, 148, 0.5); }
+        ::-webkit-scrollbar-track { background: #f9f7ff; }
+        #particleContainer, #trailContainer, #clickEffectContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+        #clickEffectContainer, #trailContainer { z-index: 9999; }
+        .particle { position: absolute; border-radius: 50%; background: rgba(255, 126, 185, 0.6); box-shadow: 0 0 10px rgba(255, 77, 148, 0.8); animation: particleFloat 3s ease-out forwards; }
+        .click-effect { position: absolute; width: 40px; height: 40px; border: 2px solid #ff7eb9; border-radius: 50%; transform: scale(0); animation: clickEffect 0.8s ease-out forwards; }
+        .mouse-trail { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #ff4d94; box-shadow: 0 0 8px #ff7eb9; animation: tailFlow 1s linear forwards; }
+        .carousel-container { overflow: hidden; position: relative; }
+        .carousel-wrapper { display: flex; transition: transform 0.5s ease-in-out; }
+        .carousel-item { flex: 0 0 100%; }
+        .carousel-dot.active { background-color: #ff7eb9; box-shadow: 0 0 10px #ff7eb9; }
+        .carousel-btn { transition: all 0.3s ease; z-index: 10; }
+        .carousel-btn:hover { background-color: #ff7eb9; transform: scale(1.1); box-shadow: 0 0 10px #ff7eb9; }
+    </style>
+</head>
+<body class="font-sans bg-light bg-gradient-anime text-dark">
+    <div id="trailContainer"></div>
+    <div id="particleContainer"></div>
+    <div id="clickEffectContainer"></div>
+
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed top-0 left-0 w-full bg-white/95 backdrop-blur-md z-50 transition-all duration-500 ease-in-out rounded-b-xl shadow-anime">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2">
+                <i class="fa fa-paint-brush text-primary text-2xl animate-float"></i>
+                <h1 class="font-comic text-2xl md:text-3xl text-primary text-shadow-anime">不见桃花不见秋版聊天论坛</h1>
+            </a>
+            <nav class="hidden md:flex items-center gap-6">
+                <a href="#home" class="font-comic text-lg hover:text-primary transition-custom relative group">首页<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-glow transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="#features" class="font-comic text-lg hover:text-primary transition-custom relative group">功能<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-glow transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="#install" class="font-comic text-lg hover:text-primary transition-custom relative group">安装<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-glow transition-all duration-300 group-hover:w-full"></span></a>
+                
+                <a href="#about" class="font-comic text-lg hover:text-primary transition-custom relative group">关于<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-glow transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="#download" class="bg-primary hover:bg-glow text-white px-5 py-2 rounded-full font-comic shadow-anime hover:shadow-anime-hover transition-custom transform hover:scale-105">立即下载</a>
+            </nav>
+            <button id="menuBtn" class="md:hidden text-primary text-2xl hover:text-glow transition-custom">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white rounded-b-xl shadow-anime p-4">
+            <nav class="flex flex-col gap-4">
+                <a href="#home" class="font-comic text-lg hover:text-primary transition-custom py-2 border-b border-secondary/50"><i class="fa fa-home mr-2"></i>首页</a>
+                <a href="#features" class="font-comic text-lg hover:text-primary transition-custom py-2 border-b border-secondary/50"><i class="fa fa-star mr-2"></i>功能</a>
+                <a href="#install" class="font-comic text-lg hover:text-primary transition-custom py-2 border-b border-secondary/50"><i class="fa fa-cog mr-2"></i>安装</a>
+                
+                <a href="#about" class="font-comic text-lg hover:text-primary transition-custom py-2"><i class="fa fa-info-circle mr-2"></i>关于</a>
+                <a href="#download" class="bg-primary hover:bg-glow text-white px-5 py-3 rounded-full font-comic shadow-anime hover:shadow-anime-hover transition-custom text-center transform hover:scale-105">立即下载</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+        <!-- 首页banner -->
+        <section id="home" class="container mx-auto px-4 py-16 md:py-24 flex flex-col md:flex-row items-center gap-10">
+            <div class="w-full md:w-1/2 animate-slide-up opacity-0" style="animation-delay: 0.2s">
+                <h2 class="font-comic text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark leading-tight text-shadow-anime">
+                    「不见桃花不见秋版」<br>
+                    <span class="text-gradient-flow">动漫风初心聊天论坛</span>
+                </h2>
+                <p class="mt-6 text-lg md:text-xl text-dark/80 font-comic max-w-lg">
+                    简约文艺 × 二次元美学，响应式适配+超强功能，让论坛搭建像看动漫一样简单！
+                </p>
+                <div class="mt-8 flex flex-wrap gap-4">
+                    <a href="#download" class="bg-primary hover:bg-glow text-white px-8 py-3 rounded-full font-comic text-lg shadow-anime hover:shadow-anime-hover transition-custom transform hover:scale-105 flex items-center gap-2">
+                        <i class="fa fa-download"></i> 立即下载
+                    </a>
+                    <a href="#install" class="bg-white hover:bg-secondary text-primary border-2 border-primary px-8 py-3 rounded-full font-comic text-lg shadow-anime hover:shadow-anime-hover transition-custom transform hover:scale-105 flex items-center gap-2">
+                        <i class="fa fa-book"></i> 安装指南
+                    </a>
+                </div>
+                <div class="mt-10 flex items-center gap-6">
+                    <div class="flex -space-x-2">
+                        <img src="https://picsum.photos/200/200?random=1" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white shadow-anime">
+                        <img src="https://picsum.photos/200/200?random=2" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white shadow-anime">
+                        <img src="https://picsum.photos/200/200?random=3" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-white shadow-anime">
+                    </div>
+                    <p class="font-comic text-dark/70"><span class="text-primary font-bold">5000+</span> 博主正在使用</p>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 perspective-1000 animate-float opacity-0 animate-fade-in" style="animation-delay: 0.5s">
+                <div class="relative transform-3d backface-hidden">
+                    <div class="bg-white rounded-2xl shadow-anime p-6 transform hover:rotate-y-10 transition-custom duration-700">
+                        <img src="https://picsum.photos/800/500?random=10" alt="聊天论坛预览" class="rounded-xl w-full h-auto shadow-md">
+                        <div class="absolute top-4 right-4 bg-glow/20 text-white text-sm font-comic px-3 py-1 rounded-full backdrop-blur-sm animate-pulse-slow">
+                            动漫风主题
+                        </div>
+                    </div>
+                    <div class="absolute -top-5 -left-5 w-10 h-10 bg-secondary rounded-full shadow-anime animate-float" style="animation-delay: 0.3s"></div>
+                    <div class="absolute -bottom-3 -right-3 w-8 h-8 bg-primary rounded-full shadow-anime animate-float" style="animation-delay: 0.7s"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心功能（轮播版） -->
+        <section id="features" class="container mx-auto px-4 py-16 bg-white/70 backdrop-blur-md rounded-3xl shadow-anime my-10">
+            <div class="text-center mb-12">
+                <h2 class="font-comic text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark text-shadow-anime">
+                    核心功能 <span class="text-gradient-flow">二次元级体验</span>
+                </h2>
+                <p class="mt-4 text-lg text-dark/70 font-comic max-w-2xl mx-auto">
+                    专为新手打造，聚焦实用性与二次元美学，满足个人论坛搭建的核心需求
+                </p>
+            </div>
+            
+            <!-- 功能轮播组件 -->
+            <div class="carousel-container w-full mx-auto px-2 md:px-10">
+                <div class="carousel-wrapper h-[380px] md:h-[420px] scrollbar-hide" id="featureCarousel">
+                    <!-- 轮播项1 -->
+                    <div class="carousel-item perspective-1000">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-light w-full max-w-md rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom transform-3d hover:rotate-y-5 h-full flex flex-col justify-center">
+                                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary text-3xl mb-6 mx-auto shadow-anime">
+                                    <i class="fa fa-mobile"></i>
+                                </div>
+                                <h3 class="font-comic text-2xl font-bold mb-4 text-center">全响应式适配</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    自动适配手机、平板、PC等所有设备，二次元精致风格在任意屏幕下都能完美呈现，无死角好看！
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项2 -->
+                    <div class="carousel-item perspective-1000">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-light w-full max-w-md rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom transform-3d hover:rotate-y-5 h-full flex flex-col justify-center">
+                                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary text-3xl mb-6 mx-auto shadow-anime">
+                                    <i class="fa fa-paint-brush"></i>
+                                </div>
+                                <h3 class="font-comic text-2xl font-bold mb-4 text-center">主题优化工具</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    集成动漫风配色调整、布局自定义、字体切换，无需一行代码，就能打造专属你的二次元个性论坛
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项3 -->
+                    <div class="carousel-item perspective-1000">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-light w-full max-w-md rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom transform-3d hover:rotate-y-5 h-full flex flex-col justify-center">
+                                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary text-3xl mb-6 mx-auto shadow-anime">
+                                    <i class="fa fa-bolt"></i>
+                                </div>
+                                <h3 class="font-comic text-2xl font-bold mb-4 text-center">性能极速提升</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    静态资源压缩、缓存优化、数据库清理，论坛加载速度像动漫打斗名场面一样迅猛，拒绝卡顿等待
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项4 -->
+                    <div class="carousel-item perspective-1000">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-light w-full max-w-md rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom transform-3d hover:rotate-y-5 h-full flex flex-col justify-center">
+                                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary text-3xl mb-6 mx-auto shadow-anime">
+                                    <i class="fa fa-plug"></i>
+                                </div>
+                                <h3 class="font-comic text-2xl font-bold mb-4 text-center">插件扩展支持</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    预设评论、阅读统计、社交分享等常用适配，二次元社交属性直接拉满
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项5 -->
+                    <div class="carousel-item perspective-1000">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-light w-full max-w-md rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom transform-3d hover:rotate-y-5 h-full flex flex-col justify-center">
+                                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary text-3xl mb-6 mx-auto shadow-anime">
+                                    <i class="fa fa-shield"></i>
+                                </div>
+                                <h3 class="font-comic text-2xl font-bold mb-4 text-center">全方位安全防护</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    SQL注入防护、XSS过滤、后台登录验证，层层守护你的二次元小天地，让创作更安心无忧
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项6 -->
+                    <div class="carousel-item perspective-1000">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-light w-full max-w-md rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom transform-3d hover:rotate-y-5 h-full flex flex-col justify-center">
+                                <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center text-primary text-3xl mb-6 mx-auto shadow-anime">
+                                    <i class="fa fa-feather"></i>
+                                </div>
+                                <h3 class="font-comic text-2xl font-bold mb-4 text-center">轻量化极简设计</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    代码精简无冗余，占用服务器资源极少，运行稳定高效，普通虚拟主机也能轻松承载
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 轮播控制按钮 -->
+                <div class="flex justify-between absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8">
+                    <button class="carousel-btn w-10 h-10 rounded-full bg-white/80 text-primary flex items-center justify-center border-2 border-primary hover:text-white" id="featurePrev">
+                        <i class="fa fa-angle-left text-xl"></i>
+                    </button>
+                    <button class="carousel-btn w-10 h-10 rounded-full bg-white/80 text-primary flex items-center justify-center border-2 border-primary hover:text-white" id="featureNext">
+                        <i class="fa fa-angle-right text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- 轮播指示点 -->
+                <div class="flex justify-center gap-2 mt-8">
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer active" data-index="0"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="1"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="2"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="3"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="4"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="5"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 安装指南（轮播版） -->
+        <section id="install" class="container mx-auto px-4 py-16">
+            <div class="text-center mb-12">
+                <h2 class="font-comic text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark text-shadow-anime">
+                    简单4步 <span class="text-gradient-flow">快速部署</span>
+                </h2>
+                <p class="mt-4 text-lg text-dark/70 font-comic max-w-2xl mx-auto">
+                    无需专业技术背景，像看动漫一样轻松搭建属于你的专属论坛
+                </p>
+            </div>
+            
+            <!-- 安装步骤轮播组件 -->
+            <div class="carousel-container w-full mx-auto px-2 md:px-10">
+                <div class="carousel-wrapper h-[320px] md:h-[360px] scrollbar-hide" id="installCarousel">
+                    <!-- 轮播项1 步骤1 -->
+                    <div class="carousel-item">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-white rounded-2xl p-8 shadow-light-anime w-full max-w-md h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center font-comic text-2xl mb-6 shadow-anime animate-float">1</div>
+                                <h3 class="font-comic text-2xl font-bold mb-5 text-center">下载并解压</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    从下载中心获取工具包压缩包，解压后即可得到完整的聊天论坛源码，无额外隐藏文件
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项2 步骤2 -->
+                    <div class="carousel-item">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-white rounded-2xl p-8 shadow-light-anime w-full max-w-md h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center font-comic text-2xl mb-6 shadow-anime animate-float">2</div>
+                                <h3 class="font-comic text-2xl font-bold mb-5 text-center">上传至服务器</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    通过FTP工具或服务器面板，将解压后的源码，直接上传至服务器根目录即可
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项3 步骤3 -->
+                    <div class="carousel-item">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-white rounded-2xl p-8 shadow-light-anime w-full max-w-md h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center font-comic text-2xl mb-6 shadow-anime animate-float">3</div>
+                                <h3 class="font-comic text-2xl font-bold mb-5 text-center">运行配置脚本</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    访问服务器绑定IP或域名，打开源码根目录cofig文件夹下的config.php，更改数据库地址信息简单配置
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 轮播项4 步骤4 -->
+                    <div class="carousel-item">
+                        <div class="h-full flex items-center justify-center p-4">
+                            <div class="bg-white rounded-2xl p-8 shadow-light-anime w-full max-w-md h-full flex flex-col items-center justify-center">
+                                <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center font-comic text-2xl mb-6 shadow-anime animate-float">4</div>
+                                <h3 class="font-comic text-2xl font-bold mb-5 text-center">启用并使用</h3>
+                                <p class="text-dark/70 font-comic text-center text-lg">
+                                    安装完成后直接访问站点论坛首页index.php，注册成为管理员，第一个注册用户会成为管理员
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 轮播控制按钮 -->
+                <div class="flex justify-between absolute top-1/2 left-0 right-0 -translate-y-1/2 px-4 md:px-8">
+                    <button class="carousel-btn w-10 h-10 rounded-full bg-white/80 text-primary flex items-center justify-center border-2 border-primary hover:text-white" id="installPrev">
+                        <i class="fa fa-angle-left text-xl"></i>
+                    </button>
+                    <button class="carousel-btn w-10 h-10 rounded-full bg-white/80 text-primary flex items-center justify-center border-2 border-primary hover:text-white" id="installNext">
+                        <i class="fa fa-angle-right text-xl"></i>
+                    </button>
+                </div>
+                
+                <!-- 轮播指示点 -->
+                <div class="flex justify-center gap-2 mt-8">
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer active" data-index="0"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="1"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="2"></span>
+                    <span class="carousel-dot w-3 h-3 rounded-full bg-gray-300 cursor-pointer" data-index="3"></span>
+                </div>
+            </div>
+
+            <!-- 注意事项 -->
+            <div class="mt-16 bg-secondary/30 rounded-2xl p-6 shadow-anime">
+                <h3 class="font-comic text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fa fa-exclamation-circle text-primary"></i> 注意事项
+                </h3>
+                <ul class="font-comic text-dark/70 space-y-2">
+                    <li class="flex items-start gap-2"><i class="fa fa-check text-primary mt-1"></i><span>确保服务器已安装PHP 8.2.6、MySQL 5.6+环境</span></li>
+                    <li class="flex items-start gap-2"><i class="fa fa-check text-primary mt-1"></i><span>上传前请备份论坛数据，避免意外丢失</span></li>
+                    <li class="flex items-start gap-2"><i class="fa fa-check text-primary mt-1"></i><span>建议使用最新稳定版以获得最佳二次元体验</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 下载中心 -->
+        <section id="download" class="container mx-auto px-4 py-16 bg-white/70 backdrop-blur-md rounded-3xl shadow-anime my-10">
+            <div class="text-center mb-16">
+                <h2 class="font-comic text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark text-shadow-anime">
+                    下载中心 <span class="text-gradient-flow">选择你的版本</span>
+                </h2>
+                <p class="mt-4 text-lg text-dark/70 font-comic max-w-2xl mx-auto">
+                    建议使用最新稳定版以获得最佳体验，所有版本均开源免费
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-light rounded-2xl p-8 shadow-anime hover:shadow-anime-hover transition-custom border-2 border-primary transform hover:scale-[1.02]">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-4">
+                                <span class="bg-primary text-white text-sm font-comic px-3 py-1 rounded-full animate-pulse-slow">最新稳定版</span>
+                                <span class="font-comic text-dark/70">兼容初心聊天论坛 1.2+</span>
+                            </div>
+                            <h3 class="font-comic text-2xl font-bold mb-3">v2.0.0</h3>
+                            <p class="font-comic text-dark/70 mb-4">更新时间：2026-03-25 | 大小：173.2KS
+                            </p>
+                            <div class="mb-6">
+                                <h4 class="font-comic text-lg font-bold mb-2">更新内容：</h4>
+                                <ul class="font-comic text-dark/70 space-y-1">
+                                    <li class="flex items-start gap-2"><i class="fa fa-star text-primary mt-1"></i><span>新增动漫风深色模式切换功能</span></li>
+                                    <li class="flex items-start gap-2"><i class="fa fa-star text-primary mt-1"></i><span>优化移动端二次元适配体验</span></li>
+                                    <li class="flex items-start gap-2"><i class="fa fa-star text-primary mt-1"></i><span>修复部分插件兼容性问题</span></li>
+                                    <li class="flex items-start gap-2"><i class="fa fa-star text-primary mt-1"></i><span>提升数据库清理工具效率</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <a href="初心聊天论坛(PHP源码).zip" class="bg-primary hover:bg-glow text-white px-8 py-3 rounded-full font-comic text-lg shadow-anime hover:shadow-anime-hover transition-custom transform hover:scale-105 text-center">
+                                <i class="fa fa-download mr-2"></i> 下载完整版
+                            </a>
+                            <a href="#" class="bg-white hover:bg-secondary text-primary border-2 border-primary px-8 py-3 rounded-full font-comic text-lg shadow-anime hover:shadow-anime-hover transition-custom text-center">
+                                查看更新日志
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light rounded-2xl p-8 shadow-anime">
+                    <h3 class="font-comic text-2xl font-bold mb-6">历史版本</h3>
+                    <div class="space-y-6">
+                        <div class="border-b border-secondary/50 pb-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-comic text-xl font-bold">v1.1.0</h4>
+                                <a href="#" class="text-primary hover:text-glow font-comic transition-custom"><i class="fa fa-download mr-1"></i> 下载</a>
+                            </div>
+                            <p class="font-comic text-dark/70">更新时间：2025-12-01 | 大小：1.1MB</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-comic text-xl font-bold">v1.0.0</h4>
+                                <a href="#" class="text-primary hover:text-glow font-comic transition-custom"><i class="fa fa-download mr-1"></i> 下载</a>
+                            </div>
+                            <p class="font-comic text-dark/70">更新时间：2024-06-01 | 大小：1.0MB</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于工具包 -->
+        <section id="about" class="container mx-auto px-4 py-16">
+            <div class="bg-white rounded-2xl p-8 md:p-12 shadow-anime">
+                <div class="flex flex-col md:flex-row gap-10 items-center">
+                    <div class="w-full md:w-1/3">
+                        <div class="relative">
+                            <img src="https://picsum.photos/600/600?random=20" alt="关于我们" class="rounded-2xl w-full h-auto shadow-anime">
+                            <div class="absolute -bottom-5 -right-5 bg-primary text-white font-comic px-4 py-2 rounded-full shadow-anime animate-float">开源免费</div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <h2 class="font-comic text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-dark text-shadow-anime mb-6">
+                            关于「不见桃花不见秋版」动漫风初心聊天论坛源码
+                        </h2>
+                        <p class="font-comic text-dark/80 text-lg mb-6 leading-relaxed">
+                            基于初心聊天论坛聊天论坛二次开发的自建安装包，诞生于对简约文艺+二次元美学的追求。我们希望通过轻量化的设计、实用的功能，让每个博主都能轻松搭建属于自己的理想论坛。
+                        </p>
+                        <p class="font-comic text-dark/80 text-lg mb-8 leading-relaxed">
+                            动漫风主题融合了樱花粉、深海蓝等经典二次元色彩，搭配发光阴影、3D悬停、粒子特效等交互元素，让论坛不仅实用，更具视觉冲击力和趣味性。
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#" class="bg-primary hover:bg-glow text-white px-6 py-2 rounded-full font-comic shadow-anime hover:shadow-anime-hover transition-custom transform hover:scale-105">
+                                <i class="fa fa-github mr-2"></i> GitHub开源
+                            </a>
+                            <a href="#" class="bg-white hover:bg-secondary text-primary border-2 border-primary px-6 py-2 rounded-full font-comic shadow-anime hover:shadow-anime-hover transition-custom">
+                                <i class="fa fa-question-circle mr-2"></i> 帮助文档
+                            </a>
+                            <a href="#" class="bg-white hover:bg-secondary text-primary border-2 border-primary px-6 py-2 rounded-full font-comic shadow-anime hover:shadow-anime-hover transition-custom">
+                                <i class="fa fa-comments mr-2"></i> 社区交流
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <i class="fa fa-paint-brush text-primary text-2xl animate-float"></i>
+                    <h2 class="font-comic text-2xl text-white text-shadow-anime">开发者:不见桃花不见秋</h2>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-white hover:text-primary transition-custom text-xl"><i class="fa fa-github"></i></a>
+                    <a href="#" class="text-white hover:text-primary transition-custom text-xl"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="text-white hover:text-primary transition-custom text-xl"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="text-white hover:text-primary transition-custom text-xl"><i class="fa fa-bilibili"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-white/10 text-center font-comic text-white/70">
+                <p> <span id="yearSpan"></span>  © 不见桃花不见秋版 | 基于 MIT 开源协议 <br> 归档-时光卷轴站点提供</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary hover:bg-glow text-white w-12 h-12 rounded-full flex items-center justify-center shadow-anime hover:shadow-anime-hover transition-custom opacity-0 invisible z-50 transform hover:scale-110">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+<script>
+// 获取当前年份并插入标签
+document.getElementById("yearSpan").innerText = new Date().getFullYear();
+</script>
+    <script>
+        // 基础功能
+        document.getElementById("yearSpan").innerText = new Date().getFullYear();
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icons = menuBtn.querySelector('i');
+            mobileMenu.classList.contains('hidden') ? (icons.classList.remove('fa-times'), icons.classList.add('fa-bars')) : (icons.classList.remove('fa-bars'), icons.classList.add('fa-times'));
+        });
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            window.scrollY > 50 ? (navbar.classList.add('shadow-md', 'shadow-anime'), navbar.classList.remove('bg-white/90'), navbar.classList.add('bg-white')) : (navbar.classList.remove('shadow-md', 'shadow-anime'), navbar.classList.add('bg-white/90'), navbar.classList.remove('bg-white'));
+        });
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            window.scrollY > 300 ? backToTopBtn.classList.remove('opacity-0', 'invisible') : backToTopBtn.classList.add('opacity-0', 'invisible');
+        });
+        backToTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                if (targetElement) {
+                    mobileMenu.classList.add('hidden');
+                    menuBtn.querySelector('i').classList.remove('fa-times'), menuBtn.querySelector('i').classList.add('fa-bars');
+                    window.scrollTo({top: targetElement.offsetTop - 80, behavior: 'smooth'});
+                }
+            });
+        });
+
+        // 新增8种炫酷交互特效
+        // 1. 鼠标拖尾特效
+        const trailContainer = document.getElementById('trailContainer');
+        window.addEventListener('mousemove', (e) => {
+            if(Math.random()>0.6) {
+                const trail = document.createElement('div');
+                trail.classList.add('mouse-trail');
+                trail.style.left = `${e.clientX}px`;
+                trail.style.top = `${e.clientY}px`;
+                trail.style.setProperty('--x', `${(Math.random()-0.5)*20}px`);
+                trail.style.setProperty('--y', `${(Math.random()-0.5)*20}px`);
+                trailContainer.appendChild(trail);
+                setTimeout(() => trail.remove(), 1000);
+            }
+        });
+        // 2. 增强版点击波纹
+        const clickEffectContainer = document.getElementById('clickEffectContainer');
+        document.addEventListener('click', (e) => {
+            const clickEffect = document.createElement('div');
+            clickEffect.classList.add('click-effect');
+            clickEffect.style.left = `${e.clientX - 20}px`;
+            clickEffect.style.top = `${e.clientY - 20}px`;
+            clickEffectContainer.appendChild(clickEffect);
+            setTimeout(() => clickEffect.remove(), 800);
+        });
+        // 3. 鼠标跟随粒子（增强密度）
+        const particleContainer = document.getElementById('particleContainer');
+        window.addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.5) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 10 + 3;
+                particle.style.width = `${size}px`;particle.style.height = `${size}px`;
+                particle.style.left = `${e.clientX}px`;particle.style.top = `${e.clientY}px`;
+                particle.style.opacity = Math.random() * 0.6 + 0.2;
+                particleContainer.appendChild(particle);
+                setTimeout(() => particle.remove(), 3000);
+            }
+        });
+        // 4. 滚动入场动画（增强）
+        const animateOnScroll = () => {
+            document.querySelectorAll('.shadow-anime,.shadow-light-anime').forEach(el => {
+                if(el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('animate-fade-in', 'animate-flip');
+            });
+        };
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+        // 5. 按钮悬浮光晕
+        document.querySelectorAll('a, button').forEach(btn => {
+            btn.addEventListener('mouseenter', () => btn.classList.add('shadow-light-anime'));
+            btn.addEventListener('mouseleave', () => btn.classList.remove('shadow-light-anime'));
+        });
+
+        // 核心：轮播组件逻辑（功能+安装步骤通用）
+        function initCarousel(carouselId, prevBtnId, nextBtnId, dotClass) {
+            const carousel = document.getElementById(carouselId);
+            const prevBtn = document.getElementById(prevBtnId);
+            const nextBtn = document.getElementById(nextBtnId);
+            const dots = document.querySelectorAll(dotClass);
+            let currentIndex = 0;
+            const itemCount = carousel.children.length;
+            const itemWidth = 100;
+
+            // 切换轮播
+            const switchCarousel = (index) => {
+                currentIndex = index;
+                carousel.style.transform = `translateX(-${currentIndex * itemWidth}%)`;
+                dots.forEach((dot, i) => i === currentIndex ? dot.classList.add('active') : dot.classList.remove('active'));
+            };
+            // 下一页
+            nextBtn.addEventListener('click', () => switchCarousel((currentIndex + 1) % itemCount));
+            // 上一页
+            prevBtn.addEventListener('click', () => switchCarousel((currentIndex - 1 + itemCount) % itemCount));
+            // 点击指示点切换
+            dots.forEach((dot, i) => dot.addEventListener('click', () => switchCarousel(i)));
+            // 自动轮播
+            setInterval(() => switchCarousel((currentIndex + 1) % itemCount), 5000);
+        }
+        // 初始化功能轮播和安装步骤轮播
+        initCarousel('featureCarousel', 'featurePrev', 'featureNext', '#features .carousel-dot');
+        initCarousel('installCarousel', 'installPrev', 'installNext', '#install .carousel-dot');
+
+        // 6. 导航栏滚动渐变
+        window.addEventListener('scroll', () => {
+            navbar.style.background = window.scrollY>50 ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.95)';
+        });
+        // 7. 回到顶部按钮动画
+        backToTopBtn.addEventListener('mouseenter', () => backToTopBtn.classList.add('animate-pulse-slow'));
+        backToTopBtn.addEventListener('mouseleave', () => backToTopBtn.classList.remove('animate-pulse-slow'));
+        // 8. 文本流光动画增强
+        const gradientTexts = document.querySelectorAll('.text-gradient-flow');
+        gradientTexts.forEach(text => text.addEventListener('mouseenter', () => text.style.animationDuration = '1s'));
+        gradientTexts.forEach(text => text.addEventListener('mouseleave', () => text.style.animationDuration = '3s'));
+    </script>
+</body>
+</html>
