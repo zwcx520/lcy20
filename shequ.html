@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>领里社区 - 开源下载</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            scroll-behavior: smooth;
+        }
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+        }
+        .section {
+            padding: 60px 0;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .card:hover .feature-icon {
+            transform: scale(1.1);
+            color: #764ba2;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+        .download-btn.loading {
+            pointer-events: none;
+        }
+        .download-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            transition: all 0.3s ease;
+        }
+        .code-block:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .navbar {
+            transition: all 0.3s ease;
+        }
+        .navbar.scrolled {
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-comments text-primary mr-2"></i>
+                领里社区
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#intro">项目简介</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">功能特点</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tech">技术架构</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#download">下载</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero text-center">
+        <div class="container">
+            <h1 class="display-4 mb-4">领里社区系统</h1>
+            <p class="lead mb-6">基于PHP和MySQL的社区社交平台</p>
+            <a href="#download" class="btn download-btn text-white">
+                <i class="fas fa-download mr-2"></i>立即下载
+            </a>
+        </div>
+    </section>
+
+    <!-- 功能轮播 -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2 class="text-center mb-6">核心功能</h2>
+            <div id="featureCarousel" class="carousel slide" data-bs-ride="carousel" style="padding: 0 50px;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="2"></button>
+                    <button type="button" data-bs-target="#featureCarousel" data-bs-slide-to="3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">用户注册与登录</h3>
+                                <p class="text-muted mb-4">支持邮箱注册，用户名3-20个字符，密码至少6个字符。登录成功后自动跳转到首页，会话超时自动退出。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>邮箱注册验证</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>密码加密存储</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>会话管理</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-user-circle text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">首页帖子系统</h3>
+                                <p class="text-muted mb-4">支持多图片上传（最多9张），支持jpg、jpeg、png、gif格式，单张图片大小限制5MB。帖子按发布时间倒序排列。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>多图片上传</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>点赞评论功能</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>热门话题展示</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-comment-dots text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">个人中心</h3>
+                                <p class="text-muted mb-4">显示头像、用户名、邮箱、个人简介，以及统计数据：帖子数、关注数、粉丝数。支持删除帖子操作。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>个人信息展示</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>帖子管理</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>数据统计</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-user-edit text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">消息中心</h3>
+                                <p class="text-muted mb-4">显示所有私信会话，每个会话显示对方头像、用户名、最新消息、发送时间。支持发送文字消息，自动标记消息为已读。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>私信聊天</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>未读消息提醒</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>聊天记录管理</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-envelope text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#featureCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">上一个</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#featureCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">下一个</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目简介 -->
+    <section id="intro" class="section bg-white">
+        <div class="container">
+            <h2 class="text-center mb-6">项目简介</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted">
+                        领里社区是一个基于PHP和MySQL开发的社区社交平台系统，采用前后端结合的架构，支持用户注册登录、发布帖子、图片上传、点赞评论、私信消息、用户关注等功能。系统内置管理员后台，方便对用户和内容进行管理。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术架构 -->
+    <section id="tech" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-6">技术架构</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card p-4 text-center">
+                        <i class="fas fa-server feature-icon"></i>
+                        <h3 class="mb-2">后端技术</h3>
+                        <ul class="text-left text-muted">
+                            <li>原生PHP 8.0+</li>
+                            <li>MySQL (PDO扩展)</li>
+                            <li>Session会话管理</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 text-center">
+                        <i class="fas fa-laptop-code feature-icon"></i>
+                        <h3 class="mb-2">前端技术</h3>
+                        <ul class="text-left text-muted">
+                            <li>Bootstrap 5.3.0</li>
+                            <li>Font Awesome 6.4.0</li>
+                            <li>jQuery 3.6.0</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-4 text-center">
+                        <i class="fas fa-shield-alt feature-icon"></i>
+                        <h3 class="mb-2">安全特性</h3>
+                        <ul class="text-left text-muted">
+                            <li>密码使用password_hash()加密</li>
+                            <li>Session会话管理</li>
+                            <li>安全密钥配置</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术特点轮播 -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2 class="text-center mb-6">技术特点</h2>
+            <div id="techCarousel" class="carousel slide" data-bs-ride="carousel" style="padding: 0 50px;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#techCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#techCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#techCarousel" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-database text-primary" style="font-size: 150px;"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">高效数据库设计</h3>
+                                <p class="text-muted mb-4">采用优化的数据库结构，支持用户、帖子、评论、私信和关注关系的高效存储和查询。使用PDO扩展确保数据库操作的安全性。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>优化的表结构</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>PDO预处理语句</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>外键约束</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-mobile-alt text-primary" style="font-size: 150px;"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">响应式设计</h3>
+                                <p class="text-muted mb-4">使用Bootstrap 5框架实现完全响应式设计，适配桌面、平板和移动设备。界面美观大方，用户体验良好。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>适配多种设备</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>现代化UI</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>流畅的交互体验</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-lock text-primary" style="font-size: 150px;"></i>
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="mb-4">安全保障</h3>
+                                <p class="text-muted mb-4">采用多种安全措施保护用户数据和系统安全，包括密码加密存储、会话管理、输入验证等。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>密码哈希加密</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>会话安全管理</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>输入验证</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#techCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">上一个</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#techCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">下一个</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统要求 -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2 class="text-center mb-6">系统要求</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h3 class="mb-3">服务器环境</h3>
+                        <ul class="text-muted">
+                            <li>PHP版本 ≥ 8.0.0</li>
+                            <li>MySQL版本 ≥ 5.7</li>
+                            <li>Web服务器（Apache/Nginx）</li>
+                            <li>PHP扩展：pdo、pdo_mysql</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h3 class="mb-3">客户端环境</h3>
+                        <ul class="text-muted">
+                            <li>现代浏览器（Chrome、Firefox、Safari、Edge）</li>
+                            <li>支持响应式设计</li>
+                            <li>适配桌面和移动设备</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特点 -->
+    <section id="features" class="section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-6">功能特点</h2>
+            
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h3 class="mb-3">用户注册与登录</h3>
+                        <ul class="text-muted">
+                            <li>支持邮箱注册，用户名3-20个字符</li>
+                            <li>密码至少6个字符</li>
+                            <li>登录成功后自动跳转到首页</li>
+                            <li>会话超时自动退出</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h3 class="mb-3">首页帖子系统</h3>
+                        <ul class="text-muted">
+                            <li>支持多图片上传（最多9张）</li>
+                            <li>支持的图片格式：jpg、jpeg、png、gif</li>
+                            <li>单张图片大小限制：5MB</li>
+                            <li>帖子按发布时间倒序排列</li>
+                            <li>支持点赞、评论、分享操作</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h3 class="mb-3">个人中心</h3>
+                        <ul class="text-muted">
+                            <li>显示头像、用户名、邮箱</li>
+                            <li>显示个人简介</li>
+                            <li>显示统计数据：帖子数、关注数、粉丝数</li>
+                            <li>支持删除帖子操作</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="card p-4">
+                        <h3 class="mb-3">其他功能</h3>
+                        <ul class="text-muted">
+                            <li><strong>发现页面</strong>：热门帖子和推荐用户</li>
+                            <li><strong>消息中心</strong>：私信聊天功能</li>
+                            <li><strong>管理后台</strong>：用户和内容管理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据库结构 -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2 class="text-center mb-6">数据库结构</h2>
+            
+            <div class="table-container mb-6">
+                <h3 class="mb-3">users 表（用户表）</h3>
+                <table class="table table-striped">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>字段</th>
+                            <th>类型</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>id</td><td>INT UNSIGNED</td><td>主键，自增</td></tr>
+                        <tr><td>username</td><td>VARCHAR(50)</td><td>用户名，唯一</td></tr>
+                        <tr><td>email</td><td>VARCHAR(100)</td><td>邮箱，唯一</td></tr>
+                        <tr><td>password</td><td>VARCHAR(255)</td><td>密码哈希</td></tr>
+                        <tr><td>avatar</td><td>VARCHAR(255)</td><td>头像路径，默认default.jpg</td></tr>
+                        <tr><td>bio</td><td>TEXT</td><td>个人简介</td></tr>
+                        <tr><td>is_admin</td><td>TINYINT(1)</td><td>是否管理员，0=否，1=是</td></tr>
+                        <tr><td>created_at</td><td>TIMESTAMP</td><td>注册时间</td></tr>
+                        <tr><td>updated_at</td><td>TIMESTAMP</td><td>最后更新时间</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="table-container mb-6">
+                <h3 class="mb-3">posts 表（帖子表）</h3>
+                <table class="table table-striped">
+                    <thead class="bg-primary text-white">
+                        <tr>
+                            <th>字段</th>
+                            <th>类型</th>
+                            <th>说明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>id</td><td>INT UNSIGNED</td><td>主键，自增</td></tr>
+                        <tr><td>user_id</td><td>INT UNSIGNED</td><td>发布者ID，外键</td></tr>
+                        <tr><td>content</td><td>TEXT</td><td>帖子内容</td></tr>
+                        <tr><td>image</td><td>VARCHAR(255)</td><td>图片路径，多图用逗号分隔</td></tr>
+                        <tr><td>likes</td><td>INT UNSIGNED</td><td>点赞数，默认0</td></tr>
+                        <tr><td>comments</td><td>INT UNSIGNED</td><td>评论数，默认0</td></tr>
+                        <tr><td>created_at</td><td>TIMESTAMP</td><td>发布时间</td></tr>
+                        <tr><td>updated_at</td><td>TIMESTAMP</td><td>最后更新时间</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 快速开始 -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-6">快速开始</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h3 class="mb-3">首次安装</h3>
+                        <ol class="text-muted">
+                            <li>确保MySQL服务已启动</li>
+                            <li>将项目文件复制到Web服务器目录</li>
+                            <li>修改install.php中的数据库连接信息（如需要）</li>
+                            <li>在浏览器中访问 install.php</li>
+                            <li>点击"开始安装"按钮</li>
+                            <li>安装成功后，使用管理员账号登录</li>
+                            <li>建议立即修改管理员密码</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card p-4">
+                        <h3 class="mb-3">默认账号</h3>
+                        <div class="code-block">
+                            <p><strong>用户名</strong>：admin</p>
+                            <p><strong>邮箱</strong>：admin@example.com</p>
+                            <p><strong>密码</strong>：admin123</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="download" class="section bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="mb-4">下载社区系统</h2>
+            <p class="lead mb-6">点击下方按钮下载完整的社区系统源码</p>
+            <a href="社区.zip" class="btn btn-light btn-lg px-6 py-3" download>
+                <i class="fas fa-download mr-2"></i>下载社区.zip
+            </a>
+            <p class="mt-4">文件大小：约10MB</p>
+        </div>
+    </section>
+
+    <!-- 使用场景轮播 -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2 class="text-center mb-6">使用场景</h2>
+            <div id="scenarioCarousel" class="carousel slide" data-bs-ride="carousel" style="padding: 0 50px;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#scenarioCarousel" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#scenarioCarousel" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#scenarioCarousel" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">社区交流平台</h3>
+                                <p class="text-muted mb-4">为社区居民提供一个在线交流平台，方便邻里之间沟通交流，分享生活信息，组织社区活动。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>邻里交流</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>信息分享</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>活动组织</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-users text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">兴趣爱好社区</h3>
+                                <p class="text-muted mb-4">为特定兴趣爱好的人群提供一个聚集交流的平台，分享经验，组织活动，结识志同道合的朋友。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>兴趣交流</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>经验分享</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>活动组织</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-heart text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h3 class="mb-4">企业内部社区</h3>
+                                <p class="text-muted mb-4">为企业内部员工提供一个交流平台，促进团队协作，分享工作经验，提高工作效率。</p>
+                                <ul class="text-muted">
+                                    <li><i class="fas fa-check text-success mr-2"></i>团队协作</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>经验分享</li>
+                                    <li><i class="fas fa-check text-success mr-2"></i>信息传递</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <i class="fas fa-building text-primary" style="font-size: 150px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#scenarioCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">上一个</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#scenarioCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-primary rounded-circle p-3" aria-hidden="true"></span>
+                    <span class="visually-hidden">下一个</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>&copy; 2026 领里社区系统. 保留所有权利.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到顶部按钮 -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 回到顶部功能
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 下载按钮交互
+        document.querySelector('.download-btn').addEventListener('click', function(e) {
+            const btn = this;
+            
+            // 显示加载动画
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fas fa-download mr-2"></i>下载中...';
+            
+            // 模拟下载延迟
+            setTimeout(function() {
+                btn.classList.remove('loading');
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i>开始下载';
+                
+                // 3秒后恢复按钮状态
+                setTimeout(function() {
+                    btn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                }, 3000);
+            }, 1500);
+        });
+
+        // 卡片悬停效果增强
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
