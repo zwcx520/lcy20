@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>202604月文章详情</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f7f8fa; color: #333; padding-bottom: 60px;">
+
+<!-- 顶部标题栏 -->
+<div style="position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background-color: #fff; border-bottom: 1px solid #eee; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+  <div style="font-size: 16px; font-weight: 500; color: #007aff; cursor: pointer;" onclick="window.location.href='yj.html'">返回</div>
+  <div style="font-size: 17px; font-weight: 600;">3月文章详情</div>
+  <div style="width: 40px;"></div> <!-- 占位保持居中 -->
+</div>
+
+<!-- 文章内容区 -->
+<div style="padding: 20px 16px; background-color: #fff; margin-top: 8px; border-radius: 12px; margin-left: 8px; margin-right: 8px;">
+  <h1 style="font-size: 22px; font-weight: 700; margin: 0 0 12px; line-height: 1.4; color: #222;">迷茫又压抑</h1>
+  
+  <div style="display: flex; align-items: center; font-size: 14px; color: #999; margin-bottom: 20px;">
+    <span>作者：追吻辰星</span>
+    <span style="margin: 0 8px;">·</span>
+    <span>2026-04</span>
+  </div>
+
+  <div style="font-size: 16px; line-height: 1.7; color: #444;">
+    <p style="margin: 0 0 16px;">唉，难受啊，要准备离职的事情，他妈事情还多，烦呐，我不想有那么多事情，清明节，这几天下雨，用ai创作了几首歌，自己写的词还不错，就是不能赚钱获取收益，感觉很没用啊。唉，时间过的更快，然后就是又要继续找工作了，说了20离职的，老板也在招人，唉，难啊。</p>
+    <p style="margin: 0 0 16px;">这个月都不知道咋个过了，很烦。不知不觉的时间就过的很快。</p>
+    
+    <!---
+    <p style="margin: 0 0 16px;">在设计过程中，我们需要注意以下几点：</p>
+    
+   
+    <ul style="margin: 0 0 16px; padding-left: 20px;">
+      <li style="margin-bottom: 8px;">使用合适的字体大小和行高，保证阅读舒适度</li>
+      <li style="margin-bottom: 8px;">采用简洁的配色方案，避免视觉干扰</li>
+      <li style="margin-bottom: 8px;">合理设置间距，让页面层次分明</li>
+      <li style="margin-bottom: 8px;">添加必要的交互元素，提升用户体验</li>
+    </ul>
+    
+    --->
+    <p style="margin: 0;">希望下个月能平安喜乐</p>
+  </div>
+</div>
+
+<!-- 底部操作栏（已改为固定在屏幕底部） -->
+<div style="position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-around; padding: 12px 0; background-color: #fff; border-top: 1px solid #eee; box-shadow: 0 -1px 3px rgba(0,0,0,0.05);">
+  <div style="display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #666; cursor: pointer;" onclick="likeArticle()">
+    <span style="font-size: 20px; margin-bottom: 4px;">👍</span>
+    <span>点赞</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #666; cursor: pointer;" onclick="commentArticle()">
+    <span style="font-size: 20px; margin-bottom: 4px;">💬</span>
+    <span>评论</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #666; cursor: pointer;" onclick="shareArticle()">
+    <span style="font-size: 20px; margin-bottom: 4px;">🔗</span>
+    <span>分享</span>
+  </div>
+  <div style="display: flex; flex-direction: column; align-items: center; font-size: 12px; color: #666; cursor: pointer;" onclick="collectArticle()">
+    <span style="font-size: 20px; margin-bottom: 4px;">⭐</span>
+    <span>收藏</span>
+  </div>
+</div>
+
+<!-- 提示弹窗 -->
+<div id="toast" style="position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); padding: 8px 16px; background-color: rgba(0,0,0,0.7); color: #fff; border-radius: 8px; font-size: 14px; display: none; z-index: 200;"></div>
+
+<script>
+// 分享功能（核心优化）
+async function shareArticle() {
+  const title = document.querySelector('h1').textContent;
+  const text = '推荐一篇优质文章：如何优雅地实现一个 App UI 风格的文章页面';
+  const url = window.location.href;
+
+  try {
+    // 优先使用浏览器原生分享（支持微信、QQ、微博等）
+    if (navigator.share) {
+      await navigator.share({ title, text, url });
+      showToast('分享成功');
+    } else {
+      // 不支持原生分享时，复制链接到剪贴板
+      await navigator.clipboard.writeText(url);
+      showToast('链接已复制，可直接分享');
+    }
+  } catch (err) {
+    showToast('分享失败，请重试');
+    console.error('分享出错：', err);
+  }
+}
+
+// 其他操作占位函数
+function likeArticle() { showToast('点赞成功'); }
+function commentArticle() { showToast('评论功能开发中'); }
+function collectArticle() { showToast('收藏成功'); }
+
+// 提示弹窗
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', 2000);
+}
+</script>
+
+</body>
+</html>
