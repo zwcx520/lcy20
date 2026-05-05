@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心事社区 - 官方下载</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        ul {
+            list-style: none;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航 - 滚动交互 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 0;
+            background: transparent;
+            transition: all 0.4s ease;
+            z-index: 999;
+        }
+        header.active {
+            background: #fff;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 0.8rem 0;
+        }
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        /* 导航Logo */
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+        .nav-logo-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: url("") center/cover no-repeat;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 2.8rem;
+        }
+        .nav-menu li a {
+            font-size: 15px;
+            color: #666;
+            position: relative;
+            transition: 0.3s;
+        }
+        .nav-menu li a:hover {
+            color: #667eea;
+        }
+        .nav-menu li a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: 0.3s;
+        }
+        .nav-menu li a:hover::after {
+            width: 100%;
+        }
+
+        /* 首屏Hero 纯白大布局 */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: 120px;
+            background: #f9fafb;
+            text-align: center;
+        }
+        .hero-app-icon {
+            width: 150px;
+            height: 150px;
+            border-radius: 32px;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 35px rgba(102,126,234,0.15);
+            background: url("") center/cover no-repeat;
+            transition: transform 0.4s ease;
+        }
+        .hero-app-icon:hover {
+            transform: translateY(-6px) scale(1.03);
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #111;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .down-main-btn {
+            display: inline-block;
+            padding: 18px 52px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: #fff;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: 500;
+            box-shadow: 0 8px 25px rgba(102,126,234,0.2);
+            transition: all 0.4s ease;
+        }
+        .down-main-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(102,126,234,0.3);
+        }
+
+        /* 产品特色板块 */
+        .feature {
+            padding: 100px 0;
+            background: #ffffff;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            color: #111;
+        }
+        .section-title p {
+            color: #888;
+            font-size: 16px;
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 35px;
+        }
+        .feature-item {
+            background: #f9fafb;
+            border-radius: 24px;
+            padding: 45px 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid #eee;
+        }
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+            border-color: #667eea;
+        }
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 22px;
+            border-radius: 16px;
+            background: linear-gradient(135deg,#667eea20,#764ba220);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #667eea;
+        }
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #222;
+        }
+        .feature-item p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        /* 下载专区 */
+        .download-area {
+            padding: 100px 0;
+            background: #f9fafb;
+        }
+        .download-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 28px;
+            padding: 60px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+        .download-info h3 {
+            font-size: 34px;
+            margin-bottom: 20px;
+            color: #111;
+        }
+        .download-info p {
+            color: #777;
+            margin-bottom: 35px;
+            font-size: 16px;
+        }
+        .qr-code {
+            width: 220px;
+            height: 220px;
+            background: #fff;
+            border-radius: 20px;
+            margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            background: url("") center/cover no-repeat;
+            transition: transform 0.4s ease;
+        }
+        .qr-code:hover {
+            transform: scale(1.05);
+        }
+
+        /* 页脚 */
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            background: #fff;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* 移动端适配 */
+        @media (max-width:768px) {
+            .nav-menu {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            .download-box {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header id="navbar">
+        <div class="container nav-wrap">
+            <div class="nav-logo">
+                <div class="nav-logo-img"></div>
+                心事社区
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#feature">产品特色</a></li>
+                <li><a href="#download">官方下载</a></li>
+                <li><a href="#about">关于我们</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 首屏大区 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-app-icon"></div>
+            <h1>心事社区 App</h1>
+            <p>心事倾诉 · 情感治愈 · 同频社交聚集地</p>
+            <a href="http://139.155.96.231/心事社区.apk" class="down-main-btn">立即下载官方版</a>
+        </div>
+    </section>
+
+    <!-- 产品特色 -->
+    <section class="feature" id="feature">
+        <div class="container">
+            <div class="section-title">
+                <h2>产品特色</h2>
+                <p>极简设计 · 安全纯净 · 极致体验</p>
+            </div>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3>匿名隐私</h3>
+                    <p>全程匿名发布，守护你的每一份心事</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💬</div>
+                    <h3>实时互动</h3>
+                    <p>动态评论点赞，随时与同频好友交流</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✨</div>
+                    <h3>纯净无广告</h3>
+                    <p>官方原版无捆绑、无弹窗、绿色安全</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载专区 -->
+    <section class="download-area" id="download">
+        <div class="container">
+            <div class="download-box">
+                <div class="download-info">
+                    <h3>扫码快速下载</h3>
+                    <p>安卓全机型适配，官方唯一正版渠道</p>
+                    <a href="http://139.155.96.231/心事社区.apk" class="down-main-btn">安卓客户端下载</a>
+                </div>
+                <div class="qr-code"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="about">
+        <div class="container">
+            © 2026 心事社区 版权所有 | 官方唯一下载通道
+        </div>
+    </footer>
+
+    <!-- 导航滚动交互JS -->
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 50){
+                navbar.classList.add('active');
+            }else{
+                navbar.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
