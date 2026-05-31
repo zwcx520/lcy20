@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>星漫时段 - 工时记录APP下载</title>
+  <meta name="description" content="星漫时段 - 专为打工人设计的工时记录与薪资计算工具">
+  <link rel="icon" type="image/png" href="xmsd.png">
+  <link rel="apple-touch-icon" href="xmsd.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            anime: {
+              pink: '#F687B3',
+              purple: '#9F7AEA',
+              light: '#FFF5F7',
+              dark: '#44337A',
+            }
+          },
+          fontFamily: {
+            anime: ['Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'sans-serif']
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-slow': 'float 8s ease-in-out infinite',
+            'float-delayed': 'float 7s ease-in-out infinite 2s',
+            'fade-in': 'fadeIn 0.8s ease-out forwards',
+            'slide-up': 'slideUp 0.6s ease-out forwards',
+            'pulse-slow': 'pulse 3s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(16px); }
+      .glass-dark { background: rgba(68,51,122,0.85); backdrop-filter: blur(16px); }
+      .btn-gradient { background: linear-gradient(135deg, #F687B3 0%, #9F7AEA 100%); }
+      .btn-gradient-hover:hover { background: linear-gradient(135deg, #f4729f 0%, #805ad5 100%); }
+      .stat-card { background: linear-gradient(135deg, #FFF5F7 0%, #E9D8FD 100%); }
+      .feature-card { background: linear-gradient(135deg, rgba(255,245,247,0.9) 0%, rgba(233,216,253,0.9) 100%); }
+      .bg-gradient-main { background: linear-gradient(135deg, #FFF5F7 0%, #E9D8FD 50%, #F687B3 100%); }
+      .text-gradient { background: linear-gradient(135deg, #F687B3 0%, #9F7AEA 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+      .shadow-anime { box-shadow: 0 25px 50px -12px rgba(159,122,234,0.25); }
+      .scroll-hide::-webkit-scrollbar { display: none; }
+      .scroll-hide { -ms-overflow-style: none; scrollbar-width: none; }
+      .hover-scale { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+      .hover-scale:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -15px rgba(159,122,234,0.4); }
+      .timeline-line { background: linear-gradient(180deg, #F687B3 0%, #9F7AEA 100%); }
+    }
+  </style>
+</head>
+<body class="font-anime text-anime-dark overflow-x-hidden bg-white">
+
+  <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-96 h-96 max-w-full rounded-full bg-anime-pink/20 blur-3xl animate-float"></div>
+    <div class="absolute top-1/3 -left-20 w-80 h-80 max-w-full rounded-full bg-anime-purple/20 blur-3xl animate-float-slow"></div>
+    <div class="absolute bottom-0 right-1/4 w-72 h-72 max-w-full rounded-full bg-anime-pink/15 blur-3xl animate-float-delayed"></div>
+  </div>
+
+  <nav class="fixed top-0 left-0 w-full z-50 glass border-b border-white/20">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <img src="xmsd.png" alt="星漫时段" class="w-10 h-10 rounded-xl shadow-lg object-cover">
+        <span class="text-lg font-bold text-gradient">星漫时段</span>
+      </div>
+      <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-anime-purple/10 transition-colors">
+        <i class="fa fa-bars text-xl text-anime-purple"></i>
+      </button>
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#features" class="text-anime-dark/80 hover:text-anime-purple transition-colors">功能特性</a>
+        <a href="#screenshots" class="text-anime-dark/80 hover:text-anime-purple transition-colors">界面预览</a>
+        <a href="#changelog" class="text-anime-dark/80 hover:text-anime-purple transition-colors">更新日志</a>
+        <a href="#download" class="px-4 py-2 btn-gradient text-white rounded-full text-sm hover:shadow-lg transition-shadow">
+          <i class="fa fa-download mr-1"></i>下载
+        </a>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden glass border-t border-white/20">
+      <div class="px-4 py-4 space-y-3">
+        <a href="#features" class="block py-2 px-3 rounded-lg hover:bg-anime-purple/10 text-anime-dark/80 transition-colors">功能特性</a>
+        <a href="#screenshots" class="block py-2 px-3 rounded-lg hover:bg-anime-purple/10 text-anime-dark/80 transition-colors">界面预览</a>
+        <a href="#changelog" class="block py-2 px-3 rounded-lg hover:bg-anime-purple/10 text-anime-dark/80 transition-colors">更新日志</a>
+        <a href="#download" class="block py-3 px-3 btn-gradient text-white rounded-lg text-center font-medium">
+          <i class="fa fa-download mr-1"></i>立即下载
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="relative min-h-[calc(100vh-0px)] flex items-center pt-20 pb-16 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-anime-light/50 to-white"></div>
+    
+    <div class="relative max-w-6xl mx-auto px-4 w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div class="space-y-6 opacity-0 animate-fade-in order-2 lg:order-1" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-anime-purple">
+            <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+            v1.0.0 正式版已发布
+          </div>
+          
+          <div class="flex items-center gap-4 lg:hidden">
+            <img src="xmsd.png" alt="星漫时段" class="w-16 h-16 rounded-2xl shadow-lg object-cover">
+            <div>
+              <h1 class="text-2xl font-bold text-gradient">星漫时段</h1>
+              <p class="text-sm text-anime-dark/60">工时记录APP</p>
+            </div>
+          </div>
+
+          <h1 class="text-[clamp(1.8rem,5vw,3.5rem)] font-bold leading-tight hidden lg:block">
+            你的完美
+            <span class="text-gradient">工时记录器</span>
+          </h1>
+          <h1 class="text-2xl sm:text-3xl font-bold leading-tight lg:hidden">
+            你的完美<span class="text-gradient">工时记录器</span>
+          </h1>
+          
+          <p class="text-base sm:text-lg text-anime-dark/70 leading-relaxed max-w-lg">
+            星漫时段 - 专为打工人设计的工时记录与薪资计算工具。本地数据安全存储，无云端同步，保护你的隐私。
+          </p>
+          
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <a href="#download" class="group inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 btn-gradient text-white rounded-2xl font-medium hover-scale shadow-anime touch-manipulation min-h-[56px]">
+              <i class="fa fa-android text-xl"></i>
+              <span>立即下载 APK</span>
+              <i class="fa fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <a href="#features" class="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-4 glass rounded-2xl font-medium hover:bg-white/90 transition-colors touch-manipulation min-h-[56px]">
+              <i class="fa fa-play-circle text-anime-purple"></i>
+              <span>了解更多</span>
+            </a>
+          </div>
+          
+          <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-4">
+            <div class="text-center p-2 sm:p-3">
+              <p class="text-xl sm:text-2xl font-bold text-gradient">100%</p>
+              <p class="text-[10px] sm:text-xs text-anime-dark/60">本地存储</p>
+            </div>
+            <div class="text-center p-2 sm:p-3 border-x border-anime-purple/20">
+              <p class="text-xl sm:text-2xl font-bold text-gradient">0</p>
+              <p class="text-[10px] sm:text-xs text-anime-dark/60">云端数据</p>
+            </div>
+            <div class="text-center p-2 sm:p-3">
+              <p class="text-xl sm:text-2xl font-bold text-gradient">免费</p>
+              <p class="text-[10px] sm:text-xs text-anime-dark/60">永久使用</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative opacity-0 animate-fade-in order-1 lg:order-2" style="animation-delay: 0.4s; animation-fill-mode: forwards;">
+          <div class="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-anime-pink/30 to-anime-purple/30 rounded-[2rem] sm:rounded-[3rem] blur-2xl"></div>
+          <div class="relative mx-auto w-64 sm:w-72 md:w-80">
+            <div class="relative rounded-[2rem] sm:rounded-[2.5rem] p-2 bg-gradient-to-br from-anime-pink to-anime-purple shadow-2xl animate-float">
+              <div class="bg-white rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-inner">
+                <div class="bg-gradient-to-r from-anime-pink to-anime-purple p-4 sm:p-6 text-white text-center rounded-b-[1.2rem] sm:rounded-b-[1.5rem]">
+                  <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto bg-white/20 rounded-2xl flex items-center justify-center mb-2 sm:mb-3 overflow-hidden">
+                    <img src="xmsd.png" alt="星漫时段" class="w-full h-full object-cover">
+                  </div>
+                  <h3 class="text-base sm:text-lg font-bold">星漫时段</h3>
+                  <p class="text-xs sm:text-sm opacity-90">工时记录APP</p>
+                </div>
+                <div class="p-3 sm:p-4 space-y-2 sm:space-y-3">
+                  <div class="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-anime-light rounded-lg sm:rounded-xl">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-anime-pink/20 flex items-center justify-center flex-shrink-0">
+                      <i class="fa fa-calendar text-anime-pink text-sm sm:text-base"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs sm:text-sm font-medium truncate">2026-05-31</p>
+                      <p class="text-[10px] sm:text-xs text-gray-400">上班</p>
+                    </div>
+                    <span class="text-xs sm:text-sm font-bold text-anime-purple flex-shrink-0">8h</span>
+                  </div>
+                  <div class="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-anime-light rounded-lg sm:rounded-xl">
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-anime-purple/20 flex items-center justify-center flex-shrink-0">
+                      <i class="fa fa-briefcase text-anime-purple text-sm sm:text-base"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-xs sm:text-sm font-medium truncate">项目开发</p>
+                      <p class="text-[10px] sm:text-xs text-gray-400">09:00 - 17:00</p>
+                    </div>
+                    <span class="text-xs sm:text-sm font-bold text-anime-pink flex-shrink-0">¥160</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-2 pt-1 sm:pt-2">
+                    <div class="text-center p-2 sm:p-3 bg-gradient-to-br from-anime-light to-purple-100 rounded-lg sm:rounded-xl">
+                      <p class="text-[10px] sm:text-xs text-anime-purple">总工时</p>
+                      <p class="text-sm sm:text-lg font-bold text-anime-dark">128h</p>
+                    </div>
+                    <div class="text-center p-2 sm:p-3 bg-gradient-to-br from-anime-light to-purple-100 rounded-lg sm:rounded-xl">
+                      <p class="text-[10px] sm:text-xs text-anime-purple">总薪资</p>
+                      <p class="text-sm sm:text-lg font-bold text-anime-dark">¥2,560</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -bottom-4 sm:-bottom-6 -right-4 sm:-right-6 w-14 h-14 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl glass flex items-center justify-center shadow-lg animate-float-slow">
+              <i class="fa fa-download text-xl sm:text-2xl text-anime-purple"></i>
+            </div>
+            <div class="absolute -top-2 sm:-top-4 -left-2 sm:-left-4 w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl glass flex items-center justify-center shadow-lg animate-float-delayed">
+              <i class="fa fa-check-circle text-base sm:text-xl text-green-500"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="relative py-12 sm:py-20">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="inline-block px-4 py-2 rounded-full glass text-sm text-anime-purple mb-4">
+          <i class="fa fa-star mr-1"></i>核心功能
+        </span>
+        <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold mb-3 sm:mb-4">
+          为什么选择 <span class="text-gradient">星漫时段</span>？
+        </h2>
+        <p class="text-anime-dark/60 max-w-2xl mx-auto text-sm sm:text-base">
+          专注于工时记录的每一个细节，让你的工作时间管理变得简单高效
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="feature-card rounded-2xl p-5 sm:p-6 hover-scale">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl btn-gradient flex items-center justify-center mb-4 shadow-lg">
+            <i class="fa fa-clock-o text-white text-lg sm:text-xl"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold mb-2">智能工时计算</h3>
+          <p class="text-xs sm:text-sm text-anime-dark/60 leading-relaxed">
+            输入起止时间，系统自动计算工时，支持精确到0.1小时的精度
+          </p>
+        </div>
+
+        <div class="feature-card rounded-2xl p-5 sm:p-6 hover-scale">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl btn-gradient flex items-center justify-center mb-4 shadow-lg">
+            <i class="fa fa-calculator text-white text-lg sm:text-xl"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold mb-2">薪资自动统计</h3>
+          <p class="text-xs sm:text-sm text-anime-dark/60 leading-relaxed">
+            自定义时薪，自动计算每日及累计薪资，收入一目了然
+          </p>
+        </div>
+
+        <div class="feature-card rounded-2xl p-5 sm:p-6 hover-scale">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl btn-gradient flex items-center justify-center mb-4 shadow-lg">
+            <i class="fa fa-shield text-white text-lg sm:text-xl"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold mb-2">本地安全存储</h3>
+          <p class="text-xs sm:text-sm text-anime-dark/60 leading-relaxed">
+            所有数据仅存储在本地设备，无云端同步，绝对隐私保护
+          </p>
+        </div>
+
+        <div class="feature-card rounded-2xl p-5 sm:p-6 hover-scale">
+          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl btn-gradient flex items-center justify-center mb-4 shadow-lg">
+            <i class="fa fa-search text-white text-lg sm:text-xl"></i>
+          </div>
+          <h3 class="text-base sm:text-lg font-bold mb-2">快捷搜索筛选</h3>
+          <p class="text-xs sm:text-sm text-anime-dark/60 leading-relaxed">
+            支持按日期、时间、事项关键词搜索，快速定位记录
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-6 sm:mt-8">
+        <div class="feature-card rounded-2xl p-5 sm:p-6 hover-scale">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-anime-pink/20 flex items-center justify-center flex-shrink-0">
+              <i class="fa fa-edit text-anime-pink text-lg sm:text-xl"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-base sm:text-lg font-bold mb-2">灵活编辑管理</h3>
+              <p class="text-xs sm:text-sm text-anime-dark/60 leading-relaxed">
+                支持编辑和删除单条记录，修改后自动重新计算工时和薪资
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card rounded-2xl p-5 sm:p-6 hover-scale">
+          <div class="flex items-start gap-3 sm:gap-4">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-anime-purple/20 flex items-center justify-center flex-shrink-0">
+              <i class="fa fa-mobile text-anime-purple text-xl sm:text-2xl"></i>
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-base sm:text-lg font-bold mb-2">简洁界面设计</h3>
+              <p class="text-xs sm:text-sm text-anime-dark/60 leading-relaxed">
+                粉紫色动漫风格，毛玻璃效果，视觉舒适，操作流畅
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screenshots" class="relative py-12 sm:py-20 bg-gradient-to-b from-white to-anime-light/30">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="inline-block px-4 py-2 rounded-full glass text-sm text-anime-purple mb-4">
+          <i class="fa fa-mobile mr-1"></i>界面预览
+        </span>
+        <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold mb-3 sm:mb-4">
+          精美 <span class="text-gradient">UI 设计</span>
+        </h2>
+        <p class="text-anime-dark/60 max-w-2xl mx-auto text-sm sm:text-base">
+          简洁优雅的界面设计，让工时记录成为一种享受
+        </p>
+      </div>
+
+      <div class="relative">
+        <div class="overflow-x-auto scroll-hide -mx-4 px-4 pb-4">
+          <div class="flex gap-4 sm:gap-6 min-w-max justify-center">
+            <div class="w-56 sm:w-64 flex-shrink-0">
+              <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white hover-scale">
+                <div class="bg-gradient-to-r from-anime-pink to-anime-purple p-3 sm:p-4 text-white">
+                  <div class="flex items-center gap-2">
+                    <img src="xmsd.png" alt="星漫时段" class="w-6 h-6 rounded-lg object-cover">
+                    <span class="font-bold text-sm sm:text-base">星漫时段</span>
+                  </div>
+                </div>
+                <div class="bg-white p-3 sm:p-4 space-y-2 sm:space-y-3">
+                  <div class="grid grid-cols-3 gap-1 sm:gap-2">
+                    <div class="text-center p-1.5 sm:p-2 bg-anime-light rounded-lg">
+                      <p class="text-[10px] sm:text-xs text-gray-400">总记录</p>
+                      <p class="font-bold text-sm sm:text-base">12</p>
+                    </div>
+                    <div class="text-center p-1.5 sm:p-2 bg-anime-light rounded-lg">
+                      <p class="text-[10px] sm:text-xs text-gray-400">总工时</p>
+                      <p class="font-bold text-sm sm:text-base">89h</p>
+                    </div>
+                    <div class="text-center p-1.5 sm:p-2 bg-anime-light rounded-lg">
+                      <p class="text-[10px] sm:text-xs text-gray-400">总薪资</p>
+                      <p class="font-bold text-sm sm:text-base">¥1780</p>
+                    </div>
+                  </div>
+                  <div class="space-y-1.5 sm:space-y-2">
+                    <div class="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                      <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-medium">2026-05-30</p>
+                        <p class="text-[10px] sm:text-xs text-gray-400">09:00 - 18:00</p>
+                      </div>
+                      <span class="text-xs sm:text-sm font-bold text-anime-purple flex-shrink-0 ml-2">9h</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                      <div class="min-w-0">
+                        <p class="text-xs sm:text-sm font-medium">2026-05-29</p>
+                        <p class="text-[10px] sm:text-xs text-gray-400">10:00 - 17:00</p>
+                      </div>
+                      <span class="text-xs sm:text-sm font-bold text-anime-purple flex-shrink-0 ml-2">7h</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-56 sm:w-64 flex-shrink-0">
+              <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white hover-scale">
+                <div class="bg-gradient-to-r from-anime-pink to-anime-purple p-3 sm:p-4 text-white">
+                  <div class="flex items-center gap-2">
+                    <i class="fa fa-plus-circle text-sm sm:text-base"></i>
+                    <span class="font-bold text-sm sm:text-base">添加记录</span>
+                  </div>
+                </div>
+                <div class="bg-white p-3 sm:p-4 space-y-2 sm:space-y-3">
+                  <input type="date" class="w-full p-2.5 sm:p-3 border border-gray-200 rounded-lg text-xs sm:text-sm" value="2026-05-31" />
+                  <select class="w-full p-2.5 sm:p-3 border border-gray-200 rounded-lg text-xs sm:text-sm bg-white">
+                    <option>上班</option>
+                    <option>休息</option>
+                  </select>
+                  <input type="text" class="w-full p-2.5 sm:p-3 border border-gray-200 rounded-lg text-xs sm:text-sm" placeholder="请输入记录事项" />
+                  <div class="grid grid-cols-2 gap-2">
+                    <input type="time" class="p-2.5 sm:p-3 border border-gray-200 rounded-lg text-xs sm:text-sm" value="09:00" />
+                    <input type="time" class="p-2.5 sm:p-3 border border-gray-200 rounded-lg text-xs sm:text-sm" value="18:00" />
+                  </div>
+                  <button class="w-full p-2.5 sm:p-3 btn-gradient text-white rounded-lg font-medium text-xs sm:text-sm">
+                    保存时段记录
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="w-56 sm:w-64 flex-shrink-0">
+              <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white hover-scale">
+                <div class="bg-gradient-to-r from-anime-pink to-anime-purple p-3 sm:p-4 text-white">
+                  <div class="flex items-center gap-2">
+                    <i class="fa fa-search text-sm sm:text-base"></i>
+                    <span class="font-bold text-sm sm:text-base">搜索记录</span>
+                  </div>
+                </div>
+                <div class="bg-white p-3 sm:p-4 space-y-2 sm:space-y-3">
+                  <div class="relative">
+                    <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    <input type="text" class="w-full p-2.5 sm:p-3 pl-10 border border-gray-200 rounded-lg text-xs sm:text-sm" placeholder="搜索日期、时间..." value="2026-05" />
+                  </div>
+                  <div class="space-y-1.5 sm:space-y-2">
+                    <div class="p-2 sm:p-3 bg-anime-light rounded-lg border-2 border-anime-purple/30">
+                      <div class="flex justify-between items-start mb-1 sm:mb-2">
+                        <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-anime-purple/20 text-anime-purple">上班</span>
+                        <span class="text-[10px] sm:text-xs text-gray-400">2026-05-28</span>
+                      </div>
+                      <p class="text-xs sm:text-sm font-medium mb-1">项目开发任务</p>
+                      <div class="flex justify-between text-[10px] sm:text-xs text-gray-400">
+                        <span>09:00 - 17:30</span>
+                        <span class="text-anime-purple font-bold">8.5h</span>
+                      </div>
+                    </div>
+                    <div class="p-2 sm:p-3 bg-gray-50 rounded-lg">
+                      <div class="flex justify-between items-start mb-1 sm:mb-2">
+                        <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-anime-pink/20 text-anime-pink">上班</span>
+                        <span class="text-[10px] sm:text-xs text-gray-400">2026-05-27</span>
+                      </div>
+                      <p class="text-xs sm:text-sm font-medium mb-1">会议讨论</p>
+                      <div class="flex justify-between text-[10px] sm:text-xs text-gray-400">
+                        <span>14:00 - 16:00</span>
+                        <span class="text-anime-purple font-bold">2h</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="changelog" class="relative py-12 sm:py-20">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="inline-block px-4 py-2 rounded-full glass text-sm text-anime-purple mb-4">
+          <i class="fa fa-history mr-1"></i>版本记录
+        </span>
+        <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold mb-3 sm:mb-4">
+          更新 <span class="text-gradient">日志</span>
+        </h2>
+        <p class="text-anime-dark/60 max-w-2xl mx-auto text-sm sm:text-base">
+          持续优化，持续进步
+        </p>
+      </div>
+
+      <div class="relative">
+        <div class="absolute left-6 md:left-1/2 top-0 bottom-0 w-1 timeline-line rounded-full -translate-x-1/2"></div>
+
+        <div class="space-y-6 sm:space-y-8">
+          <div class="relative flex flex-col md:flex-row items-start md:items-center">
+            <div class="md:w-1/2 md:pr-8 md:text-right pl-14 md:pl-0">
+              <div class="feature-card rounded-2xl p-4 sm:p-5 hover-scale">
+                <div class="flex items-center gap-2 mb-2 md:justify-end">
+                  <span class="px-3 py-1 rounded-full bg-green-100 text-green-600 text-xs font-medium">最新</span>
+                </div>
+                <h3 class="text-base sm:text-lg font-bold mb-2">v1.0.0 正式版</h3>
+                <p class="text-xs text-gray-400 mb-3">2026年5月31日</p>
+                <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-anime-dark/70">
+                  <li class="flex items-start gap-2 md:justify-end md:flex-row-reverse">
+                    <i class="fa fa-check text-green-500 mt-0.5 flex-shrink-0"></i>
+                    <span>工时记录与薪资计算核心功能</span>
+                  </li>
+                  <li class="flex items-start gap-2 md:justify-end md:flex-row-reverse">
+                    <i class="fa fa-check text-green-500 mt-0.5 flex-shrink-0"></i>
+                    <span>本地数据安全存储</span>
+                  </li>
+                  <li class="flex items-start gap-2 md:justify-end md:flex-row-reverse">
+                    <i class="fa fa-check text-green-500 mt-0.5 flex-shrink-0"></i>
+                    <span>粉紫色动漫风格UI</span>
+                  </li>
+                  <li class="flex items-start gap-2 md:justify-end md:flex-row-reverse">
+                    <i class="fa fa-check text-green-500 mt-0.5 flex-shrink-0"></i>
+                    <span>搜索与筛选功能</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="absolute left-6 md:left-1/2 w-5 h-5 sm:w-6 sm:h-6 rounded-full btn-gradient border-4 border-white shadow-lg -translate-x-1/2 top-5 md:top-1/2"></div>
+            <div class="md:w-1/2 md:pl-8 hidden md:block"></div>
+          </div>
+
+          <div class="relative flex flex-col md:flex-row items-start md:items-center">
+            <div class="md:w-1/2 md:pr-8 hidden md:block"></div>
+            <div class="absolute left-6 md:left-1/2 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-anime-purple border-4 border-white shadow-lg -translate-x-1/2 top-5 md:top-1/2"></div>
+            <div class="md:w-1/2 md:pl-8 pl-14">
+              <div class="feature-card rounded-2xl p-4 sm:p-5 hover-scale">
+                <h3 class="text-base sm:text-lg font-bold mb-2">v0.9.0 测试版</h3>
+                <p class="text-xs text-gray-400 mb-3">2026年5月20日</p>
+                <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-anime-dark/70">
+                  <li class="flex items-start gap-2">
+                    <i class="fa fa-plus text-anime-purple mt-0.5 flex-shrink-0"></i>
+                    <span>内部测试版本发布</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i class="fa fa-plus text-anime-purple mt-0.5 flex-shrink-0"></i>
+                    <span>基础工时记录功能</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <i class="fa fa-plus text-anime-purple mt-0.5 flex-shrink-0"></i>
+                    <span>简单薪资计算</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download" class="relative py-12 sm:py-20 bg-gradient-to-b from-white to-anime-light/50">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="relative overflow-hidden rounded-2xl sm:rounded-3xl">
+        <div class="absolute inset-0 bg-gradient-to-br from-anime-pink via-anime-purple to-anime-dark"></div>
+        <div class="absolute inset-0 opacity-10">
+          <div class="absolute top-0 left-0 w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-white blur-3xl"></div>
+          <div class="absolute bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-anime-pink blur-3xl"></div>
+        </div>
+        
+        <div class="relative p-6 sm:p-8 md:p-12 text-center text-white">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 rounded-2xl bg-white/20 flex items-center justify-center overflow-hidden">
+            <img src="xmsd.png" alt="星漫时段" class="w-full h-full object-cover">
+          </div>
+          
+          <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold mb-3 sm:mb-4">
+            立即下载
+          </h2>
+          <p class="text-white/80 mb-6 sm:mb-8 max-w-md mx-auto text-sm sm:text-base">
+            开始使用星漫时段，让工时记录变得简单高效
+          </p>
+
+          <div class="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8 max-w-md mx-auto">
+            <div class="glass rounded-xl p-2 sm:p-3">
+              <p class="text-[10px] sm:text-xs text-white/70">版本号</p>
+              <p class="text-base sm:text-lg font-bold">v1.0.0</p>
+            </div>
+            <div class="glass rounded-xl p-2 sm:p-3">
+              <p class="text-[10px] sm:text-xs text-white/70">文件大小</p>
+              <p class="text-base sm:text-lg font-bold">3.41MB</p>
+            </div>
+            <div class="glass rounded-xl p-2 sm:p-3">
+              <p class="text-[10px] sm:text-xs text-white/70">更新日期</p>
+              <p class="text-base sm:text-lg font-bold">05-31</p>
+            </div>
+          </div>
+
+          <a href="xmsd.apk" download="星漫时段_v1.0.0.apk" class="inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 sm:py-5 bg-white text-anime-purple rounded-2xl font-bold text-base sm:text-lg hover:bg-white/90 transition-colors shadow-2xl group touch-manipulation min-h-[56px]">
+            <i class="fa fa-download text-lg sm:text-xl"></i>
+            <span>下载 APK 安装包</span>
+            <i class="fa fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+          </a>
+
+          <div class="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/20">
+            <p class="text-xs sm:text-sm text-white/60 mb-3 sm:mb-4">
+              <i class="fa fa-info-circle mr-1"></i>
+              安装说明：下载后点击 APK 文件进行安装，部分设备可能需要开启"允许安装未知来源应用"权限
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-white/60">
+              <span><i class="fa fa-android mr-1"></i>Android 9.0+</span>
+              <span><i class="fa fa-shield mr-1"></i>安全无毒</span>
+              <span><i class="fa fa-bolt mr-1"></i>快速安装</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="relative bg-anime-dark text-white">
+    <div class="max-w-6xl mx-auto px-4 py-8 sm:py-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <img src="xmsd.png" alt="星漫时段" class="w-10 h-10 rounded-xl object-cover">
+            <span class="text-xl font-bold">星漫时段</span>
+          </div>
+          <p class="text-white/60 text-xs sm:text-sm leading-relaxed">
+            你的完美工时记录器，专为打工人设计的工时记录与薪资计算工具。
+          </p>
+        </div>
+
+        <div>
+          <h4 class="font-bold mb-4">快速链接</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-white/60">
+            <li><a href="#features" class="hover:text-white transition-colors">功能特性</a></li>
+            <li><a href="#screenshots" class="hover:text-white transition-colors">界面预览</a></li>
+            <li><a href="#changelog" class="hover:text-white transition-colors">更新日志</a></li>
+            <li><a href="#download" class="hover:text-white transition-colors">下载页面</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="font-bold mb-4">联系我们</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-white/60">
+            <li class="flex items-center gap-2">
+              <i class="fa fa-user"></i>
+              <span>开发者：不见桃花不见秋</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <i class="fa fa-qq"></i>
+              <span>联系QQ：1837601513</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pt-6 sm:pt-8 border-t border-white/10 text-center text-xs sm:text-sm text-white/40">
+        <p>© 2026 星漫时段. 版权所有.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const headerOffset = 70;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -30px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.hover-scale').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease';
+      observer.observe(el);
+    });
+
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const nav = document.querySelector('nav');
+      if (scrolled > 50) {
+        nav.classList.add('shadow-md');
+      } else {
+        nav.classList.remove('shadow-md');
+      }
+    });
+  </script>
+</body>
+</html>
