@@ -318,5 +318,5 @@
         selector: '#versionLabel',
         latestVersion: '1.7.6',      //新版本号控制修改                  // ← 改成 '1.0.1' 试试，绝对不弹
         checkInterval: 1000,
-        updateUrl: 'https://lcy20.netlify.app/gdlive.apk'
+        updateUrl: 'https://lcy20.netlify.app/gd.apk'
     });
