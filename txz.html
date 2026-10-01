@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不见桃花不见秋·♏ 天蝎座 · 深度档案</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+:root{
+  --gold:#e0b872;--gold2:#f4dca8;
+  --rose:#c2557d;--rose2:#e08ba8;
+  --plum:#7a2f63;--plum2:#5a2449;
+  --side:300px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Serif SC',serif;color:#2e1a2a;background:#faf4f8;line-height:1.85;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(900px 700px at 15% 10%,#ecd0df 0%,transparent 55%),
+  radial-gradient(800px 600px at 85% 40%,#f0d9c6 0%,transparent 50%),
+  radial-gradient(900px 800px at 50% 90%,#dfc9e8 0%,transparent 55%),
+  linear-gradient(165deg,#fbf0f5 0%,#f8ecf2 50%,#f4eaf3 100%);}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+.dot{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,255,255,.8);animation:tw 4s ease-in-out infinite;}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:.9;transform:scale(1.15)}}
+
+/* ===== 侧边栏 ===== */
+.side{position:fixed;top:0;left:0;bottom:0;width:var(--side);z-index:200;
+  background:linear-gradient(170deg,rgba(122,47,99,.96),rgba(90,36,73,.98));
+  color:#fff;display:flex;flex-direction:column;
+  box-shadow:6px 0 40px rgba(90,36,73,.3);}
+.side-brand{padding:38px 26px 26px;text-align:center;border-bottom:1px solid rgba(255,255,255,.14);}
+.side-brand .glyph{font-size:52px;color:var(--gold2);filter:drop-shadow(0 0 18px rgba(224,184,114,.6));}
+.side-brand h1{font-family:'Ma Shan Zheng',cursive;font-size:34px;margin:8px 0 4px;letter-spacing:6px;color:#fff;}
+.side-brand .lat{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--gold2);letter-spacing:5px;}
+.side-brand .line{width:48px;height:2px;margin:16px auto 0;background:linear-gradient(90deg,var(--gold),var(--rose));border-radius:2px;}
+.side-nav{flex:1;overflow-y:auto;padding:16px 14px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.25) transparent;}
+.side-nav::-webkit-scrollbar{width:5px;}
+.side-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:4px;}
+.side-nav a{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.82);text-decoration:none;font-size:14px;
+  padding:12px 14px;border-radius:14px;margin-bottom:5px;transition:.3s;cursor:pointer;}
+.side-nav a i{width:20px;text-align:center;font-size:15px;color:var(--gold2);transition:.3s;flex:none;}
+.side-nav a .n{font-family:'Playfair Display',serif;font-size:11px;color:rgba(255,255,255,.4);margin-left:auto;letter-spacing:1px;}
+.side-nav a:hover{background:rgba(255,255,255,.14);color:#fff;transform:translateX(4px);}
+.side-nav a:hover i{transform:scale(1.25);}
+.side-nav a.active{background:linear-gradient(100deg,rgba(224,184,114,.35),rgba(194,85,125,.4));color:#fff;
+  box-shadow:0 6px 20px rgba(0,0,0,.2);}
+.side-nav a.active i{color:#fff;}
+.side-nav a.active .n{color:rgba(255,255,255,.8);}
+.side-foot{padding:18px 22px;font-size:12px;color:rgba(255,255,255,.55);text-align:center;border-top:1px solid rgba(255,255,255,.14);line-height:1.7;}
+
+.hamb{position:fixed;top:18px;left:18px;z-index:180;width:48px;height:48px;border-radius:14px;cursor:pointer;
+  display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;
+  background:linear-gradient(135deg,var(--plum2),var(--rose));border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 8px 24px rgba(90,36,73,.3);transition:.3s;}
+.hamb span{width:20px;height:2px;border-radius:2px;background:#fff;transition:.35s;}
+body.open .hamb span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+body.open .hamb span:nth-child(2){opacity:0;}
+body.open .hamb span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.scrim{position:fixed;inset:0;background:rgba(58,31,52,.45);z-index:150;opacity:0;pointer-events:none;transition:.4s;}
+
+/* ===== 主内容 ===== */
+.main{margin-left:var(--side);transition:margin .45s cubic-bezier(.3,.8,.3,1);min-height:100vh;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 40px;}
+.page{display:none;padding:56px 0 80px;animation:fade .55s ease both;}
+.page.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+.page-head{margin-bottom:34px;padding-bottom:22px;border-bottom:1px solid rgba(122,47,99,.16);}
+.page-no{font-family:'Playfair Display',serif;font-size:13px;letter-spacing:6px;color:var(--plum);font-weight:600;}
+.page-h{font-size:40px;font-weight:700;margin-top:6px;
+  background:linear-gradient(100deg,var(--plum2),var(--rose),var(--gold));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-sub{color:#6b4a5e;font-weight:300;font-size:16px;margin-top:12px;max-width:760px;}
+
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:5px;color:var(--plum);
+  font-family:'Playfair Display',serif;font-weight:600;margin-bottom:10px;}
+.eyebrow::before{content:"";width:32px;height:1px;background:linear-gradient(90deg,var(--plum),transparent);}
+.sec-title{font-size:38px;font-weight:700;
+  background:linear-gradient(100deg,var(--plum2),var(--rose),var(--gold));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.3;margin-bottom:12px;}
+.sec-desc{color:#6b4a5e;font-weight:300;font-size:16px;max-width:760px;}
+
+.card{background:rgba(255,255,255,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.8);
+  border-radius:20px;padding:28px;box-shadow:0 14px 40px rgba(122,47,99,.1);}
+.card-t{display:flex;align-items:center;gap:12px;font-size:19px;color:var(--plum2);font-weight:600;margin-bottom:4px;}
+.card-t i{color:var(--rose);font-size:17px;}
+.card-n{font-size:12.5px;color:#8a6c7e;margin-bottom:14px;font-weight:300;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.gap{display:flex;flex-direction:column;gap:28px;}
+
+.kv{border-radius:18px;padding:22px;text-align:center;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 10px 30px rgba(122,47,99,.1);transition:.35s;}
+.kv:hover{transform:translateY(-5px);background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(252,236,244,.7));}
+.kv .k{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;
+  background:linear-gradient(135deg,var(--plum2),var(--rose));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.kv .v{font-size:12px;color:#8a6c7e;letter-spacing:2px;margin-top:4px;}
+.badges{display:flex;gap:10px;flex-wrap:wrap;}
+.badge{font-size:12.5px;color:#5f4256;background:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.85);
+  padding:8px 15px;border-radius:22px;box-shadow:0 6px 18px rgba(122,47,99,.09);}
+.badge i{color:var(--plum);margin-right:6px;}
+
+.evo{display:flex;gap:14px;align-items:stretch;}
+.evo-i{flex:1;padding:26px 20px;border-radius:20px;color:#fff;text-align:center;transition:.4s;}
+.evo-i:hover{transform:translateY(-8px);}
+.evo-i .ic{font-size:34px;margin-bottom:12px;color:var(--gold2);}
+.evo-i h5{font-size:19px;margin-bottom:8px;}
+.evo-i p{font-size:13.5px;font-weight:300;opacity:.94;line-height:1.75;}
+.evo-i.e1{background:linear-gradient(150deg,#8a5a8a,var(--plum2));box-shadow:0 14px 36px rgba(90,60,90,.28);}
+.evo-i.e2{background:linear-gradient(150deg,var(--plum2),var(--rose));box-shadow:0 14px 36px rgba(122,47,99,.28);}
+.evo-i.e3{background:linear-gradient(150deg,var(--rose),var(--gold));box-shadow:0 14px 36px rgba(194,85,125,.26);}
+.evo-a{display:flex;align-items:center;font-size:24px;color:var(--gold);padding:0 6px;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px;}
+.tbl th{text-align:left;font-size:12px;letter-spacing:3px;color:#8a6c7e;font-weight:600;padding:12px 14px;border-bottom:2px solid rgba(122,47,99,.18);}
+.tbl td{padding:15px 14px;border-bottom:1px dashed rgba(122,47,99,.14);color:#5f4256;font-weight:300;vertical-align:top;}
+.tbl td.name{color:var(--plum2);font-weight:600;white-space:nowrap;}
+.tbl td i{color:var(--plum);width:22px;}
+.tbl tr:last-child td{border-bottom:none;}
+
+.defs{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.def{padding:22px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 10px 30px rgba(122,47,99,.1);transition:.35s;}
+.def:hover{transform:translateY(-4px);background:linear-gradient(140deg,rgba(255,255,255,.85),rgba(252,236,244,.7));}
+.def dt{display:flex;align-items:center;gap:10px;font-size:17px;color:var(--plum2);margin-bottom:8px;}
+.def dt i{color:var(--gold);font-size:18px;}
+.def dd{font-size:14px;color:#6b4a5e;font-weight:300;}
+
+.list{padding:0;}
+.list li{list-style:none;display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px dashed rgba(122,47,99,.14);}
+.list li:last-child{border-bottom:none;}
+.list .no{flex:none;width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--plum2),var(--rose));
+  color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:14px;}
+.list li p{font-size:14.5px;color:#5f4256;font-weight:300;}
+.list li p b{color:var(--plum2);}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.stat{padding:24px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 10px 30px rgba(122,47,99,.1);transition:.35s;}
+.stat:hover{transform:translateY(-5px);background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(252,236,244,.7));}
+.stat .num{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;
+  background:linear-gradient(135deg,var(--plum2),var(--rose));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.stat .lbl{font-size:13.5px;color:#6b4a5e;margin-top:4px;font-weight:300;}
+.tag-cloud{display:flex;gap:10px;flex-wrap:wrap;}
+.tag{font-size:13px;color:#fff;padding:9px 16px;border-radius:20px;background:linear-gradient(135deg,var(--plum2),var(--rose));
+  box-shadow:0 6px 18px rgba(122,47,99,.22);transition:.3s;}
+.tag:hover{transform:translateY(-3px);}
+.tag.g{background:linear-gradient(135deg,var(--gold),var(--rose));box-shadow:0 6px 18px rgba(194,85,125,.22);}
+.tag.p{background:linear-gradient(135deg,#8a5a8a,var(--plum2));box-shadow:0 6px 18px rgba(90,60,90,.22);}
+
+.bars{display:flex;flex-direction:column;gap:16px;}
+.bar-i .b-head{display:flex;justify-content:space-between;font-size:14px;color:#5f4256;margin-bottom:6px;}
+.bar-i .b-head b{color:var(--plum2);}
+.bar-track{height:12px;border-radius:8px;background:rgba(122,47,99,.08);overflow:hidden;}
+.bar-fill{height:100%;border-radius:8px;width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1);
+  background:linear-gradient(90deg,var(--plum2),var(--rose),var(--gold));}
+.body-fig{text-align:center;padding:24px;background:rgba(255,255,255,.5);border-radius:20px;border:1px solid rgba(255,255,255,.8);}
+.body-fig i{font-size:130px;color:var(--plum2);opacity:.85;}
+
+.pair-tbl{width:100%;border-collapse:collapse;border-radius:18px;overflow:hidden;box-shadow:0 14px 40px rgba(122,47,99,.12);}
+.pair-tbl th{background:linear-gradient(135deg,var(--plum2),var(--rose));color:#fff;padding:16px;text-align:left;font-size:14px;font-weight:600;letter-spacing:2px;}
+.pair-tbl td{padding:16px;background:rgba(255,255,255,.6);border-bottom:1px solid rgba(255,255,255,.9);font-size:14.5px;color:#5f4256;font-weight:300;}
+.pair-tbl tr:last-child td{border-bottom:none;}
+.pair-tbl td:first-child{color:var(--plum2);font-weight:600;white-space:nowrap;background:rgba(255,255,255,.75);}
+.lv-tag{display:inline-block;font-size:11px;padding:3px 10px;border-radius:14px;letter-spacing:1px;color:#fff;}
+.lv-soul{background:linear-gradient(135deg,var(--plum2),var(--rose));}
+.lv-good{background:linear-gradient(135deg,var(--rose),var(--gold));}
+.lv-hard{background:linear-gradient(135deg,#8a5a8a,var(--plum2));}
+
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:12px;}
+.step{display:flex;gap:18px;align-items:center;padding:18px 22px;border-radius:16px;background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.8);box-shadow:0 8px 26px rgba(122,47,99,.09);transition:.35s;}
+.step:hover{transform:translateX(8px);background:linear-gradient(120deg,rgba(255,255,255,.85),rgba(252,236,244,.7));}
+.step::before{counter-increment:s;content:"0" counter(s);flex:none;font-family:'Playfair Display',serif;font-weight:700;font-size:28px;
+  background:linear-gradient(135deg,var(--plum2),var(--rose));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.step .t{font-size:16px;color:var(--plum2);font-weight:600;margin-bottom:2px;}
+.step .d{font-size:13.5px;color:#6b4a5e;font-weight:300;}
+
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.tl-i{position:relative;padding:22px 20px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 10px 30px rgba(122,47,99,.1);transition:.35s;}
+.tl-i:hover{transform:translateY(-6px);}
+.tl-i .ph{font-size:24px;color:var(--gold);}
+.tl-i h5{font-size:16px;color:var(--plum2);margin:10px 0 6px;}
+.tl-i p{font-size:13px;color:#6b4a5e;font-weight:300;}
+.tl-i .wk{font-family:'Playfair Display',serif;font-size:12px;color:#8a6c7e;letter-spacing:2px;margin-top:10px;padding-top:10px;border-top:1px dashed rgba(122,47,99,.16);}
+
+.tips{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.tip{padding:24px;border-radius:18px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.8);
+  box-shadow:0 10px 30px rgba(122,47,99,.1);transition:.4s;}
+.tip:hover{transform:translateY(-6px) rotate(-1deg);background:linear-gradient(150deg,rgba(255,255,255,.85),rgba(252,236,244,.7));}
+.tip .no{font-family:'Ma Shan Zheng',cursive;font-size:28px;color:var(--gold);}
+.tip h5{font-size:16px;color:var(--plum2);margin:6px 0 6px;}
+.tip p{font-size:13.5px;color:#6b4a5e;font-weight:300;}
+
+.chart-box{width:100%;height:320px;}
+.cover-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px;}
+
+footer{margin-left:var(--side);padding:56px 40px;text-align:center;position:relative;
+  background:linear-gradient(120deg,rgba(224,184,114,.4),rgba(194,85,125,.35),rgba(122,47,99,.45));}
+footer .sig{font-family:'Ma Shan Zheng',cursive;font-size:30px;color:#fff;margin-bottom:10px;text-shadow:0 2px 10px rgba(90,36,73,.3);}
+footer p{color:rgba(255,255,255,.94);font-weight:300;max-width:640px;margin:0 auto;font-size:15px;}
+footer small{display:block;margin-top:22px;color:rgba(255,255,255,.78);font-size:12px;}
+
+@media(max-width:1100px){
+  .grid3,.grid4,.stats,.tl,.tips,.cover-mini{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:860px){
+  :root{--side:280px;}
+  .hamb{display:flex;}
+  .side{transform:translateX(-100%);transition:transform .45s cubic-bezier(.3,.8,.3,1);}
+  body.open .side{transform:none;}
+  body.open .scrim{opacity:1;pointer-events:auto;}
+  .main,.scrim,footer{margin-left:0;}
+  .gap,.grid2,.defs,.grid3,.grid4,.stats,.tl,.tips,.cover-mini{grid-template-columns:1fr;}
+  .page{padding:70px 0 60px;}
+  .page-h,.sec-title{font-size:27px;}
+  .evo{flex-direction:column;}
+  .evo-a{transform:rotate(90deg);padding:4px 0;}
+  .tbl,.pair-tbl{font-size:13px;}
+  .tbl thead,.pair-tbl thead{display:none;}
+  .tbl tr,.pair-tbl tr{display:block;padding:12px 0;border-bottom:1px dashed rgba(122,47,99,.14);}
+  .tbl td,.pair-tbl td{display:block;padding:6px 0;border:none;}
+  .tbl td.name,.pair-tbl td:first-child{font-size:15px;}
+  .pair-tbl td:first-child{background:transparent;padding-bottom:4px;}
+  footer{padding:44px 22px;}
+}
+@media(max-width:420px){
+  .wrap{padding:0 16px;}
+  .side{width:86%;}
+  .card{padding:20px;}
+}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div class="scrim" onclick="document.body.classList.remove('open')"></div>
+
+<aside class="side">
+  <div class="side-brand">
+    <div class="glyph"><img Width="80px" src="tx.png"></div>
+    <h1>天蝎座</h1>
+    <div class="lat">不见桃花不见秋</div>
+    <div class="line"></div>
+  </div>
+  <nav class="side-nav">
+    <a data-go="cover"><i class="fa-solid fa-house"></i> 概览首页 <span class="n">00</span></a>
+    <a data-go="dossier"><i class="fa-solid fa-book-journal-whills"></i> 基础档案 <span class="n">01</span></a>
+    <a data-go="core"><i class="fa-solid fa-feather"></i> 三层进化 <span class="n">02</span></a>
+    <a data-go="char"><i class="fa-solid fa-mask"></i> 性格全景 <span class="n">03</span></a>
+    <a data-go="love"><i class="fa-solid fa-heart"></i> 爱情模式 <span class="n">04</span></a>
+    <a data-go="friend"><i class="fa-solid fa-people-group"></i> 友情人际 <span class="n">05</span></a>
+    <a data-go="career"><i class="fa-solid fa-briefcase"></i> 事业财运 <span class="n">06</span></a>
+    <a data-go="health"><i class="fa-solid fa-heart-pulse"></i> 健康 <span class="n">07</span></a>
+    <a data-go="pair"><i class="fa-solid fa-link"></i> 星座配对 <span class="n">08</span></a>
+    <a data-go="shadow"><i class="fa-solid fa-seedling"></i> 阴影修复 <span class="n">09</span></a>
+    <a data-go="now"><i class="fa-solid fa-moon"></i> 当下运势 <span class="n">10</span></a>
+    <a data-go="path"><i class="fa-solid fa-map-location-dot"></i> 相处之道 <span class="n">11</span></a>
+  </nav>
+  <div class="side-foot">天蝎座完整深度档案<br>占星民俗参考 · 非宿命论断</div>
+</aside>
+
+<div class="hamb" onclick="document.body.classList.toggle('open')">
+  <span></span><span></span><span></span>
+</div>
+
+<main class="main">
+  <div class="wrap">
+
+    <!-- 00 概览 -->
+    <section class="page active" id="page-cover">
+      <div class="page-head">
+        <div class="page-no">ZODIAC PROFILE</div>
+        <div class="page-h">关于<br>『不见桃花不见秋』的<br>天蝎座 · 深度档案</div>
+        <br>
+       <center> <img width="40%" src="tx.png"/></center>
+        <div class="page-sub">要么不进门，进门就不轻易退场。这是一份可收藏的完整解析——从占星底稿、性格机制，到感情、事业、财运、健康、配对与自我修复。</div>
+      </div>
+      <div class="grid4">
+        <div class="kv"><div class="k">10.23</div><div class="v">起始</div></div>
+        <div class="kv"><div class="k">11.21</div><div class="v">终结</div></div>
+        <div class="kv"><div class="k">VIII</div><div class="v">第八宫</div></div>
+        <div class="kv"><div class="k">♀♂</div><div class="v">双守护</div></div>
+      </div>
+      <div class="gap" style="margin-top:28px;">
+        <div class="grid3">
+          <div class="card"><div class="card-t"><i class="fa-solid fa-droplet"></i> 水象感知</div><div class="card-n">情绪不是流过，是沉进去</div><p style="color:#6b4a5e;font-weight:300;font-size:14.5px;">感知力深，一层层往深处走，别人情绪过去了就算了，天蝎会拿去淬炼一遍。</p></div>
+          <div class="card"><div class="card-t"><i class="fa-solid fa-anchor"></i> 固定宫执念</div><div class="card-n">不轻易进，也不轻易退</div><p style="color:#6b4a5e;font-weight:300;font-size:14.5px;">认准就钉死在那里，是持久力和忠诚感的来源，也是控制欲的温床。</p></div>
+          <div class="card"><div class="card-t"><i class="fa-solid fa-fire"></i> 火星反击</div><div class="card-n">不吵但会咬</div><p style="color:#6b4a5e;font-weight:300;font-size:14.5px;">被触到底线时有精准而安静的反击力，不爆发但记得住。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 档案 -->
+    <section class="page" id="page-dossier">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 01</div>
+        <div class="page-h">基础档案 · 占星底稿</div>
+        <div class="page-sub">黄道上的第八个刻度，水象与固定宫双重叠加。日期常见 10.23–11.21，交界日需按当年太阳过宫时刻精算。</div>
+      </div>
+      <div class="gap">
+        <div class="card">
+          <div class="card-t"><i class="fa-solid fa-table-list"></i> 属性一览</div>
+          <div class="card-n">太阳星座层面的民俗占星参考</div>
+          <div style="overflow-x:auto;">
+            <table class="tbl">
+              <thead><tr><th style="width:120px;">维度</th><th>内容</th><th style="width:130px;">维度</th><th>内容</th></tr></thead>
+              <tbody>
+                <tr><td class="name"><i class="fa-solid fa-signature"></i>符号</td><td>♏ 蝎子（蝎尾 / 钳子意象）</td><td class="name"><i class="fa-solid fa-arrows-left-right"></i>对宫</td><td>金牛座</td></tr>
+                <tr><td class="name"><i class="fa-solid fa-droplet"></i>元素</td><td>水象（唯一固定水象）</td><td class="name"><i class="fa-solid fa-comment"></i>句诀</td><td>我想要、我需要（I Desire）</td></tr>
+                <tr><td class="name"><i class="fa-solid fa-anchor"></i>模式</td><td>固定宫 · 持续、执着、抗压</td><td class="name"><i class="fa-solid fa-key"></i>掌管</td><td>第八宫 · 转化宫</td></tr>
+                <tr><td class="name"><i class="fa-solid fa-rotate"></i>守护星</td><td>现代冥王星 / 古典火星</td><td class="name"><i class="fa-solid fa-palette"></i>幸运色</td><td>深红、酒红、黑、暗紫</td></tr>
+                <tr><td class="name"><i class="fa-solid fa-gem"></i>幸运石</td><td>黑曜石、石榴石、黄玉、红宝石</td><td class="name"><i class="fa-solid fa-hashtag"></i>幸运数</td><td>0、8、18（另有 2·1·6·11 等版本）</td></tr>
+                <tr><td class="name"><i class="fa-solid fa-calendar-day"></i>幸运日</td><td>星期二</td><td class="name"><i class="fa-solid fa-bone"></i>掌管身体</td><td>生殖 / 泌尿 / 肛肠 / 盆腔 / 内分泌 / 免疫</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="grid4">
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-fire-flame-curved"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">冥王能量</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">蜕变、权力、潜意识</p></div>
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-arrows-to-circle"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">第八宫</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">生与死、共享资源、深度关系</p></div>
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-eye"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">阴性</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">内收型能量，先感知再行动</p></div>
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-infinity"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">固定水</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">全黄道唯一，深且持久</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 内核 -->
+    <section class="page" id="page-core">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 02</div>
+        <div class="page-h">底层机制 · 四相构成</div>
+        <div class="page-sub">天蝎的独特不是"腹黑"，是固定水 + 冥王星 + 火星三重叠加，构成"潜行型深度处理器"。</div>
+      </div>
+      <div class="gap">
+        <div class="grid3">
+          <div class="card"><div class="card-t"><i class="fa-solid fa-droplet"></i> 水象感知</div><div class="card-n">情绪不是流过，是沉进去</div><p style="color:#6b4a5e;font-weight:300;font-size:14.5px;">感知力深，一层层往深处走，别人情绪过去了就算了，天蝎会拿去淬炼一遍。</p></div>
+          <div class="card"><div class="card-t"><i class="fa-solid fa-anchor"></i> 固定宫执念</div><div class="card-n">不轻易进，也不轻易退</div><p style="color:#6b4a5e;font-weight:300;font-size:14.5px;">认准就钉死在那里，是持久力和忠诚感的来源，也是控制欲的温床。</p></div>
+          <div class="card"><div class="card-t"><i class="fa-solid fa-fire"></i> 火星反击</div><div class="card-n">不吵但会咬</div><p style="color:#6b4a5e;font-weight:300;font-size:14.5px;">被触到底线时有精准而安静的反击力，不爆发但记得住。</p></div>
+        </div>
+        <div class="card">
+          <div class="card-t"><i class="fa-solid fa-feather"></i> 象征动物的三层进化</div>
+          <div class="card-n">蝎 → 鹰 → 凤凰，对应三种意识层级</div>
+          <div class="evo">
+            <div class="evo-i e1"><div class="ic"><i class="fa-solid fa-bug"></i></div><h5>蝎 · 本能层</h5><p>被威胁就反击，困在生存与防御里，用蛰刺保护自己。</p></div>
+            <div class="evo-a"><i class="fa-solid fa-arrow-right"></i></div>
+            <div class="evo-i e2"><div class="ic"><i class="fa-solid fa-dove"></i></div><h5>鹰 · 超越层</h5><p>飞高俯瞰，看清全局与动机链，不再被情绪拖着走。</p></div>
+            <div class="evo-a"><i class="fa-solid fa-arrow-right"></i></div>
+            <div class="evo-i e3"><div class="ic"><i class="fa-solid fa-fire"></i></div><h5>凤凰 · 蜕变层</h5><p>被击穿之后还能重组一遍再站起来，把痛苦炼成力量。</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 性格 -->
+    <section class="page" id="page-char">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 03</div>
+        <div class="page-h">性格全景 · 高光与暗面</div>
+        <div class="page-sub">天蝎的"狠"通常是被辜负过之后的自保，不是出厂设定。</div>
+      </div>
+      <div class="gap">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-sun"></i> 高光面</div>
+            <div class="card-n">这些特质让人愿意托付</div>
+            <ul class="list">
+              <li><span class="no">1</span><p><b>洞察力接近测谎仪</b>——微表情、潜台词、动机链一眼看穿，不易被套路。</p></li>
+              <li><span class="no">2</span><p><b>逆商极高</b>——越被打压越收缩蓄力，低谷里能自己重组一遍再出来。</p></li>
+              <li><span class="no">3</span><p><b>极度专一</b>——对认定的人兜底、保密、记恩，护短到底。</p></li>
+              <li><span class="no">4</span><p><b>能扛事</b>——危机里反而清醒，适合做深挖、风控、谈判、救火。</p></li>
+              <li><span class="no">5</span><p><b>爱憎分明、嘴严</b>——不虚伪客套，别人的秘密到他这就锁死了。</p></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-moon"></i> 暗面（多为保护壳变形）</div>
+            <div class="card-n">需要被看见和修正的部分</div>
+            <ul class="list">
+              <li><span class="no">1</span><p><b>猜忌内耗</b>——安全感先天不足，容易过度解读细节。</p></li>
+              <li><span class="no">2</span><p><b>控制占有</b>——要透明感，边界太紧会让对方窒息。</p></li>
+              <li><span class="no">3</span><p><b>非黑即白</b>——要么全信要么全切，中间灰度难留。</p></li>
+              <li><span class="no">4</span><p><b>冷战型</b>——不爽不说，先沉默观察，隔阂越拖越厚。</p></li>
+              <li><span class="no">5</span><p><b>记仇不翻篇</b>——不是坏，是不敢再把自己交出去。</p></li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-t"><i class="fa-solid fa-chart-radar"></i> 十二项特质强度</div>
+          <div class="card-n">原型综合映射，非统计数据</div>
+          <div id="radar" class="chart-box" data-chart="radar"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 爱情 -->
+    <section class="page" id="page-love">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 04</div>
+        <div class="page-h">爱情模式 · 玩就玩命</div>
+        <div class="page-sub">不玩暧昧，要就深到骨子里。两大刚需：绝对忠诚 + 灵魂共鸣。</div>
+      </div>
+      <div class="gap">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-book-open"></i> 恋爱底层逻辑</div>
+            <div class="card-n">四条运行规则</div>
+            <dl class="defs" style="grid-template-columns:1fr;">
+              <div class="def"><dt><i class="fa-solid fa-key"></i> 刚需前置</dt><dd>忠诚与共鸣是入场券，没有这两条，暧昧养鱼在他这里活不过三轮。</dd></div>
+              <div class="def"><dt><i class="fa-solid fa-hourglass-start"></i> 慢热考察</dt><dd>前期反复试探不是作，是确认你值不值得，确认安全才肯卸防。</dd></div>
+              <div class="def"><dt><i class="fa-solid fa-toolbox"></i> 行动兜底</dt><dd>不爱说甜话，但记得你所有喜好，会替你挡事、默默布局。</dd></div>
+              <div class="def"><dt><i class="fa-solid fa-magnifying-glass"></i> 探测方式</dt><dd>有点"刑侦感"——不是作，是确认你配不配得上这份交付。</dd></div>
+            </dl>
+          </div>
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-chart-bar"></i> 爱情需求权重</div>
+            <div class="card-n">天蝎在关系中的隐性需求占比</div>
+            <div id="loveBar" class="chart-box" data-chart="loveBar" style="height:300px;"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-bolt"></i> 雷区清单</div>
+            <div class="card-n">踩了之后很难恢复</div>
+            <div class="tag-cloud">
+              <span class="tag p">暧昧养鱼</span><span class="tag p">异性边界模糊</span><span class="tag p">撒谎隐瞒</span>
+              <span class="tag p">翻旧账被发现</span><span class="tag p">当众不给面子</span><span class="tag p">拿来和人比</span>
+              <span class="tag p">消耗信任装没事</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-kitchen-set"></i> 吵架配方</div>
+            <div class="card-n">什么有效，什么致命</div>
+            <ul class="list">
+              <li><span class="no"><i class="fa-solid fa-check" style="font-size:12px;"></i></span><p><b>吃软不吃硬</b>——主动示弱、先说"我在乎你"，比硬碰硬快十倍和解。</p></li>
+              <li><span class="no"><i class="fa-solid fa-xmark" style="font-size:12px;"></i></span><p><b>别硬碰硬</b>——只会换来更长的沉默和冷战。</p></li>
+              <li><span class="no"><i class="fa-solid fa-clock"></i></span><p><b>别在情绪最高点摊牌</b>——也别翻三年前的旧账。</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 人际 -->
+    <section class="page" id="page-friend">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 05</div>
+        <div class="page-h">友情人际 · 圈子小，但能托命</div>
+        <div class="page-sub">朋友贵精不贵多，三个知己胜过三十个熟人。</div>
+      </div>
+      <div class="gap">
+        <div class="grid4">
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-user-group"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">少而精</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">酒肉局基本不混，能交心的人极少。</p></div>
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-hands-holding"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">沉默兜底</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">你落难他不一定安慰，但会把事扛了。</p></div>
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-lock"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">守口如瓶</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">秘密到他这就锁死，不会四处散播。</p></div>
+          <div class="card" style="text-align:center;"><div style="font-size:30px;color:var(--plum);"><i class="fa-solid fa-door-closed"></i></div><h5 style="font-size:16px;color:var(--plum2);margin:10px 0 6px;">难再修复</h5><p style="font-size:13.5px;color:#6b4a5e;font-weight:300;">表面客气内心已划线，信任断裂难回头。</p></div>
+        </div>
+        <div class="card">
+          <div class="card-t"><i class="fa-solid fa-circle-info"></i> 长期相处法则</div>
+          <div class="card-n">和天蝎做长期伙伴的关键</div>
+          <ul class="list">
+            <li><span class="no">1</span><p><b>别演、别骗</b>——真诚比聪明值钱得多。</p></li>
+            <li><span class="no">2</span><p><b>别逼他太快交底</b>——信任要时间积累，越催越退。</p></li>
+            <li><span class="no">3</span><p><b>被他选中就别辜负</b>——这是最高规格的认可。</p></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 事业财运 -->
+    <section class="page" id="page-career">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 06</div>
+        <div class="page-h">事业与财运 · 厚积薄发</div>
+        <div class="page-sub">不走短线，靠能力滚雪球。谋定后动，能忍前期寂寞。</div>
+      </div>
+      <div class="gap">
+        <div class="stats">
+          <div class="stat"><div class="num">长线</div><div class="lbl">布局思维 · 细节抠得狠</div></div>
+          <div class="stat"><div class="num">危机</div><div class="lbl">越紧急越清醒稳定</div></div>
+          <div class="stat"><div class="num">慢热</div><div class="lbl">前期蓄力，后期爆发</div></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-briefcase"></i> 适合发力领域</div>
+            <div class="card-n">点开是天蝎能长出来的地方</div>
+            <div class="tag-cloud">
+              <span class="tag">心理 / 咨询</span><span class="tag">金融投资</span><span class="tag">风控</span>
+              <span class="tag">刑侦法务</span><span class="tag">医疗科研</span><span class="tag">网络安全</span>
+              <span class="tag g">危机公关</span><span class="tag g">幕后策划</span><span class="tag g">深度内容</span>
+              <span class="tag p">自主创业</span><span class="tag p">保密审计</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-ban"></i> 环境雷区</div>
+            <div class="card-n">让天蝎枯萎的场景</div>
+            <ul class="list">
+              <li><span class="no"><i class="fa-solid fa-xmark" style="font-size:11px;"></i></span><p>纯琐碎重复的机械劳动。</p></li>
+              <li><span class="no"><i class="fa-solid fa-xmark" style="font-size:11px;"></i></span><p>勾心斗角但没有产出的内耗环境。</p></li>
+              <li><span class="no"><i class="fa-solid fa-xmark" style="font-size:11px;"></i></span><p>只看表面、不重实质的评价体系。</p></li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-chart-pie"></i> 财富构成逻辑</div>
+            <div class="card-n">正财滚雪球，偏财有嗅觉但容易上头</div>
+            <div id="pie" class="chart-box" data-chart="pie" style="height:280px;"></div>
+          </div>
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-ranking-star"></i> 职业适配度</div>
+            <div class="card-n">适合天蝎发力的方向评分</div>
+            <div id="careerBar" class="chart-box" data-chart="careerBar" style="height:280px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 健康 -->
+    <section class="page" id="page-health">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 07</div>
+        <div class="page-h">健康 · 身体是情绪的容器</div>
+        <div class="page-sub">真正容易出问题的不是器官本身，而是情绪郁结转成的身体反应。</div>
+      </div>
+      <div class="gap">
+        <div class="grid2">
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-person"></i> 掌管部位</div>
+            <div class="card-n">生殖 / 泌尿 / 肛肠 / 盆腔 / 内分泌 / 免疫</div>
+            <div class="body-fig"><i class="fa-solid fa-person-standing"></i></div>
+          </div>
+          <div class="card">
+            <div class="card-t"><i class="fa-solid fa-gauge-high"></i> 风险关注指数</div>
+            <div class="card-n">不同诱因的潜在影响程度（参考，非诊断）</div>
+            <div class="bars">
+              <div class="bar-i"><div class="b-head"><b>熬夜透支</b><span>95</span></div><div class="bar-track"><div class="bar-fill" data-w="95"></div></div></div>
+              <div class="bar-i"><div class="b-head"><b>情绪压抑</b><span>90</span></div><div class="bar-track"><div class="bar-fill" data-w="90"></div></div></div>
+              <div class="bar-i"><div class="b-head"><b>睡眠不足</b><span>82</span></div><div class="bar-track"><div class="bar-fill" data-w="82"></div></div></div>
+              <div class="bar-i"><div class="b-head"><b>长期饮酒</b><span>70</span></div><div class="bar-track"><div class="bar-fill" data-w="70"></div></div></div>
+              <div class="bar-i"><div class="b-head"><b>饮食辛辣</b><span>66</span></div><div class="bar-track"><div class="bar-fill" data-w="66"></div></div></div>
+              <div class="bar-i"><div class="b-head"><b>久坐不动</b><span>60</span></div><div class="bar-track"><div class="bar-fill" data-w="60"></div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-t"><i class="fa-solid fa-seedling"></i> 保养处方</div>
+          <div class="card-n">最低成本的四件事</div>
+          <div class="grid4">
+            <div class="badge"><i class="fa-solid fa-moon"></i> 十一点前入睡</div>
+            <div class="badge"><i class="fa-solid fa-person-running"></i> 每周三次出汗运动</div>
+            <div class="badge"><i class="fa-solid fa-pen"></i> 写日记 / 找人聊，给情绪出口</div>
+            <div class="badge"><i class="fa-solid fa-stethoscope"></i> 年度查泌尿与妇科/男科基础项</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 08 配对 -->
+    <section class="page" id="page-pair">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 08</div>
+        <div class="page-h">星座配对 · 灵魂共振表</div>
+        <div class="page-sub">太阳星座只是表皮，真正合不合要叠上升、月亮、金星、火星与第七宫才立体。</div>
+      </div>
+      <div class="card">
+        <div class="card-t"><i class="fa-solid fa-table"></i> 配对速查</div>
+        <div class="card-n">按契合度分层</div>
+        <div style="overflow-x:auto;">
+          <table class="pair-tbl">
+            <thead><tr><th style="width:110px;">层级</th><th style="width:200px;">星座</th><th>为什么合 / 不合</th></tr></thead>
+            <tbody>
+              <tr><td><span class="lv-tag lv-soul">灵魂级</span></td><td>巨蟹 · 双鱼</td><td>同水象，懂情绪深度，互给安全感，能一起沉到最底再浮上来。</td></tr>
+              <tr><td><span class="lv-tag lv-good">高适配</span></td><td>摩羯 · 处女 · 金牛</td><td>土象的稳接得住天蝎的执念，承诺感强，适合长期过日子。</td></tr>
+              <tr><td><span class="lv-tag lv-good">可磨合</span></td><td>天蝎 · 狮子</td><td>都太有主见，容易变成权力拉锯，看谁先学会退半步。</td></tr>
+              <tr><td><span class="lv-tag lv-hard">高消耗</span></td><td>双子 · 水瓶 · 白羊</td><td>自由飘忽或冲劲太直，难满足"深绑 + 透明"的双重需求。</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 09 阴影修复 -->
+    <section class="page" id="page-shadow">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 09</div>
+        <div class="page-h">阴影修复 · 一生要过的关</div>
+        <div class="page-sub">把保护壳一点点松下来，而不是拆掉。</div>
+      </div>
+      <div class="steps">
+        <div class="step"><div><div class="t">把"试探"换成"直说"</div><div class="d">你问一句，比脑补一夜省命。</div></div></div>
+        <div class="step"><div><div class="t">把"切断"当最后手段</div><div class="d">不是第一反应。先修，再断。</div></div></div>
+        <div class="step"><div><div class="t">允许灰度存在</div><div class="d">人不是非忠即叛，事不是非赢即输。</div></div></div>
+        <div class="step"><div><div class="t">情绪要有出口</div><div class="d">运动、写字、咨询，或对信得过的人开口。</div></div></div>
+        <div class="step"><div><div class="t">别把掌控当安全</div><div class="d">真正的安全是"就算失去，我也能重生"。</div></div></div>
+        <div class="step"><div><div class="t">信任筛选制</div><div class="d">给人一次机会 ≠ 把命交出去，边界可以软着设。</div></div></div>
+      </div>
+    </section>
+
+    <!-- 10 运势 -->
+    <section class="page" id="page-now">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 10</div>
+        <div class="page-h">当下节点 · 2026 年 10 月</div>
+        <div class="page-sub">关键词：<b style="color:var(--plum2);">旧绪清算</b> + <b style="color:var(--rose);">下旬重启</b>。本月天蝎的功课不是看清别人，是承认"我在意"，然后把执念分拣一遍。</div>
+      </div>
+      <div class="tl">
+        <div class="tl-i"><div class="ph"><i class="fa-solid fa-moon"></i></div><h5>上旬 · 复盘</h5><p>适合收尾清理，不急着冲。旧项目有收口机会。</p><div class="wk">WEEK 01–02</div></div>
+        <div class="tl-i"><div class="ph"><i class="fa-solid fa-moon"></i></div><h5>中旬 · 筹备</h5><p>新计划先在幕后筹备，不对外声张，合同文件反复看。</p><div class="wk">WEEK 02–03</div></div>
+        <div class="tl-i"><div class="ph"><i class="fa-solid fa-moon"></i></div><h5>下旬 · 重启</h5><p>太阳进天蝎，气场回血，存在感拉满。</p><div class="wk">WEEK 04</div></div>
+        <div class="tl-i"><div class="ph"><i class="fa-solid fa-moon"></i></div><h5>贯穿 · 谨记</h5><p>重要财务决定拖到 11 月中后；情绪高点不做决断。</p><div class="wk">ALL MONTH</div></div>
+      </div>
+    </section>
+
+    <!-- 11 相处 -->
+    <section class="page" id="page-path">
+      <div class="page-head">
+        <div class="page-no">CHAPTER 11</div>
+        <div class="page-h">相处之道 · 最短路径</div>
+        <div class="page-sub">这六条做到，和天蝎的关系就稳了大半。</div>
+      </div>
+      <div class="tips">
+        <div class="tip"><div class="no">壹</div><h5>真诚大于聪明</h5><p>撒一次谎，信任断一半。</p></div>
+        <div class="tip"><div class="no">贰</div><h5>主动报备</h5><p>不是束缚，是给他卸防。</p></div>
+        <div class="tip"><div class="no">叁</div><h5>吵架别硬刚</h5><p>先说"我在乎你"，再谈事。</p></div>
+        <div class="tip"><div class="no">肆</div><h5>读懂沉默</h5><p>他不是在罚你，是在等你是否接住。</p></div>
+        <div class="tip"><div class="no">伍</div><h5>给足独处</h5><p>别天天逼问"你到底想什么"。</p></div>
+        <div class="tip"><div class="no">陆</div><h5>对等交付</h5><p>你对他好他会翻倍还；你捅他底牌，他会安静消失。</p></div>
+      </div>
+    </section>
+
+  </div><!--/wrap-->
+</main>
+
+<footer>
+  <div class="sig"><img width="30px" src="tx.png"> 不见桃花不见秋<br>天蝎座·深度档案</div>
+  <p>星座是性格地图，不是判决书。天蝎最厉害的，不是蛰人，是每次被击穿之后，还能把自己重组一遍再站起来。<br><a href="https://bjth.netlify.app">技术提供：不见桃花不见技术网</a></p>
+  
+</footer>
+
+<script>
+/* 星点 */
+(function(){
+  var s=document.getElementById('stars'),n=60;
+  for(var i=0;i<n;i++){
+    var d=document.createElement('div');d.className='dot';
+    d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';
+    var r=(Math.random()*2.2+0.6).toFixed(2);
+    d.style.width=r+'px';d.style.height=r+'px';
+    d.style.animationDelay=(Math.random()*4).toFixed(2)+'s';
+    s.appendChild(d);
+  }
+})();
+
+/* 图表实例缓存 */
+var chartCache={};
+function grad(){return new echarts.graphic.LinearGradient(0,0,1,0,[{offset:0,color:'#5a2449'},{offset:.55,color:'#c2557d'},{offset:1,color:'#e0b872'}]);}
+function buildChart(el){
+  var t=el.dataset.chart,opt;
+  if(t==='radar'){opt={
+    radar:{center:['50%','54%'],radius:'64%',shape:'polygon',
+      indicator:[{name:'洞察力'},{name:'忠诚度'},{name:'意志力'},{name:'直觉'},{name:'占有欲'},{name:'记仇度'},{name:'危机力'},{name:'深情度'}].map(function(o){o.max=100;return o;}),
+      axisName:{color:'#5a2449',fontSize:12},
+      splitArea:{areaStyle:{color:['rgba(224,184,114,.06)','rgba(194,85,125,.07)']}},
+      splitLine:{lineStyle:{color:'rgba(122,47,99,.15)'}},
+      axisLine:{lineStyle:{color:'rgba(122,47,99,.18)'}}},
+    series:[{type:'radar',data:[{value:[96,95,94,92,88,85,90,93],name:'天蝎原型',
+      areaStyle:{color:'rgba(194,85,125,.32)'},lineStyle:{color:'#c2557d',width:2},itemStyle:{color:'#e0b872'}}]}]};
+  }
+  if(t==='pie'){opt={tooltip:{trigger:'item',formatter:'{b}: {d}%'},
+    series:[{type:'pie',radius:['42%','72%'],center:['50%','54%'],
+      label:{color:'#6b4a5e',formatter:'{b}\n{d}%'},
+      labelLine:{lineStyle:{color:'rgba(122,47,99,.3)'}},
+      data:[
+        {value:32,name:'水象深情',itemStyle:{color:'#a86bb5'}},
+        {value:28,name:'固定执念',itemStyle:{color:'#5a2449'}},
+        {value:26,name:'冥王重生',itemStyle:{color:'#c2557d'}},
+        {value:14,name:'火星行动',itemStyle:{color:'#e0b872'}}]}]};
+  }
+  if(t==='loveBar'){opt={tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:{left:96,right:34,top:10,bottom:16},
+    xAxis:{type:'value',max:100,splitLine:{lineStyle:{color:'rgba(122,47,99,.08)'}},axisLabel:{color:'#8a6c7e'}},
+    yAxis:{type:'category',data:['身体吸引','共同成长','情绪价值','安全透明','忠诚专一','灵魂共鸣'],
+      axisLine:{lineStyle:{color:'rgba(122,47,99,.22)'}},axisLabel:{color:'#5f4256'}},
+    series:[{type:'bar',data:[62,80,86,94,98,100],itemStyle:{borderRadius:[0,8,8,0],color:grad()},
+      barWidth:'55%',label:{show:true,position:'right',color:'#6b4a5e',formatter:'{c}'}}]};
+  }
+  if(t==='careerBar'){opt={tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+    grid:{left:92,right:34,top:10,bottom:10},
+    xAxis:{type:'value',max:100,splitLine:{lineStyle:{color:'rgba(122,47,99,.08)'}},axisLabel:{color:'#8a6c7e'}},
+    yAxis:{type:'category',data:['重复执行','琐碎行政','公开社交','自主创业','医疗科研','危机公关','刑侦法务','投资风控','心理疗愈'],
+      axisLine:{lineStyle:{color:'rgba(122,47,99,.22)'}},axisLabel:{color:'#5f4256',fontSize:11}},
+    series:[{type:'bar',data:[30,40,58,72,78,84,88,94,96],itemStyle:{borderRadius:[0,8,8,0],color:grad()},
+      barWidth:'55%',label:{show:true,position:'right',color:'#6b4a5e',formatter:'{c}'}}]};
+  }
+  chartCache[t]=echarts.init(el);chartCache[t].setOption(opt);
+}
+function ensureCharts(scope){
+  (scope||document).querySelectorAll('[data-chart]').forEach(function(el){
+    if(!chartCache[el.dataset.chart])buildChart(el);
+    else chartCache[el.dataset.chart].resize();
+  });
+}
+function resetBars(scope){(scope||document).querySelectorAll('.bar-fill').forEach(function(b){b.style.width='0%';});}
+function runBars(scope){
+  (scope||document).querySelectorAll('.bar-fill').forEach(function(b,i){
+    setTimeout(function(){b.style.width=b.dataset.w+'%';},260+i*90);
+  });
+}
+
+/* SPA 切换 */
+var pages=[].slice.call(document.querySelectorAll('.page'));
+var navLinks=[].slice.call(document.querySelectorAll('.side-nav a'));
+function go(key){
+  var id='page-'+key;
+  var target=document.getElementById(id);
+  if(!target)target=document.getElementById('page-cover');
+  pages.forEach(function(p){p.classList.toggle('active',p===target);});
+  navLinks.forEach(function(a){a.classList.toggle('active',a.dataset.go===key);});
+  resetBars(target);
+  ensureCharts(target);
+  runBars(target);
+  window.scrollTo(0,0);
+  if(history.replaceState)history.replaceState(null,'','#'+key);
+}
+navLinks.forEach(function(a){
+  a.addEventListener('click',function(ev){
+    ev.preventDefault();
+    go(a.dataset.go);
+    document.body.classList.remove('open');
+  });
+});
+
+/* 首次进入 */
+var start=(location.hash||'').replace('#','');
+if(start && !document.getElementById('page-'+start))start='cover';
+go(start||'cover');
+setTimeout(function(){ensureCharts(document.querySelector('.page.active'));runBars(document.querySelector('.page.active'));},200);
+
+/* resize 重绘图表 + 响应式收起侧栏 */
+window.addEventListener('resize',function(){
+  Object.keys(chartCache).forEach(function(k){try{chartCache[k].resize();}catch(e){}});
+  if(window.innerWidth>860)document.body.classList.remove('open');
+});
+</script>
+</body>
+</html>
